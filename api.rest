@@ -1,0 +1,43 @@
+@baseUrl = http://localhost:5000/api
+@authToken = {{login.response.body.token}}
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### Login
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### Get user profile
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{authToken}}
+
+### Create a new blog post
+POST {{baseUrl}}/blogs
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "My First Blog Post",
+  "content": "This is the content of my first blog post."
+}
+
+### Get all blog posts
+GET {{baseUrl}}/blogs
+
+### Get latest blog post
+GET {{baseUrl}}/blogs/latest
+
