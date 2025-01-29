@@ -86,7 +86,7 @@ export function WeeklyPosts({ language }) {
             <Link href="/blog-podcast">{t.readMore}</Link>
           </Button>
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700 rounded-full">
-            <Link href="/register">{t.joinCommunity}</Link>
+            <Link href="/apply">{t.joinCommunity}</Link>
           </Button>
         </div>
       </div>

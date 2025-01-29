@@ -113,9 +113,7 @@ export default function PricingPage() {
 
   const handleEnterpriseClick = () => {
     const message = encodeURIComponent(
-      language === "en"
-        ? "Hello, I would like to inquire about the Enterprise Plan for my startup. Could you provide more information about customized solutions?"
-        : "Hola, me gustaría consultar sobre el Plan Enterprise para mi startup. ¿Podrían brindarme más información sobre soluciones personalizadas?",
+        "Hola, me gustaría consultar sobre el Plan Enterprise para mi startup. ¿Podrían brindarme más información sobre soluciones personalizadas?",
     )
     window.open(`https://wa.me/5491131954757?text=${message}`, "_blank")
   }
