@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Users, Rocket, Target } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/contexts/LanguageContext"
+import Image from "next/image"
 
 export default function About() {
   const { language } = useLanguage()
@@ -31,8 +32,18 @@ export default function About() {
       team: {
         title: "Meet Our Team",
         members: [
-          { name: "Nicolas Said", role: "CEO & Founder" },
-          { name: "Benjamin Kaputiansky", role: "CTO & Founder" },
+          {
+            name: "Nicolas Said",
+            role: "CEO & Founder",
+            image:
+              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/TURCP.jpg-ecEnIU4nbSX672VwRwCBRrIt1Sj6gM.jpeg",
+          },
+          {
+            name: "Benjamin Kaputiansky",
+            role: "CTO & Founder",
+            image:
+              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BENJO%20.jpg-0e6X3hUTMkicx5X92jN0qB5fs5iV8d.jpeg",
+          },
         ],
       },
       cta: {
@@ -62,8 +73,18 @@ export default function About() {
       team: {
         title: "Conoce a Nuestro Equipo",
         members: [
-          { name: "Nicolas Said", role: "CEO y Fundador" },
-          { name: "Benjamin Kaputiansky", role: "CTO y Fundador" },
+          {
+            name: "Nicolas Said",
+            role: "CEO y Fundador",
+            image:
+              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/TURCP.jpg-ecEnIU4nbSX672VwRwCBRrIt1Sj6gM.jpeg",
+          },
+          {
+            name: "Benjamin Kaputiansky",
+            role: "CTO y Fundador",
+            image:
+              "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BENJO%20.jpg-0e6X3hUTMkicx5X92jN0qB5fs5iV8d.jpeg",
+          },
         ],
       },
       cta: {
@@ -85,21 +106,21 @@ export default function About() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <Card className="bg-secondary-50 border-secondary-200">
+          <Card className="bg-secondary-50 border-2 border-secondary-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl">
             <CardHeader>
               <Users className="w-12 h-12 text-secondary-600 mb-4" />
               <CardTitle className="text-2xl text-primary-900">{t.mission.title}</CardTitle>
             </CardHeader>
             <CardContent className="text-gray-600">{t.mission.description}</CardContent>
           </Card>
-          <Card className="bg-secondary-50 border-secondary-200">
+          <Card className="bg-secondary-50 border-2 border-secondary-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl">
             <CardHeader>
               <Rocket className="w-12 h-12 text-secondary-600 mb-4" />
               <CardTitle className="text-2xl text-primary-900">{t.vision.title}</CardTitle>
             </CardHeader>
             <CardContent className="text-gray-600">{t.vision.description}</CardContent>
           </Card>
-          <Card className="bg-secondary-50 border-secondary-200">
+          <Card className="bg-secondary-50 border-2 border-secondary-200 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl">
             <CardHeader>
               <Target className="w-12 h-12 text-secondary-600 mb-4" />
               <CardTitle className="text-2xl text-primary-900">{t.approach.title}</CardTitle>
@@ -113,11 +134,13 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
             {t.team.members.map((member, index) => (
               <div key={index} className="text-center">
-                <img
-                  src="/placeholder.svg?height=200&width=200"
-                  alt={member.name}
-                  className="w-48 h-48 rounded-full mx-auto mb-4 object-cover"
-                />
+                <div className="relative w-48 h-48 mx-auto mb-4">
+                  <img
+                    src={member.image || "/placeholder.svg"}
+                    alt={member.name}
+                    className="rounded-full object-cover w-full h-full"
+                  />
+                </div>
                 <h3 className="text-xl font-semibold text-primary-900">{member.name}</h3>
                 <p className="text-gray-600">{member.role}</p>
               </div>

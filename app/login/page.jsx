@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import Link from "next/link"
-import { LogIn } from "lucide-react"
+import Image from "next/image"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -72,8 +72,12 @@ export default function Login() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-6">
-            <div className="bg-secondary-100 p-3 rounded-full">
-              <LogIn className="h-6 w-6 text-secondary-600" />
+            <div className="w-16 h-16">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
+                alt="LinkUp Logo"
+                className="w-full h-full"
+              />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center">{t.title}</CardTitle>
@@ -90,13 +94,13 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-11"
+                className="h-11 rounded-full"
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">{t.passwordLabel}</Label>
-                <Link href="#" className="text-sm text-secondary-600 hover:text-secondary-700">
+                <Link href="/forgot-password" className="text-sm text-secondary-600 hover:text-secondary-700">
                   {t.forgotPassword}
                 </Link>
               </div>
@@ -107,12 +111,12 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-11"
+                className="h-11 rounded-full"
               />
             </div>
             <Button
               type="submit"
-              className="w-full h-11 bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300"
+              className="w-full h-11 bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300 rounded-full"
               disabled={loading}
             >
               {loading ? t.signingIn : t.signIn}

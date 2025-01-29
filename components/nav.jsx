@@ -20,7 +20,6 @@ export function Nav() {
     { name: language === "en" ? "About" : "Acerca de", path: "/about" },
     { name: language === "en" ? "Pricing" : "Precios", path: "/pricing" },
     { name: language === "en" ? "Contact" : "Contacto", path: "/contact" },
-    // Add Login as a menu item
     ...(user ? [] : [{ name: language === "en" ? "Login" : "Iniciar sesión", path: "/login" }]),
   ]
 
@@ -35,7 +34,7 @@ export function Nav() {
   )
 
   return (
-    <nav className="fixed top-0 w-full bg-white border-b border-gray-100 z-50">
+    <nav className="fixed top-0 w-full bg-white border-b border-gray-100 z-50 shadow-sm">
       <div className="container flex items-center justify-between h-16">
         {/* Logo and Language Toggle */}
         <div className="flex items-center space-x-4">
@@ -43,7 +42,7 @@ export function Nav() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Imagen%20de%20WhatsApp%202025-01-26%20a%20las%2015.19.42_e01988de.jpg-cpajLuZWHffaR1AfdCOjwttm1CwJLm.jpeg"
               alt="LinkUp Logo"
-              className="h-8 w-8"
+              className="h-8 w-8 rounded-full"
             />
             <span className="font-bold text-xl text-primary-900">LinkUp</span>
           </Link>
@@ -64,7 +63,7 @@ export function Nav() {
           {user ? (
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-primary-900">Welcome, {user.username}</span>
-              <Button onClick={logout} variant="ghost" className="hover:bg-secondary-50">
+              <Button onClick={logout} variant="ghost" className="hover:bg-secondary-50 rounded-full">
                 {language === "en" ? "Logout" : "Cerrar sesión"}
               </Button>
             </div>
@@ -72,11 +71,11 @@ export function Nav() {
             <div className="flex items-center gap-4">
               <Link
                 href="/login"
-                className="text-sm font-medium text-primary-900 hover:text-secondary-600 transition-all duration-300 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-secondary-600 after:transition-all hover:after:w-full"
+                className="text-sm font-medium text-primary-900 hover:text-secondary-600 transition-all duration-300"
               >
                 {language === "en" ? "Login" : "Iniciar sesión"}
               </Link>
-              <Button asChild className="bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300">
+              <Button asChild className="bg-blue-600 text-white hover:bg-blue-700 rounded-full">
                 <Link href="/apply">{language === "en" ? "Apply Now" : "Aplicar Ahora"}</Link>
               </Button>
             </div>
@@ -86,23 +85,25 @@ export function Nav() {
         {/* Mobile Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden hover:bg-secondary-50">
+            <Button variant="ghost" size="icon" className="md:hidden hover:bg-secondary-50 rounded-full">
               <Menu className="h-6 w-6" />
               <span className="sr-only">Open menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[280px] p-0">
+          <SheetContent side="right" className="w-[280px] bg-white p-0">
             <div className="flex flex-col h-full">
               <div className="p-4 border-b">
                 <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2">
                   <img
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Imagen%20de%20WhatsApp%202025-01-26%20a%20las%2015.19.42_e01988de.jpg-cpajLuZWHffaR1AfdCOjwttm1CwJLm.jpeg"
                     alt="LinkUp Logo"
-                    className="h-8 w-8"
+                    className="h-8 w-8 rounded-full"
                   />
                   <span className="font-bold text-xl text-primary-900">LinkUp</span>
                 </Link>
-                <LanguageToggle />
+                <div className="mt-4">
+                  <LanguageToggle />
+                </div>
               </div>
               <div className="flex-1 overflow-auto">
                 <div className="flex flex-col px-4 py-6 space-y-4">
@@ -120,6 +121,7 @@ export function Nav() {
                           setIsOpen(false)
                         }}
                         variant="ghost"
+                        className="rounded-full"
                       >
                         {language === "en" ? "Logout" : "Cerrar sesión"}
                       </Button>
@@ -127,7 +129,7 @@ export function Nav() {
                   ) : (
                     <Button
                       asChild
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
                       onClick={() => setIsOpen(false)}
                     >
                       <Link href="/apply">{language === "en" ? "Apply Now" : "Aplicar Ahora"}</Link>

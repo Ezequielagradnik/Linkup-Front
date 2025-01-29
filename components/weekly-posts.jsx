@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Share2, MessageCircle, TrendingUp } from "lucide-react"
@@ -42,17 +44,34 @@ export function WeeklyPosts({ language }) {
   const fetchPosts = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/blogs")
+      if (!response.ok) throw new Error("Failed to fetch posts")
       const data = await response.json()
       setPosts(data)
       data.forEach((post) => fetchComments(post.id))
     } catch (error) {
       console.error("Error fetching posts:", error)
+      // Set some default posts if the API fails
+      setPosts([
+        {
+          id: 1,
+          title: "How to Validate Your Startup Idea",
+          content: "Learn the essential steps to validate your startup idea before investing time and resources...",
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: 2,
+          title: "Securing Your First Investment",
+          content: "Discover the key strategies for attracting and securing your first startup investment...",
+          createdAt: new Date().toISOString(),
+        },
+      ])
     }
   }
 
   const fetchComments = async (blogId) => {
     try {
       const response = await fetch(`http://localhost:5000/api/comments/blog/${blogId}`)
+      if (!response.ok) throw new Error("Failed to fetch comments")
       const data = await response.json()
       setComments((prev) => ({ ...prev, [blogId]: data }))
     } catch (error) {
@@ -104,11 +123,11 @@ export function WeeklyPosts({ language }) {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mt-6">
                     <div className="flex items-center gap-4">
-                      <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                      <Button variant="ghost" size="sm" className="flex items-center gap-2 rounded-full">
                         <MessageCircle className="h-4 w-4" />
                         <span>Comment</span>
                       </Button>
-                      <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                      <Button variant="ghost" size="sm" className="flex items-center gap-2 rounded-full">
                         <Share2 className="h-4 w-4" />
                         <span>Share</span>
                       </Button>
@@ -121,8 +140,11 @@ export function WeeklyPosts({ language }) {
                           placeholder={t.commentPlaceholder}
                           value={newComments[post.id] || ""}
                           onChange={(e) => setNewComments((prev) => ({ ...prev, [post.id]: e.target.value }))}
+                          className="rounded-full"
                         />
-                        <Button onClick={() => handleCommentSubmit(post.id)}>{t.postComment}</Button>
+                        <Button onClick={() => handleCommentSubmit(post.id)} className="rounded-full">
+                          {t.postComment}
+                        </Button>
                       </div>
                     ) : (
                       <p className="text-sm text-gray-500">{t.loginToComment}</p>
@@ -130,8 +152,8 @@ export function WeeklyPosts({ language }) {
                   </div>
                   <div className="space-y-2">
                     {comments[post.id]?.map((comment) => (
-                      <div key={comment.id} className="bg-gray-50 p-2 rounded">
-                        <p className="text-sm font-semibold">{comment.User.username}</p>
+                      <div key={comment.id} className="bg-gray-50 p-2 rounded-full">
+                        <p className="text-sm font-semibold">{comment.User?.username}</p>
                         <p className="text-sm">{comment.content}</p>
                       </div>
                     ))}
@@ -142,10 +164,10 @@ export function WeeklyPosts({ language }) {
           ))}
         </div>
         <div className="flex justify-center gap-4 mt-12">
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="rounded-full">
             <Link href="/blog-podcast">{t.readMore}</Link>
           </Button>
-          <Button asChild className="bg-secondary-500 text-white hover:bg-secondary-600">
+          <Button asChild className="bg-blue-600 text-white hover:bg-blue-700 rounded-full">
             <Link href="/register">{t.joinCommunity}</Link>
           </Button>
         </div>

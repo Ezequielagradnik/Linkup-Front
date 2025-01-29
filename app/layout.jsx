@@ -10,6 +10,14 @@ import { NewBlogNotification } from "@/components/NewBlogNotification"
 export const metadata = {
   title: "LinkUp",
   description: "Transform Your Startup Journey with LinkUp",
+  icons: {
+    icon: [
+      {
+        url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-gvcWC04ntMdre9NtwJxygicnbRrcXF.png",
+        href: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-gvcWC04ntMdre9NtwJxygicnbRrcXF.png",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({ children }) {
