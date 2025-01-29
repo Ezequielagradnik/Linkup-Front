@@ -1,11 +1,17 @@
-import Sequelize from "sequelize"
+import { Sequelize } from "sequelize"
 import UserModel from "./user.js"
 import BlogModel from "./blog.js"
 import CommentModel from "./comment.js"
 
-
-const sequelize = new Sequelize(process.env.DATABASE_URL || "postgres://user:password@localhost:5432/linkup_db", {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+  logging: process.env.NODE_ENV === "development" ? console.log : false,
 })
 
 const User = UserModel(sequelize, Sequelize)
@@ -21,10 +27,5 @@ Comment.belongsTo(User)
 Blog.hasMany(Comment)
 Comment.belongsTo(Blog)
 
-module.exports = {
-  sequelize,
-  User,
-  Blog,
-  Comment,
-}
+export { sequelize, User, Blog, Comment }
 

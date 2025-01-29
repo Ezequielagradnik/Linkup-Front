@@ -1,10 +1,11 @@
-const express = require("express")
-const cors = require("cors")
-const { sequelize } = require("./models")
-const authRoutes = require("./routes/auth")
-const blogRoutes = require("./routes/blog")
-const userRoutes = require("./routes/user")
-const commentRoutes = require("./routes/comment")
+import "dotenv/config"
+import express from "express"
+import cors from "cors"
+import { sequelize } from "./models/index.js"
+import authRoutes from "./routes/auth.js"
+import blogRoutes from "./routes/blog.js"
+import userRoutes from "./routes/user.js"
+import commentRoutes from "./routes/comment.js"
 
 const app = express()
 
@@ -22,7 +23,11 @@ async function startServer() {
   try {
     await sequelize.authenticate()
     console.log("Database connected.")
-    await sequelize.sync()
+
+    // Sincroniza los modelos con la base de datos
+    await sequelize.sync({ force: true }) // CUIDADO: 'force: true' eliminará las tablas existentes
+    console.log("Database synchronized.")
+
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
   } catch (error) {
     console.error("Unable to start the server:", error)
