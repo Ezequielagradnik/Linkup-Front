@@ -1,7 +1,8 @@
-const { Sequelize } = require("sequelize")
-const UserModel = require("./user")
-const BlogModel = require("./blog")
-const CommentModel = require("./comment")
+import Sequelize from "sequelize"
+import UserModel from "./user.js"
+import BlogModel from "./blog.js"
+import CommentModel from "./comment.js"
+
 
 const sequelize = new Sequelize(process.env.DATABASE_URL || "postgres://user:password@localhost:5432/linkup_db", {
   dialect: "postgres",

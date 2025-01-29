@@ -1,6 +1,6 @@
-const express = require("express")
-const { User } = require("../models")
-const authenticateToken = require("../middleware/auth")
+import express from "express"
+import { User } from "../models/index.js"
+import authenticateToken from "../middleware/auth.js"
 
 const router = express.Router()
 
