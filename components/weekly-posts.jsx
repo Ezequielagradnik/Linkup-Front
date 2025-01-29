@@ -2,17 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Share2, MessageCircle, TrendingUp } from "lucide-react"
+import { TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { useAuth } from "@/contexts/AuthContext"
 
 export function WeeklyPosts({ language }) {
   const [posts, setPosts] = useState([])
-  const [comments, setComments] = useState({})
-  const [newComments, setNewComments] = useState({})
-  const { user } = useAuth()
 
   const content = {
     en: {
@@ -20,18 +15,12 @@ export function WeeklyPosts({ language }) {
       description: "Latest insights and strategies for startup success",
       readMore: "Read more in our blog",
       joinCommunity: "Join our community",
-      commentPlaceholder: "Write a comment...",
-      postComment: "Post",
-      loginToComment: "Login to comment",
     },
     es: {
       title: "Posts Semanales",
       description: "Últimos insights y estrategias para el éxito de startups",
       readMore: "Leer más en nuestro blog",
       joinCommunity: "Únete a nuestra comunidad",
-      commentPlaceholder: "Escribe un comentario...",
-      postComment: "Publicar",
-      loginToComment: "Inicia sesión para comentar",
     },
   }
 
@@ -47,10 +36,8 @@ export function WeeklyPosts({ language }) {
       if (!response.ok) throw new Error("Failed to fetch posts")
       const data = await response.json()
       setPosts(data)
-      data.forEach((post) => fetchComments(post.id))
     } catch (error) {
       console.error("Error fetching posts:", error)
-      // Set some default posts if the API fails
       setPosts([
         {
           id: 1,
@@ -65,39 +52,6 @@ export function WeeklyPosts({ language }) {
           createdAt: new Date().toISOString(),
         },
       ])
-    }
-  }
-
-  const fetchComments = async (blogId) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/comments/blog/${blogId}`)
-      if (!response.ok) throw new Error("Failed to fetch comments")
-      const data = await response.json()
-      setComments((prev) => ({ ...prev, [blogId]: data }))
-    } catch (error) {
-      console.error("Error fetching comments:", error)
-    }
-  }
-
-  const handleCommentSubmit = async (blogId) => {
-    if (!user) return
-    try {
-      const response = await fetch("http://localhost:5000/api/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ content: newComments[blogId], blogId }),
-      })
-      const data = await response.json()
-      setComments((prev) => ({
-        ...prev,
-        [blogId]: [data, ...(prev[blogId] || [])],
-      }))
-      setNewComments((prev) => ({ ...prev, [blogId]: "" }))
-    } catch (error) {
-      console.error("Error posting comment:", error)
     }
   }
 
@@ -120,45 +74,9 @@ export function WeeklyPosts({ language }) {
                 <p className="text-gray-600">{post.content.substring(0, 150)}...</p>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between mt-6">
-                    <div className="flex items-center gap-4">
-                      <Button variant="ghost" size="sm" className="flex items-center gap-2 rounded-full">
-                        <MessageCircle className="h-4 w-4" />
-                        <span>Comment</span>
-                      </Button>
-                      <Button variant="ghost" size="sm" className="flex items-center gap-2 rounded-full">
-                        <Share2 className="h-4 w-4" />
-                        <span>Share</span>
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    {user ? (
-                      <div className="flex gap-2">
-                        <Input
-                          placeholder={t.commentPlaceholder}
-                          value={newComments[post.id] || ""}
-                          onChange={(e) => setNewComments((prev) => ({ ...prev, [post.id]: e.target.value }))}
-                          className="rounded-full"
-                        />
-                        <Button onClick={() => handleCommentSubmit(post.id)} className="rounded-full">
-                          {t.postComment}
-                        </Button>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-500">{t.loginToComment}</p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    {comments[post.id]?.map((comment) => (
-                      <div key={comment.id} className="bg-gray-50 p-2 rounded-full">
-                        <p className="text-sm font-semibold">{comment.User?.username}</p>
-                        <p className="text-sm">{comment.content}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <Link href="/blog-podcast" className="text-secondary-600 hover:text-secondary-700 font-medium">
+                  Read more →
+                </Link>
               </CardContent>
             </Card>
           ))}

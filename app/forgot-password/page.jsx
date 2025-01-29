@@ -19,7 +19,7 @@ export default function ForgotPassword() {
       title: "Forgot Password",
       description: "Enter your email address and we'll send you a link to reset your password.",
       emailLabel: "Email",
-      emailPlaceholder: "Enter your email",
+      emailPlaceholder: "name@company.com",
       resetButton: "Send Reset Link",
       sending: "Sending...",
       backToLogin: "Back to login",
@@ -29,7 +29,7 @@ export default function ForgotPassword() {
       title: "Olvidaste tu Contraseña",
       description: "Ingresa tu dirección de email y te enviaremos un link para restablecer tu contraseña.",
       emailLabel: "Email",
-      emailPlaceholder: "Ingresa tu email",
+      emailPlaceholder: "nombre@empresa.com",
       resetButton: "Enviar Link de Restablecimiento",
       sending: "Enviando...",
       backToLogin: "Volver al inicio de sesión",
@@ -68,7 +68,9 @@ export default function ForgotPassword() {
           {!submitted ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">{t.emailLabel}</Label>
+                <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
+                  {t.emailLabel}
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -76,18 +78,21 @@ export default function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-11 rounded-full"
+                  className="h-12 px-4 border-[2.5px] border-gray-300 rounded-lg focus:border-secondary-500 focus:ring-2 focus:ring-secondary-200 transition-all duration-200 hover:border-gray-400"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full h-11 bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300 rounded-full"
+                className="w-full h-12 mt-6 bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300 rounded-lg text-base font-semibold shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] border-2 border-secondary-500"
                 disabled={loading}
               >
                 {loading ? t.sending : t.resetButton}
               </Button>
-              <div className="text-center">
-                <Link href="/login" className="text-sm text-secondary-600 hover:text-secondary-700">
+              <div className="text-center mt-4">
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-secondary-600 hover:text-secondary-700 transition-colors"
+                >
                   {t.backToLogin}
                 </Link>
               </div>
@@ -95,7 +100,11 @@ export default function ForgotPassword() {
           ) : (
             <div className="text-center space-y-4">
               <p className="text-sm text-gray-600">{t.successMessage}</p>
-              <Button asChild variant="outline" className="rounded-full">
+              <Button
+                asChild
+                variant="outline"
+                className="mt-4 border-[2.5px] border-gray-300 hover:border-secondary-500 hover:bg-secondary-50 transition-all duration-200 rounded-lg h-12 w-full font-medium"
+              >
                 <Link href="/login">{t.backToLogin}</Link>
               </Button>
             </div>

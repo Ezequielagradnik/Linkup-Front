@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import Link from "next/link"
-import Image from "next/image"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -24,28 +23,24 @@ export default function Login() {
       title: "Welcome back",
       description: "Enter your email and password to access your account",
       emailLabel: "Email",
-      emailPlaceholder: "Enter your email",
+      emailPlaceholder: "name@company.com",
       passwordLabel: "Password",
-      passwordPlaceholder: "Enter your password",
+      passwordPlaceholder: "••••••••",
       forgotPassword: "Forgot password?",
       signIn: "Sign in",
       signingIn: "Signing in...",
-      noAccount: "Don't have an account?",
-      createAccount: "Create an account",
       loginFailed: "Login failed. Please check your credentials.",
     },
     es: {
       title: "Bienvenido de nuevo",
       description: "Ingresa tu email y contraseña para acceder a tu cuenta",
       emailLabel: "Email",
-      emailPlaceholder: "Ingresa tu email",
+      emailPlaceholder: "nombre@empresa.com",
       passwordLabel: "Contraseña",
-      passwordPlaceholder: "Ingresa tu contraseña",
+      passwordPlaceholder: "••••••••",
       forgotPassword: "¿Olvidaste tu contraseña?",
       signIn: "Iniciar sesión",
       signingIn: "Iniciando sesión...",
-      noAccount: "¿No tienes una cuenta?",
-      createAccount: "Crear una cuenta",
       loginFailed: "Error al iniciar sesión. Por favor verifica tus credenciales.",
     },
   }
@@ -86,7 +81,9 @@ export default function Login() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">{t.emailLabel}</Label>
+              <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
+                {t.emailLabel}
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -94,13 +91,18 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-11 rounded-full"
+                className="h-12 px-4 border-[2.5px] border-gray-300 rounded-lg focus:border-secondary-500 focus:ring-2 focus:ring-secondary-200 transition-all duration-200 hover:border-gray-400"
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">{t.passwordLabel}</Label>
-                <Link href="/forgot-password" className="text-sm text-secondary-600 hover:text-secondary-700">
+                <Label htmlFor="password" className="text-sm font-semibold text-gray-700">
+                  {t.passwordLabel}
+                </Label>
+                <Link
+                  href="/forgot-password"
+                  className="text-sm font-medium text-secondary-600 hover:text-secondary-700 transition-colors"
+                >
                   {t.forgotPassword}
                 </Link>
               </div>
@@ -111,24 +113,16 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-11 rounded-full"
+                className="h-12 px-4 border-[2.5px] border-gray-300 rounded-lg focus:border-secondary-500 focus:ring-2 focus:ring-secondary-200 transition-all duration-200 hover:border-gray-400"
               />
             </div>
             <Button
               type="submit"
-              className="w-full h-11 bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300 rounded-full"
+              className="w-full h-12 mt-6 bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300 rounded-lg text-base font-semibold shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] border-2 border-secondary-500"
               disabled={loading}
             >
               {loading ? t.signingIn : t.signIn}
             </Button>
-            <div className="text-center space-y-2">
-              <p className="text-sm text-gray-600">
-                {t.noAccount}{" "}
-                <Link href="/register" className="text-secondary-600 hover:text-secondary-700 font-medium">
-                  {t.createAccount}
-                </Link>
-              </p>
-            </div>
           </form>
         </CardContent>
       </Card>

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -19,8 +19,8 @@ export default function ApplyNow() {
   const content = {
     en: {
       title: "Join LinkUp",
-      subtitle: "Complete the application below to start your startup journey",
-      steps: ["Personal Information", "Startup Details", "Your Goals"],
+      subtitle: "Complete the application to start your startup journey",
+      steps: ["Personal Information", "Startup Details", "Account Setup"],
       form: {
         firstName: "First Name",
         lastName: "Last Name",
@@ -49,6 +49,8 @@ export default function ApplyNow() {
         },
         description: "Describe Your Startup",
         goals: "What are your goals with LinkUp?",
+        password: "Password",
+        confirmPassword: "Confirm Password",
       },
       buttons: {
         back: "Back",
@@ -58,8 +60,8 @@ export default function ApplyNow() {
     },
     es: {
       title: "Únete a LinkUp",
-      subtitle: "Completa la solicitud a continuación para comenzar tu viaje de startup",
-      steps: ["Información Personal", "Detalles de la Startup", "Tus Objetivos"],
+      subtitle: "Completa la solicitud para comenzar tu viaje de startup",
+      steps: ["Información Personal", "Detalles de la Startup", "Configuración de Cuenta"],
       form: {
         firstName: "Nombre",
         lastName: "Apellido",
@@ -88,6 +90,8 @@ export default function ApplyNow() {
         },
         description: "Describe tu Startup",
         goals: "¿Cuáles son tus objetivos con LinkUp?",
+        password: "Contraseña",
+        confirmPassword: "Confirmar Contraseña",
       },
       buttons: {
         back: "Atrás",
@@ -240,6 +244,24 @@ export default function ApplyNow() {
                   <Textarea
                     placeholder={t.form.goals}
                     className="min-h-[100px] rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">{t.form.password}</Label>
+                  <Input
+                    type="password"
+                    placeholder={t.form.password}
+                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">{t.form.confirmPassword}</Label>
+                  <Input
+                    type="password"
+                    placeholder={t.form.confirmPassword}
+                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
                   />
                 </div>
               </div>

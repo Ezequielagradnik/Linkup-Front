@@ -1,6 +1,8 @@
-import { Check } from "lucide-react"
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Check } from "lucide-react"
 import Link from "next/link"
 
 export function Pricing({ language }) {
@@ -47,15 +49,20 @@ export function Pricing({ language }) {
         },
       ],
       cta: "Start Now",
+      enterprise: {
+        title: "Need a customized plan?",
+        description: "Contact us to create a plan that perfectly fits your startup's specific needs.",
+        button: "Contact Sales Team",
+      },
     },
     es: {
       title: "Planes diseñados para tu éxito",
-      description: "Elige el plan que mejor se adapte a tus necesidades y comienza tu journey hacia el éxito",
+      description: "Elige el plan que mejor se adapte a tus necesidades y alcanza el éxito con nosotros",
       plans: [
         {
           name: "Plan Básico",
           price: "349",
-          description: "Perfecto para empezar tu journey como founder",
+          description: "Perfecto para iniciar tu desarrollo empresarial",
           features: [
             "Escuela de Startups",
             "Mentor IA 24/7",
@@ -67,7 +74,7 @@ export function Pricing({ language }) {
         {
           name: "Plan Intermedio",
           price: "499",
-          description: "El plan más popular para founders comprometidos",
+          description: "El plan más popular para emprendedores comprometidos",
           features: [
             "Todo lo del plan Básico",
             "Acceso a Vefy",
@@ -90,13 +97,28 @@ export function Pricing({ language }) {
         },
       ],
       cta: "Comenzar Ahora",
+      enterprise: {
+        title: "¿Necesitas un plan personalizado?",
+        description:
+          "Contáctanos para crear un plan que se ajuste perfectamente a las necesidades específicas de tu startup.",
+        button: "Contactar al equipo de ventas",
+      },
     },
   }
 
   const t = content[language]
 
+  const handleEnterpriseClick = () => {
+    const message = encodeURIComponent(
+      language === "en"
+        ? "Hello, I would like to inquire about the Enterprise Plan for my startup. Could you provide more information about customized solutions?"
+        : "Hola, me gustaría consultar sobre el Plan Enterprise para mi startup. ¿Podrían brindarme más información sobre soluciones personalizadas?",
+    )
+    window.open(`https://wa.me/5491131954757?text=${message}`, "_blank")
+  }
+
   return (
-    <section className="py-24">
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-primary-900 mb-4">{t.title}</h2>
@@ -140,6 +162,23 @@ export function Pricing({ language }) {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Enterprise Section with new design */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <div className="border-t border-gray-200 pt-16">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-primary-900 mb-4">{t.enterprise.title}</h2>
+              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">{t.enterprise.description}</p>
+              <Button
+                onClick={handleEnterpriseClick}
+                className="bg-secondary-500 hover:bg-secondary-600 text-white transition-all duration-300 
+                  px-8 py-3 text-lg rounded-xl shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)]"
+              >
+                {t.enterprise.button}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
