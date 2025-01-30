@@ -41,3 +41,59 @@ GET {{baseUrl}}/blogs
 ### Get latest blog post
 GET {{baseUrl}}/blogs/latest
 
+### Create a new comment on a blog post
+POST {{baseUrl}}/comments
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "content": "This is a great post!",
+  "blogId": "1"
+}
+
+
+### Get all comments for a specific blog post
+GET {{baseUrl}}/comments/blog/1
+
+### Delete a comment
+DELETE {{baseUrl}}/comments/1
+Authorization: Bearer {{authToken}}
+
+### Submit a new application
+# @name submitApplication
+POST {{baseUrl}}/applications
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@example.com",
+  "password": "securepassword123",
+  "linkedinProfile": "https://www.linkedin.com/in/johndoe",
+  "startupName": "TechInnovate",
+  "shortDescription": "AI-powered sustainability solutions",
+  "problemSolved": "We're addressing climate change through innovative AI technologies.",
+  "sector": "CleanTech",
+  "stage": "mvp",
+  "hasInvestment": false,
+  "seekingInvestment": true,
+  "hasCustomers": false,
+  "customersDetails": "",
+  "links": "https://techinnovate.com",
+  "founderContact": "John Doe, johndoe@techinnovate.com",
+  "whyJoinLinkUp": "We believe LinkUp can provide the mentorship and resources we need to scale our impact.",
+  "howHeardAboutLinkUp": "Through a recommendation from a fellow entrepreneur."
+}
+
+### Get all applications (Admin only)
+GET {{baseUrl}}/admin/applications
+Authorization: Bearer {{authToken}}
+
+### Update application status (Admin only)
+PUT {{baseUrl}}/admin/applications/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "status": "accepted"
+}

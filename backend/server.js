@@ -1,6 +1,11 @@
 import express from "express"
 import cors from "cors"
 import { config } from "dotenv"
+import dotenv from "dotenv"
+dotenv.config()
+
+console.log("Database URL:", process.env.DATABASE_URL) // Add this line for debugging
+
 config()
 
 import { sequelize } from "./models/index.js"
@@ -9,6 +14,7 @@ import blogRoutes from "./routes/blog.js"
 import userRoutes from "./routes/user.js"
 import commentRoutes from "./routes/comment.js"
 import applicationRoutes from "./routes/application.js"
+import adminRoutes from "./routes/admin.js"
 
 const app = express()
 
@@ -24,6 +30,7 @@ app.use("/api/blogs", blogRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/comments", commentRoutes)
 app.use("/api/applications", applicationRoutes)
+app.use("/api/admin", adminRoutes)
 
 const PORT = process.env.PORT || 5000
 
