@@ -20,7 +20,6 @@ export function Nav() {
     { name: language === "en" ? "About" : "Acerca de", path: "/about" },
     { name: language === "en" ? "Pricing" : "Precios", path: "/pricing" },
     { name: language === "en" ? "Contact" : "Contacto", path: "/contact" },
-    ...(user ? [] : [{ name: language === "en" ? "Login" : "Iniciar sesión", path: "/login" }]),
     ...(user?.isAdmin ? [{ name: language === "en" ? "Admin" : "Administrador", path: "/admin/dashboard" }] : []),
   ]
 
@@ -128,13 +127,16 @@ export function Nav() {
                       </Button>
                     </>
                   ) : (
-                    <Button
-                      asChild
-                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Link href="/apply">{language === "en" ? "Apply Now" : "Aplicar Ahora"}</Link>
-                    </Button>
+                    <>
+                      <MobileMenuItem href="/login">{language === "en" ? "Login" : "Iniciar sesión"}</MobileMenuItem>
+                      <Button
+                        asChild
+                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Link href="/apply">{language === "en" ? "Apply Now" : "Aplicar Ahora"}</Link>
+                      </Button>
+                    </>
                   )}
                 </div>
               </div>
