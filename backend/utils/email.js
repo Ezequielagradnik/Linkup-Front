@@ -1,15 +1,26 @@
 import nodemailer from "nodemailer"
 
-const transporter = nodemailer.createTransport({
+let transporter
 
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-})
+try {
+  transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  })
+  console.log("Nodemailer transporter created successfully")
+} catch (error) {
+  console.error("Error creating Nodemailer transporter:", error)
+}
 
 export async function sendApplicationEmail(to) {
+  if (!transporter) {
+    console.error("Nodemailer transporter not initialized")
+    return
+  }
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: "linkup.startups@gmail.com",

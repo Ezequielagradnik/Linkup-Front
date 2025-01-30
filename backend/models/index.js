@@ -3,30 +3,70 @@ import UserModel from "./user.js"
 import BlogModel from "./blog.js"
 import CommentModel from "./comment.js"
 import ApplicationModel from "./application.js"
+import dotenv from "dotenv"
 
-const sequelize = process.env.DATABASE_URL
-  ? new Sequelize(process.env.DATABASE_URL, {
-      dialect: "postgres",
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
+let sequelize
+
+console.log("DATABASE_URL:", process.env.DATABASE_URL)
+console.log("DB_HOST:", process.env.DB_HOST)
+console.log("DB_PORT:", process.env.DB_PORT)
+console.log("DB_NAME:", process.env.DB_NAME)
+console.log("DB_USER:", process.env.DB_USER)
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD ? "[REDACTED]" : "undefined")
+
+if (process.env.DATABASE_URL) {
+  console.log("Initializing Sequelize with DATABASE_URL")
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
       },
-      logging: process.env.NODE_ENV === "development" ? console.log : false,
-    })
-  : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      dialect: "postgres",
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
+    },
+    logging: (msg) => console.log("Sequelize log:", msg),
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+  })
+} else {
+  console.error(
+    "DATABASE_URL is not defined in the environment variables. Attempting to use individual connection parameters.",
+  )
+
+  if (
+    !process.env.DB_NAME ||
+    !process.env.DB_USER ||
+    !process.env.DB_PASSWORD ||
+    !process.env.DB_HOST ||
+    !process.env.DB_PORT
+  ) {
+    console.error("Missing required database connection parameters.")
+    process.exit(1)
+  }
+
+  sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
       },
-      logging: process.env.NODE_ENV === "development" ? console.log : false,
-    })
+    },
+    logging: (msg) => console.log("Sequelize log:", msg),
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+  })
+}
 
 const User = UserModel(sequelize, Sequelize)
 const Blog = BlogModel(sequelize, Sequelize)

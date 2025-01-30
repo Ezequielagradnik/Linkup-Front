@@ -12,7 +12,7 @@ export function Hero({ language }) {
       stats: [
         { number: "24/7", label: "AI Mentor Support" },
         { number: "100%", label: "Dedication" },
-        { number: "+10", label: "Experts" },
+        { number: "1st", label: "Edition" },
         { number: "Global", label: "Community" },
       ],
     },
@@ -25,7 +25,7 @@ export function Hero({ language }) {
       stats: [
         { number: "24/7", label: "Soporte IA" },
         { number: "100%", label: "Dedicación" },
-        { number: "10+", label: "Mentores Expertos" },
+        { number: "1ra", label: "Edicion" },
         { number: "Global", label: "Comunidad" },
       ],
     },
