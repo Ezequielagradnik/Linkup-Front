@@ -10,35 +10,23 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
+    const isAdmin = localStorage.getItem("isAdmin")
     if (token) {
-      fetchUserProfile(token)
-    } else {
-      setLoading(false)
+      setUser({ token, isAdmin: isAdmin === "true" })
     }
+    setLoading(false)
   }, [])
-
-  const fetchUserProfile = async (token) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/users/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      if (response.ok) {
-        const userData = await response.json()
-        setUser(userData)
-      } else {
-        localStorage.removeItem("token")
-      }
-    } catch (error) {
-      console.error("Error fetching user profile:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const login = async (email, password) => {
     try {
+      if (email === "linkup.startups@gmail.com" && password === "cotur2025") {
+        // Admin login
+        setUser({ email, isAdmin: true })
+        localStorage.setItem("token", "admin_token")
+        localStorage.setItem("isAdmin", "true")
+        return true
+      }
+
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
@@ -49,11 +37,8 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json()
         localStorage.setItem("token", data.token)
-        await fetchUserProfile(data.token)
-        // Check if the user is an admin
-        if (email === "linkup.startups@gmail.com") {
-          setUser((prevUser) => ({ ...prevUser, isAdmin: true }))
-        }
+        localStorage.setItem("isAdmin", "false")
+        setUser({ email, isAdmin: false })
         return true
       }
       return false
@@ -63,31 +48,13 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const register = async (username, email, password) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      })
-      if (response.ok) {
-        return true
-      }
-      return false
-    } catch (error) {
-      console.error("Error registering:", error)
-      return false
-    }
-  }
-
   const logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("isAdmin")
     setUser(null)
   }
 
-  return <AuthContext.Provider value={{ user, loading, login, register, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => useContext(AuthContext)

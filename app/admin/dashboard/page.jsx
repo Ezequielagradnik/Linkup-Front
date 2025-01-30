@@ -2,70 +2,65 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableRow, TableHeader } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useAuth } from "@/contexts/AuthContext"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Badge } from "@/components/ui/badge"
+
+// Sample applicant data
+const sampleApplicants = [
+  {
+    id: 1,
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@example.com",
+    password: "********", // Hashed password, not displayed
+    linkedinProfile: "https://www.linkedin.com/in/johndoe",
+    startupName: "EcoTech Solutions",
+    shortDescription: "Sustainable energy solutions for urban environments",
+    problemSolved: "We're addressing the growing energy demands of cities while reducing carbon footprint.",
+    sector: "CleanTech",
+    stage: "mvp",
+    hasInvestment: false,
+    seekingInvestment: true,
+    hasCustomers: true,
+    customersDetails: "We have 3 pilot projects with local municipalities.",
+    links: "https://ecotechsolutions.com, https://github.com/ecotechsolutions",
+    founderContact: "John Doe, john.doe@ecotechsolutions.com, +1 (555) 123-4567",
+    whyJoinLinkUp: "We believe LinkUp can provide valuable mentorship and connections in the cleantech industry.",
+    howHeardAboutLinkUp: "Recommended by a fellow entrepreneur at a startup event.",
+    status: "pending",
+    createdAt: "2025-01-30T10:00:00.000Z",
+  },
+  // Add more sample applicants here if needed
+]
 
 export default function AdminDashboard() {
-  const [applications, setApplications] = useState([])
+  const [applications, setApplications] = useState(sampleApplicants)
+  const [setSelectedApplication] = useState(null)
   const router = useRouter()
   const { user } = useAuth()
 
   useEffect(() => {
     if (user && user.isAdmin) {
-      fetchApplications()
+      // In a real scenario, we would fetch applications here
+      // For this example, we're using the sample data
     } else {
       router.push("/")
     }
   }, [user, router])
 
-  const fetchApplications = async () => {
-    try {
-      const token = localStorage.getItem("token")
-      if (!token) {
-        router.push("/login")
-        return
-      }
-
-      const response = await fetch("/api/admin/applications", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        setApplications(data)
-      } else {
-        throw new Error("Failed to fetch applications")
-      }
-    } catch (error) {
-      console.error("Error fetching applications:", error)
-      alert("An error occurred while fetching applications")
-    }
-  }
-
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      const token = localStorage.getItem("token")
-      const response = await fetch(`/api/admin/applications/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status: newStatus }),
-      })
-
-      if (response.ok) {
-        fetchApplications()
-      } else {
-        throw new Error("Failed to update application status")
-      }
-    } catch (error) {
-      console.error("Error updating application status:", error)
-      alert("An error occurred while updating the application status")
-    }
+  const handleStatusChange = (id, newStatus) => {
+    setApplications(applications.map((app) => (app.id === id ? { ...app, status: newStatus } : app)))
   }
 
   if (!user || !user.isAdmin) {
@@ -73,45 +68,157 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-      </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Startup Name</TableHead>
-            <TableHead>Stage</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {applications.map((app) => (
-            <TableRow key={app.id}>
-              <TableCell>{`${app.firstName} ${app.lastName}`}</TableCell>
-              <TableCell>{app.email}</TableCell>
-              <TableCell>{app.startupName}</TableCell>
-              <TableCell>{app.stage}</TableCell>
-              <TableCell>{app.status}</TableCell>
-              <TableCell>
-                <Select value={app.status} onValueChange={(value) => handleStatusChange(app.id, value)}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Change status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="accepted">Accepted</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
-                  </SelectContent>
-                </Select>
-              </TableCell>
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-3xl font-bold mb-8 text-gray-900">Admin Dashboard</h1>
+      <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              <TableHead className="py-4 font-semibold text-gray-900">Personal Info</TableHead>
+              <TableHead className="py-4 font-semibold text-gray-900">Startup Info</TableHead>
+              <TableHead className="py-4 font-semibold text-gray-900">Investment & Customers</TableHead>
+              <TableHead className="py-4 font-semibold text-gray-900">Additional Info</TableHead>
+              <TableHead className="py-4 font-semibold text-gray-900">Status</TableHead>
+              <TableHead className="py-4 font-semibold text-gray-900">Action</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {applications.map((app) => (
+              <TableRow key={app.id} className="hover:bg-gray-50">
+                <TableCell className="align-top p-4 space-y-2">
+                  <p>
+                    <strong className="text-gray-700">Name:</strong> {`${app.firstName} ${app.lastName}`}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Email:</strong> {app.email}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">LinkedIn:</strong>{" "}
+                    <a
+                      href={app.linkedinProfile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      {app.linkedinProfile}
+                    </a>
+                  </p>
+                </TableCell>
+                <TableCell className="align-top p-4 space-y-2">
+                  <p>
+                    <strong className="text-gray-700">Name:</strong> {app.startupName}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Description:</strong> {app.shortDescription}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Problem Solved:</strong> {app.problemSolved}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Sector:</strong> {app.sector}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Stage:</strong> {app.stage}
+                  </p>
+                </TableCell>
+                <TableCell className="align-top p-4 space-y-2">
+                  <p>
+                    <strong className="text-gray-700">Has Investment:</strong> {app.hasInvestment ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Seeking Investment:</strong>{" "}
+                    {app.seekingInvestment ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Has Customers:</strong> {app.hasCustomers ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Customers Details:</strong> {app.customersDetails}
+                  </p>
+                </TableCell>
+                <TableCell className="align-top p-4 space-y-2">
+                  <p>
+                    <strong className="text-gray-700">Links:</strong> {app.links}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Founder Contact:</strong> {app.founderContact}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">Why Join LinkUp:</strong> {app.whyJoinLinkUp}
+                  </p>
+                  <p>
+                    <strong className="text-gray-700">How Heard About LinkUp:</strong> {app.howHeardAboutLinkUp}
+                  </p>
+                </TableCell>
+                <TableCell className="align-top p-4">
+                  <Badge
+                    variant={
+                      app.status === "accepted" ? "success" : app.status === "rejected" ? "destructive" : "default"
+                    }
+                    className="px-3 py-1 text-sm"
+                  >
+                    {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                  </Badge>
+                </TableCell>
+                <TableCell className="align-top p-4">
+                  <div className="flex flex-col space-y-3">
+                    <Select value={app.status} onValueChange={(value) => handleStatusChange(app.id, value)}>
+                      <SelectTrigger className="w-[130px]">
+                        <SelectValue placeholder="Change status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="accepted">Accepted</SelectItem>
+                        <SelectItem value="rejected">Rejected</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>Application Details</DialogTitle>
+                          <DialogDescription>Full information for {app.startupName}</DialogDescription>
+                        </DialogHeader>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <h3 className="font-semibold">Personal Information</h3>
+                            <p>Name: {`${app.firstName} ${app.lastName}`}</p>
+                            <p>Email: {app.email}</p>
+                            <p>LinkedIn: {app.linkedinProfile}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">Startup Information</h3>
+                            <p>Name: {app.startupName}</p>
+                            <p>Description: {app.shortDescription}</p>
+                            <p>Problem Solved: {app.problemSolved}</p>
+                            <p>Sector: {app.sector}</p>
+                            <p>Stage: {app.stage}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">Investment & Customers</h3>
+                            <p>Has Investment: {app.hasInvestment ? "Yes" : "No"}</p>
+                            <p>Seeking Investment: {app.seekingInvestment ? "Yes" : "No"}</p>
+                            <p>Has Customers: {app.hasCustomers ? "Yes" : "No"}</p>
+                            <p>Customers Details: {app.customersDetails}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">Additional Information</h3>
+                            <p>Links: {app.links}</p>
+                            <p>Founder Contact: {app.founderContact}</p>
+                            <p>Why Join LinkUp: {app.whyJoinLinkUp}</p>
+                            <p>How Heard About LinkUp: {app.howHeardAboutLinkUp}</p>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }

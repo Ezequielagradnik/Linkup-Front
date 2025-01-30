@@ -53,7 +53,11 @@ export default function Login() {
     try {
       const success = await login(email, password)
       if (success) {
-        router.push("/")
+        if (email === "linkup.startups@gmail.com") {
+          router.push("/admin/dashboard")
+        } else {
+          router.push("/")
+        }
       } else {
         alert(t.loginFailed)
       }

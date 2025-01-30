@@ -62,7 +62,6 @@ export function Nav() {
           ))}
           {user ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium text-primary-900">Welcome, {user.username}</span>
               <Button onClick={logout} variant="ghost" className="hover:bg-secondary-50 rounded-full">
                 {language === "en" ? "Logout" : "Cerrar sesión"}
               </Button>
@@ -114,7 +113,6 @@ export function Nav() {
                   ))}
                   {user ? (
                     <>
-                      <span className="text-sm font-medium text-primary-900">Welcome, {user.username}</span>
                       <Button
                         onClick={() => {
                           logout()
