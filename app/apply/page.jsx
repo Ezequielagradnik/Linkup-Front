@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 
@@ -15,42 +15,63 @@ export default function ApplyNow() {
   const [step, setStep] = useState(1)
   const totalSteps = 3
   const { language } = useLanguage()
+  const router = useRouter()
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    linkedinProfile: "",
+    startupName: "",
+    shortDescription: "",
+    problemSolved: "",
+    sector: "",
+    stage: "",
+    hasInvestment: "",
+    seekingInvestment: "",
+    hasCustomers: "",
+    customersDetails: "",
+    links: "",
+    founderContact: "",
+    whyJoinLinkUp: "",
+    howHeardAboutLinkUp: "",
+  })
 
   const content = {
     en: {
       title: "Join LinkUp",
       subtitle: "Complete the application to start your startup journey",
-      steps: ["Personal Information", "Startup Details", "Account Setup"],
+      steps: ["Personal Information", "Startup Details", "Additional Information"],
       form: {
         firstName: "First Name",
         lastName: "Last Name",
         email: "Email",
-        linkedin: "LinkedIn Profile",
-        companyName: "Company/Startup Name",
+        password: "Password",
+        confirmPassword: "Confirm Password",
+        linkedinProfile: "LinkedIn Profile",
+        startupName: "Startup Name",
+        shortDescription: "Brief one-line description",
+        problemSolved: "Problem you're solving",
+        sector: "Sector",
         stage: {
-          label: "Stage of Your Startup",
+          label: "Current stage of your startup",
           options: [
-            { value: "idea", label: "Idea Stage" },
+            { value: "idea", label: "Idea" },
             { value: "mvp", label: "MVP" },
-            { value: "market", label: "In Market" },
+            { value: "market", label: "Product in Market" },
             { value: "scaling", label: "Scaling" },
           ],
         },
-        industry: {
-          label: "Industry",
-          placeholder: "Select industry",
-          options: [
-            { value: "tech", label: "Technology" },
-            { value: "health", label: "Healthcare" },
-            { value: "finance", label: "Fintech" },
-            { value: "edu", label: "Education" },
-            { value: "other", label: "Other" },
-          ],
-        },
-        description: "Describe Your Startup",
-        goals: "What are your goals with LinkUp?",
-        password: "Password",
-        confirmPassword: "Confirm Password",
+        hasInvestment: "Have you received investment?",
+        seekingInvestment: "Are you currently seeking investment?",
+        hasCustomers: "Do you have customers?",
+        customersDetails: "How many and in which markets?",
+        links: "Link to pitch deck, website, or social media (optional)",
+        founderContact: "Founder name(s) and contact",
+        whyJoinLinkUp: "Why do you want to join LinkUp?",
+        howHeardAboutLinkUp: "How did you hear about LinkUp?",
       },
       buttons: {
         back: "Back",
@@ -61,37 +82,35 @@ export default function ApplyNow() {
     es: {
       title: "Únete a LinkUp",
       subtitle: "Completa la solicitud para comenzar tu viaje de startup",
-      steps: ["Información Personal", "Detalles de la Startup", "Configuración de Cuenta"],
+      steps: ["Información Personal", "Detalles de la Startup", "Información Adicional"],
       form: {
         firstName: "Nombre",
         lastName: "Apellido",
         email: "Correo Electrónico",
-        linkedin: "Perfil de LinkedIn",
-        companyName: "Nombre de la Empresa/Startup",
+        password: "Contraseña",
+        confirmPassword: "Confirmar Contraseña",
+        linkedinProfile: "Perfil de LinkedIn",
+        startupName: "Nombre de la Startup",
+        shortDescription: "Breve descripción en una línea",
+        problemSolved: "Problemática que resuelven",
+        sector: "Sector en el que opera",
         stage: {
-          label: "Etapa de tu Startup",
+          label: "Estado actual de la startup",
           options: [
-            { value: "idea", label: "Etapa de Idea" },
+            { value: "idea", label: "Idea" },
             { value: "mvp", label: "MVP" },
-            { value: "market", label: "En el Mercado" },
+            { value: "market", label: "Producto en mercado" },
             { value: "scaling", label: "Escalando" },
           ],
         },
-        industry: {
-          label: "Industria",
-          placeholder: "Selecciona la industria",
-          options: [
-            { value: "tech", label: "Tecnología" },
-            { value: "health", label: "Salud" },
-            { value: "finance", label: "Fintech" },
-            { value: "edu", label: "Educación" },
-            { value: "other", label: "Otra" },
-          ],
-        },
-        description: "Describe tu Startup",
-        goals: "¿Cuáles son tus objetivos con LinkUp?",
-        password: "Contraseña",
-        confirmPassword: "Confirmar Contraseña",
+        hasInvestment: "¿Han recibido inversión?",
+        seekingInvestment: "¿Buscan inversión actualmente?",
+        hasCustomers: "¿Tienen clientes?",
+        customersDetails: "¿Cuántos y en qué mercados?",
+        links: "Enlace a pitch deck, sitio web o redes sociales (opcional)",
+        founderContact: "Nombre y contacto de fundador/es",
+        whyJoinLinkUp: "¿Por qué quieres unirte a LinkUp?",
+        howHeardAboutLinkUp: "¿Cómo te enteraste de LinkUp?",
       },
       buttons: {
         back: "Atrás",
@@ -102,6 +121,37 @@ export default function ApplyNow() {
   }
 
   const t = content[language]
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelectChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch("/api/apply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        router.push("/application-submitted")
+      } else {
+        // Handle error
+        console.error("Application submission failed")
+      }
+    } catch (error) {
+      console.error("Error submitting application:", error)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white pt-20">
@@ -145,148 +195,300 @@ export default function ApplyNow() {
 
         <Card className="border-none shadow-lg rounded-2xl overflow-hidden">
           <CardContent className="p-8">
-            {step === 1 && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit}>
+              {step === 1 && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium text-gray-700">{t.form.firstName}</Label>
+                      <Input
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        placeholder={t.form.firstName}
+                        className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium text-gray-700">{t.form.lastName}</Label>
+                      <Input
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        placeholder={t.form.lastName}
+                        className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                        required
+                      />
+                    </div>
+                  </div>
+
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium text-gray-700">{t.form.firstName}</Label>
+                    <Label className="text-sm font-medium text-gray-700">{t.form.email}</Label>
                     <Input
-                      placeholder={t.form.firstName}
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder={t.form.email}
                       className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
                     />
                   </div>
+
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium text-gray-700">{t.form.lastName}</Label>
+                    <Label className="text-sm font-medium text-gray-700">{t.form.password}</Label>
                     <Input
-                      placeholder={t.form.lastName}
+                      name="password"
+                      type="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      placeholder={t.form.password}
                       className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.confirmPassword}</Label>
+                    <Input
+                      name="confirmPassword"
+                      type="password"
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
+                      placeholder={t.form.confirmPassword}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
                     />
                   </div>
                 </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.email}</Label>
-                  <Input
-                    type="email"
-                    placeholder={t.form.email}
-                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.linkedin}</Label>
-                  <Input
-                    type="url"
-                    placeholder={t.form.linkedin}
-                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.companyName}</Label>
-                  <Input
-                    placeholder={t.form.companyName}
-                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.stage.label}</Label>
-                  <RadioGroup className="grid grid-cols-2 gap-4">
-                    {t.form.stage.options.map((option) => (
-                      <div
-                        key={option.value}
-                        className="relative flex cursor-pointer rounded-xl border border-gray-200 p-4 hover:border-secondary-500 transition-all duration-300"
-                      >
-                        <RadioGroupItem value={option.value} id={option.value} className="text-secondary-500" />
-                        <Label htmlFor={option.value} className="ml-2 cursor-pointer font-medium text-gray-700">
-                          {option.label}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.industry.label}</Label>
-                  <Select>
-                    <SelectTrigger className="rounded-xl border-gray-200">
-                      <SelectValue placeholder={t.form.industry.placeholder} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {t.form.industry.options.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            )}
-
-            {step === 3 && (
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.description}</Label>
-                  <Textarea
-                    placeholder={t.form.description}
-                    className="min-h-[150px] rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.goals}</Label>
-                  <Textarea
-                    placeholder={t.form.goals}
-                    className="min-h-[100px] rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.password}</Label>
-                  <Input
-                    type="password"
-                    placeholder={t.form.password}
-                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">{t.form.confirmPassword}</Label>
-                  <Input
-                    type="password"
-                    placeholder={t.form.confirmPassword}
-                    className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className="flex gap-4 mt-8">
-              {step > 1 && (
-                <Button
-                  variant="outline"
-                  onClick={() => setStep(step - 1)}
-                  className="flex-1 rounded-xl border-2 border-gray-200 hover:border-secondary-500 hover:bg-secondary-50 text-lg font-medium"
-                >
-                  <ArrowLeft className="w-5 h-5 mr-2" />
-                  {t.buttons.back}
-                </Button>
               )}
 
-              <Button
-                onClick={() => (step < totalSteps ? setStep(step + 1) : null)}
-                className="flex-1 rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] text-lg font-medium"
-              >
-                {step === totalSteps ? t.buttons.submit : t.buttons.next}
-                {step < totalSteps && <ArrowRight className="w-5 h-5 ml-2" />}
-              </Button>
-            </div>
+              {step === 2 && (
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.linkedinProfile}</Label>
+                    <Input
+                      name="linkedinProfile"
+                      value={formData.linkedinProfile}
+                      onChange={handleInputChange}
+                      placeholder={t.form.linkedinProfile}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.startupName}</Label>
+                    <Input
+                      name="startupName"
+                      value={formData.startupName}
+                      onChange={handleInputChange}
+                      placeholder={t.form.startupName}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.shortDescription}</Label>
+                    <Input
+                      name="shortDescription"
+                      value={formData.shortDescription}
+                      onChange={handleInputChange}
+                      placeholder={t.form.shortDescription}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.problemSolved}</Label>
+                    <Textarea
+                      name="problemSolved"
+                      value={formData.problemSolved}
+                      onChange={handleInputChange}
+                      placeholder={t.form.problemSolved}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.sector}</Label>
+                    <Input
+                      name="sector"
+                      value={formData.sector}
+                      onChange={handleInputChange}
+                      placeholder={t.form.sector}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.stage.label}</Label>
+                    <Select name="stage" onValueChange={(value) => handleSelectChange("stage", value)} required>
+                      <SelectTrigger className="rounded-xl border-gray-200">
+                        <SelectValue placeholder={t.form.stage.label} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {t.form.stage.options.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.hasInvestment}</Label>
+                    <Select
+                      name="hasInvestment"
+                      onValueChange={(value) => handleSelectChange("hasInvestment", value)}
+                      required
+                    >
+                      <SelectTrigger className="rounded-xl border-gray-200">
+                        <SelectValue placeholder={t.form.hasInvestment} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">{language === "en" ? "Yes" : "Sí"}</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.seekingInvestment}</Label>
+                    <Select
+                      name="seekingInvestment"
+                      onValueChange={(value) => handleSelectChange("seekingInvestment", value)}
+                      required
+                    >
+                      <SelectTrigger className="rounded-xl border-gray-200">
+                        <SelectValue placeholder={t.form.seekingInvestment} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">{language === "en" ? "Yes" : "Sí"}</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.hasCustomers}</Label>
+                    <Select
+                      name="hasCustomers"
+                      onValueChange={(value) => handleSelectChange("hasCustomers", value)}
+                      required
+                    >
+                      <SelectTrigger className="rounded-xl border-gray-200">
+                        <SelectValue placeholder={t.form.hasCustomers} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">{language === "en" ? "Yes" : "Sí"}</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.customersDetails}</Label>
+                    <Input
+                      name="customersDetails"
+                      value={formData.customersDetails}
+                      onChange={handleInputChange}
+                      placeholder={t.form.customersDetails}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.links}</Label>
+                    <Input
+                      name="links"
+                      value={formData.links}
+                      onChange={handleInputChange}
+                      placeholder={t.form.links}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.founderContact}</Label>
+                    <Input
+                      name="founderContact"
+                      value={formData.founderContact}
+                      onChange={handleInputChange}
+                      placeholder={t.form.founderContact}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.whyJoinLinkUp}</Label>
+                    <Textarea
+                      name="whyJoinLinkUp"
+                      value={formData.whyJoinLinkUp}
+                      onChange={handleInputChange}
+                      placeholder={t.form.whyJoinLinkUp}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">{t.form.howHeardAboutLinkUp}</Label>
+                    <Input
+                      name="howHeardAboutLinkUp"
+                      value={formData.howHeardAboutLinkUp}
+                      onChange={handleInputChange}
+                      placeholder={t.form.howHeardAboutLinkUp}
+                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-4 mt-8">
+                {step > 1 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setStep(step - 1)}
+                    className="flex-1 rounded-xl border-2 border-gray-200 hover:border-secondary-500 hover:bg-secondary-50 text-lg font-medium"
+                  >
+                    <ArrowLeft className="w-5 h-5 mr-2" />
+                    {t.buttons.back}
+                  </Button>
+                )}
+
+                {step < totalSteps ? (
+                  <Button
+                    type="button"
+                    onClick={() => setStep(step + 1)}
+                    className="flex-1 rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] text-lg font-medium"
+                  >
+                    {t.buttons.next}
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    className="flex-1 rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] text-lg font-medium"
+                  >
+                    {t.buttons.submit}
+                  </Button>
+                )}
+              </div>
+            </form>
           </CardContent>
         </Card>
       </div>
