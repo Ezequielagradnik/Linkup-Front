@@ -16,51 +16,55 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 
-// Sample applicant data
-const sampleApplicants = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    password: "********", // Hashed password, not displayed
-    linkedinProfile: "https://www.linkedin.com/in/johndoe",
-    startupName: "EcoTech Solutions",
-    shortDescription: "Sustainable energy solutions for urban environments",
-    problemSolved: "We're addressing the growing energy demands of cities while reducing carbon footprint.",
-    sector: "CleanTech",
-    stage: "mvp",
-    hasInvestment: false,
-    seekingInvestment: true,
-    hasCustomers: true,
-    customersDetails: "We have 3 pilot projects with local municipalities.",
-    links: "https://ecotechsolutions.com, https://github.com/ecotechsolutions",
-    founderContact: "John Doe, john.doe@ecotechsolutions.com, +1 (555) 123-4567",
-    whyJoinLinkUp: "We believe LinkUp can provide valuable mentorship and connections in the cleantech industry.",
-    howHeardAboutLinkUp: "Recommended by a fellow entrepreneur at a startup event.",
-    status: "pending",
-    createdAt: "2025-01-30T10:00:00.000Z",
-  },
-  // Add more sample applicants here if needed
-]
-
 export default function AdminDashboard() {
-  const [applications, setApplications] = useState(sampleApplicants)
-  const [setSelectedApplication] = useState(null)
+  const [applications, setApplications] = useState([])
+  const [selectedApplication, setSelectedApplication] = useState(null)
   const router = useRouter()
   const { user } = useAuth()
 
   useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const token = localStorage.getItem("token")
+        const response = await fetch("/api/admin/applications", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        if (response.ok) {
+          const data = await response.json()
+          setApplications(data)
+        }
+      } catch (error) {
+        console.error("Error fetching applications:", error)
+      }
+    }
+
     if (user && user.isAdmin) {
-      // In a real scenario, we would fetch applications here
-      // For this example, we're using the sample data
+      fetchApplications()
     } else {
       router.push("/")
     }
   }, [user, router])
 
-  const handleStatusChange = (id, newStatus) => {
-    setApplications(applications.map((app) => (app.id === id ? { ...app, status: newStatus } : app)))
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const token = localStorage.getItem("token")
+      const response = await fetch(`/api/admin/applications/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: newStatus }),
+      })
+
+      if (response.ok) {
+        setApplications(applications.map((app) => (app.id === id ? { ...app, status: newStatus } : app)))
+      }
+    } catch (error) {
+      console.error("Error updating application status:", error)
+    }
   }
 
   if (!user || !user.isAdmin) {
@@ -174,6 +178,9 @@ export default function AdminDashboard() {
                     </Select>
                     <Dialog>
                       <DialogTrigger asChild>
+                        <Button variant="outline" onClick={() => setSelectedApplication(app)}>
+                          View Details
+                        </Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
                         <DialogHeader>
