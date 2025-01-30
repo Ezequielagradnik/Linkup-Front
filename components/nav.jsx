@@ -21,6 +21,7 @@ export function Nav() {
     { name: language === "en" ? "Pricing" : "Precios", path: "/pricing" },
     { name: language === "en" ? "Contact" : "Contacto", path: "/contact" },
     ...(user ? [] : [{ name: language === "en" ? "Login" : "Iniciar sesión", path: "/login" }]),
+    ...(user?.isAdmin ? [{ name: language === "en" ? "Admin" : "Administrador", path: "/admin/dashboard" }] : []),
   ]
 
   const MobileMenuItem = ({ href, children }) => (
@@ -51,7 +52,7 @@ export function Nav() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          {menuItems.slice(0, -1).map((item) => (
+          {menuItems.map((item) => (
             <Link
               key={item.path}
               href={item.path}

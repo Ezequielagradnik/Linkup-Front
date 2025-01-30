@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 
 const AuthContext = createContext()
 
@@ -50,6 +50,10 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json()
         localStorage.setItem("token", data.token)
         await fetchUserProfile(data.token)
+        // Check if the user is an admin
+        if (email === "linkup.startups@gmail.com") {
+          setUser((prevUser) => ({ ...prevUser, isAdmin: true }))
+        }
         return true
       }
       return false
