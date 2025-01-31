@@ -1,12 +1,18 @@
-const applicationModel = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     const Application = sequelize.define("Application", {
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -19,16 +25,25 @@ const applicationModel = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          len: [6, 100], // password length between 6 and 100 characters
+        },
       },
       linkedinProfile: {
         type: DataTypes.STRING,
+        validate: {
+          isUrl: true,
+        },
       },
       startupName: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       shortDescription: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500), // Limit to 500 characters
       },
       problemSolved: {
         type: DataTypes.TEXT,
@@ -71,7 +86,5 @@ const applicationModel = (sequelize, DataTypes) => {
   
     return Application
   }
-  
-export default applicationModel;
   
   

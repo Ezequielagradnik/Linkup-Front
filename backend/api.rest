@@ -67,7 +67,7 @@ Content-Type: application/json
 {
   "firstName": "John",
   "lastName": "Doe",
-  "email": "johndoe@example.com",
+  "email": "eagradnik@gmail.com",
   "password": "securepassword123",
   "linkedinProfile": "https://www.linkedin.com/in/johndoe",
   "startupName": "TechInnovate",
