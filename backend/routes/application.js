@@ -6,8 +6,8 @@ import { sendApplicationEmail } from "../utils/email.js"
 const router = express.Router()
 
 router.post("/", async (req, res) => {
-  try {  console.log("Received application data:", 
-    JSON.stringify(req.body, null, 2))
+  console.log("Received application data:", JSON.stringify(req.body, null, 2))
+  try {
     const applicationData = req.body
 
     // Hash the password
@@ -17,8 +17,10 @@ router.post("/", async (req, res) => {
     // Create the application
     const application = await Application.create(applicationData)
 
-    // Send confirmation email
-    await sendApplicationEmail(applicationData.email)
+    console.log("Saved application data:", JSON.stringify(application, null, 2))
+
+    // Send confirmation email with all application data
+    await sendApplicationEmail(application)
 
     res.status(201).json({ message: "Application submitted successfully", applicationId: application.id })
   } catch (error) {

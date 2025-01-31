@@ -25,18 +25,51 @@ try {
   console.error("Error creating Nodemailer transporter:", error)
 }
 
-export async function sendApplicationEmail(to) {
-  // Si no hay transporter, solo registra un mensaje y retorna
+export async function sendApplicationEmail(application) {
+  // If there's no transporter, just log a message and return
   if (!transporter) {
-    console.log("Email functionality is disabled. Would have sent email to:", to)
+    console.log("Email functionality is disabled. Would have sent email with application data:", application)
     return
   }
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: "linkup.startups@gmail.com",
+    to: process.env.ADMIN_EMAIL,
     subject: "New LinkUp Application Received",
-    text: `A new application has been received from ${to}. Please review it in the admin panel.`,
+    text: `
+A new application has been received from ${application.firstName} ${application.lastName}.
+
+Application Details:
+--------------------
+First Name: ${application.firstName}
+Last Name: ${application.lastName}
+Email: ${application.email}
+LinkedIn Profile: ${application.linkedinProfile || "Not provided"}
+
+Startup Information:
+--------------------
+Startup Name: ${application.startupName}
+Short Description: ${application.shortDescription || "Not provided"}
+Problem Solved: ${application.problemSolved || "Not provided"}
+Sector: ${application.sector || "Not provided"}
+Stage: ${application.stage || "Not provided"}
+
+Investment & Customers:
+-----------------------
+Has Investment: ${application.hasInvestment ? "Yes" : "No"}
+Seeking Investment: ${application.seekingInvestment ? "Yes" : "No"}
+Has Customers: ${application.hasCustomers ? "Yes" : "No"}
+Customers Details: ${application.customersDetails || "Not provided"}
+
+Additional Information:
+-----------------------
+Links: ${application.links || "Not provided"}
+Founder Contact: ${application.founderContact || "Not provided"}
+Why Join LinkUp: ${application.whyJoinLinkUp || "Not provided"}
+How Heard About LinkUp: ${application.howHeardAboutLinkUp || "Not provided"}
+
+Please review this application and take appropriate action.
+    `,
   }
 
   try {
@@ -45,7 +78,7 @@ export async function sendApplicationEmail(to) {
     return info
   } catch (error) {
     console.error("Error sending application email:", error)
-    // No lanzamos el error para que no afecte el flujo principal
+    // We don't throw the error to avoid affecting the main flow
   }
 }
 

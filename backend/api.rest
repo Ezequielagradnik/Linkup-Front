@@ -67,7 +67,7 @@ Content-Type: application/json
 {
   "firstName": "John",
   "lastName": "Doe",
-  "email": "eagradnik@gmail.com",
+  "email": "48113056@est.ort.edu.ar",
   "password": "securepassword123",
   "linkedinProfile": "https://www.linkedin.com/in/johndoe",
   "startupName": "TechInnovate",
