@@ -14,13 +14,15 @@ export function NewBlogNotification() {
   useEffect(() => {
     const checkForNewBlog = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/blogs/latest")
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/latest`)
         if (response.ok) {
           const latestBlog = await response.json()
           const lastVisit = localStorage.getItem("lastVisit")
           if (latestBlog && (!lastVisit || new Date(latestBlog.createdAt) > new Date(lastVisit))) {
             setShowNotification(true)
           }
+        } else {
+          console.error("Failed to fetch latest blog:", response.statusText)
         }
       } catch (error) {
         console.error("Error checking for new blog:", error)

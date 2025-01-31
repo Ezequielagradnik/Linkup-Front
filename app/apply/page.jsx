@@ -10,12 +10,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function ApplyNow() {
   const [step, setStep] = useState(1)
   const totalSteps = 3
   const { language } = useLanguage()
   const router = useRouter()
+  const { toast } = useToast()
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -78,6 +80,10 @@ export default function ApplyNow() {
         next: "Next Step",
         submit: "Submit Application",
       },
+      toast: {
+        success: "Application submitted successfully!",
+        error: "Error submitting application. Please try again.",
+      },
     },
     es: {
       title: "Únete a LinkUp",
@@ -117,6 +123,10 @@ export default function ApplyNow() {
         next: "Siguiente Paso",
         submit: "Enviar Solicitud",
       },
+      toast: {
+        success: "¡Solicitud enviada con éxito!",
+        error: "Error al enviar la solicitud. Por favor, intenta de nuevo.",
+      },
     },
   }
 
@@ -134,7 +144,7 @@ export default function ApplyNow() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch("/api/apply", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,13 +153,22 @@ export default function ApplyNow() {
       })
 
       if (response.ok) {
+        toast({
+          title: t.toast.success,
+          description: "We will review your application and get back to you soon.",
+        })
         router.push("/application-submitted")
       } else {
-        // Handle error
-        console.error("Application submission failed")
+        const errorData = await response.json()
+        throw new Error(errorData.message || "Failed to submit application")
       }
     } catch (error) {
       console.error("Error submitting application:", error)
+      toast({
+        title: t.toast.error,
+        description: error.message || "An unexpected error occurred",
+        variant: "destructive",
+      })
     }
   }
 

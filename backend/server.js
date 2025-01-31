@@ -34,19 +34,25 @@ import authRoutes from "./routes/auth.js"
 import blogRoutes from "./routes/blog.js"
 import userRoutes from "./routes/user.js"
 import commentRoutes from "./routes/comment.js"
-import applicationRoutes from "./routes/application.js"
+import applyRoutes from "./routes/apply.js"
 import adminRoutes from "./routes/admin.js"
 
 const app = express()
 
-app.use(cors())
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+)
 app.use(express.json())
 
 app.use("/api/auth", authRoutes)
 app.use("/api/blogs", blogRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/comments", commentRoutes)
-app.use("/api/applications", applicationRoutes)
+app.use("/api/apply", applyRoutes)
 app.use("/api/admin", adminRoutes)
 
 const PORT = process.env.PORT || 5000

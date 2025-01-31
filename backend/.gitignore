@@ -12,6 +12,7 @@
 
 # local dependencies
 .env
+.env.local
 
 
 # testing
