@@ -27,33 +27,23 @@ export function WeeklyPosts({ language }) {
   const t = content[language]
 
   useEffect(() => {
-    fetchPosts()
+    // Aquí puedes cargar los posts desde donde los estés manejando ahora
+    // Por ejemplo, podrías tenerlos en un archivo JSON o en el estado de la aplicación
+    setPosts([
+      {
+        id: 1,
+        title: "How to Validate Your Startup Idea",
+        content: "Learn the essential steps to validate your startup idea before investing time and resources...",
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 2,
+        title: "Securing Your First Investment",
+        content: "Discover the key strategies for attracting and securing your first startup investment...",
+        createdAt: new Date().toISOString(),
+      },
+    ])
   }, [])
-
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/blogs")
-      if (!response.ok) throw new Error("Failed to fetch posts")
-      const data = await response.json()
-      setPosts(data)
-    } catch (error) {
-      console.error("Error fetching posts:", error)
-      setPosts([
-        {
-          id: 1,
-          title: "How to Validate Your Startup Idea",
-          content: "Learn the essential steps to validate your startup idea before investing time and resources...",
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: 2,
-          title: "Securing Your First Investment",
-          content: "Discover the key strategies for attracting and securing your first startup investment...",
-          createdAt: new Date().toISOString(),
-        },
-      ])
-    }
-  }
 
   return (
     <section className="py-24 bg-gray-50">
@@ -86,7 +76,7 @@ export function WeeklyPosts({ language }) {
             <Link href="/blog-podcast">{t.readMore}</Link>
           </Button>
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700 rounded-full">
-            <Link href="/apply">{t.joinCommunity}</Link>
+            <Link href="/register">{t.joinCommunity}</Link>
           </Button>
         </div>
       </div>

@@ -842,17 +842,8 @@ function WeeklyPosts({ language }) {
     const t = content[language];
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "WeeklyPosts.useEffect": ()=>{
-            fetchPosts();
-        }
-    }["WeeklyPosts.useEffect"], []);
-    const fetchPosts = async ()=>{
-        try {
-            const response = await fetch("http://localhost:5000/api/blogs");
-            if (!response.ok) throw new Error("Failed to fetch posts");
-            const data = await response.json();
-            setPosts(data);
-        } catch (error) {
-            console.error("Error fetching posts:", error);
+            // Aquí puedes cargar los posts desde donde los estés manejando ahora
+            // Por ejemplo, podrías tenerlos en un archivo JSON o en el estado de la aplicación
             setPosts([
                 {
                     id: 1,
@@ -868,7 +859,7 @@ function WeeklyPosts({ language }) {
                 }
             ]);
         }
-    };
+    }["WeeklyPosts.useEffect"], []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "py-24 bg-gray-50",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -882,7 +873,7 @@ function WeeklyPosts({ language }) {
                             children: t.title
                         }, void 0, false, {
                             fileName: "[project]/components/weekly-posts.jsx",
-                            lineNumber: 62,
+                            lineNumber: 52,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -890,13 +881,13 @@ function WeeklyPosts({ language }) {
                             children: t.description
                         }, void 0, false, {
                             fileName: "[project]/components/weekly-posts.jsx",
-                            lineNumber: 63,
+                            lineNumber: 53,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/weekly-posts.jsx",
-                    lineNumber: 61,
+                    lineNumber: 51,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -914,20 +905,20 @@ function WeeklyPosts({ language }) {
                                                     children: new Date(post.createdAt).toLocaleDateString()
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/weekly-posts.jsx",
-                                                    lineNumber: 70,
+                                                    lineNumber: 60,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
                                                     className: "h-5 w-5 text-secondary-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/weekly-posts.jsx",
-                                                    lineNumber: 71,
+                                                    lineNumber: 61,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/weekly-posts.jsx",
-                                            lineNumber: 69,
+                                            lineNumber: 59,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
@@ -935,7 +926,7 @@ function WeeklyPosts({ language }) {
                                             children: post.title
                                         }, void 0, false, {
                                             fileName: "[project]/components/weekly-posts.jsx",
-                                            lineNumber: 73,
+                                            lineNumber: 63,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -946,13 +937,13 @@ function WeeklyPosts({ language }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/weekly-posts.jsx",
-                                            lineNumber: 74,
+                                            lineNumber: 64,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/weekly-posts.jsx",
-                                    lineNumber: 68,
+                                    lineNumber: 58,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -962,23 +953,23 @@ function WeeklyPosts({ language }) {
                                         children: "Read more →"
                                     }, void 0, false, {
                                         fileName: "[project]/components/weekly-posts.jsx",
-                                        lineNumber: 77,
+                                        lineNumber: 67,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/weekly-posts.jsx",
-                                    lineNumber: 76,
+                                    lineNumber: 66,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, post.id, true, {
                             fileName: "[project]/components/weekly-posts.jsx",
-                            lineNumber: 67,
+                            lineNumber: 57,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/weekly-posts.jsx",
-                    lineNumber: 65,
+                    lineNumber: 55,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -993,45 +984,45 @@ function WeeklyPosts({ language }) {
                                 children: t.readMore
                             }, void 0, false, {
                                 fileName: "[project]/components/weekly-posts.jsx",
-                                lineNumber: 86,
+                                lineNumber: 76,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/weekly-posts.jsx",
-                            lineNumber: 85,
+                            lineNumber: 75,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                             asChild: true,
                             className: "bg-blue-600 text-white hover:bg-blue-700 rounded-full",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/apply",
+                                href: "/register",
                                 children: t.joinCommunity
                             }, void 0, false, {
                                 fileName: "[project]/components/weekly-posts.jsx",
-                                lineNumber: 89,
+                                lineNumber: 79,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/weekly-posts.jsx",
-                            lineNumber: 88,
+                            lineNumber: 78,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/weekly-posts.jsx",
-                    lineNumber: 84,
+                    lineNumber: 74,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/weekly-posts.jsx",
-            lineNumber: 60,
+            lineNumber: 50,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/weekly-posts.jsx",
-        lineNumber: 59,
+        lineNumber: 49,
         columnNumber: 5
     }, this);
 }

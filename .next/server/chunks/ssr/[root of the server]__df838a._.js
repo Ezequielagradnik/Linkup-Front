@@ -806,24 +806,13 @@ function NewBlogNotification() {
     const { language } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useLanguage"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const checkForNewBlog = async ()=>{
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/latest`);
-                if (response.ok) {
-                    const latestBlog = await response.json();
-                    const lastVisit = localStorage.getItem("lastVisit");
-                    if (latestBlog && (!lastVisit || new Date(latestBlog.createdAt) > new Date(lastVisit))) {
-                        setShowNotification(true);
-                    }
-                } else {
-                    console.error("Failed to fetch latest blog:", response.statusText);
-                }
-            } catch (error) {
-                console.error("Error checking for new blog:", error);
-            }
-        };
-        checkForNewBlog();
-        localStorage.setItem("lastVisit", new Date().toISOString());
+        // Aquí puedes implementar la lógica para mostrar la notificación
+        // basada en los blogs que manejarás directamente en el frontend
+        // Por ahora, simplemente mostraremos la notificación después de un tiempo
+        const timer = setTimeout(()=>{
+            setShowNotification(true);
+        }, 5000);
+        return ()=>clearTimeout(timer);
     }, []);
     const handleNotificationClick = ()=>{
         setShowNotification(false);
@@ -837,14 +826,14 @@ function NewBlogNotification() {
                 className: "h-6 w-6"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 45,
+                lineNumber: 34,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                 children: language === "en" ? "New blog post available!" : "¡Nuevo post de blog disponible!"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 46,
+                lineNumber: 35,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -855,16 +844,16 @@ function NewBlogNotification() {
                 children: language === "en" ? "Read now" : "Leer ahora"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 47,
+                lineNumber: 36,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/NewBlogNotification.jsx",
-        lineNumber: 44,
+        lineNumber: 33,
         columnNumber: 5
     }, this);
-}
+} // Este componente se encargará de mostrar una notificación en la esquina inferior derecha
 }}),
 "[externals]/next/dist/server/app-render/after-task-async-storage.external.js [external] (next/dist/server/app-render/after-task-async-storage.external.js, cjs)": (function(__turbopack_context__) {
 

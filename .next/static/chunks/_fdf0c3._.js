@@ -845,7 +845,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/button.jsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/contexts/LanguageContext.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bell$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/bell.js [app-client] (ecmascript) <export default as Bell>");
 ;
 var _s = __turbopack_refresh__.signature();
@@ -862,26 +861,17 @@ function NewBlogNotification() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "NewBlogNotification.useEffect": ()=>{
-            const checkForNewBlog = {
-                "NewBlogNotification.useEffect.checkForNewBlog": async ()=>{
-                    try {
-                        const response = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/latest`);
-                        if (response.ok) {
-                            const latestBlog = await response.json();
-                            const lastVisit = localStorage.getItem("lastVisit");
-                            if (latestBlog && (!lastVisit || new Date(latestBlog.createdAt) > new Date(lastVisit))) {
-                                setShowNotification(true);
-                            }
-                        } else {
-                            console.error("Failed to fetch latest blog:", response.statusText);
-                        }
-                    } catch (error) {
-                        console.error("Error checking for new blog:", error);
-                    }
+            // Aquí puedes implementar la lógica para mostrar la notificación
+            // basada en los blogs que manejarás directamente en el frontend
+            // Por ahora, simplemente mostraremos la notificación después de un tiempo
+            const timer = setTimeout({
+                "NewBlogNotification.useEffect.timer": ()=>{
+                    setShowNotification(true);
                 }
-            }["NewBlogNotification.useEffect.checkForNewBlog"];
-            checkForNewBlog();
-            localStorage.setItem("lastVisit", new Date().toISOString());
+            }["NewBlogNotification.useEffect.timer"], 5000);
+            return ({
+                "NewBlogNotification.useEffect": ()=>clearTimeout(timer)
+            })["NewBlogNotification.useEffect"];
         }
     }["NewBlogNotification.useEffect"], []);
     const handleNotificationClick = ()=>{
@@ -896,14 +886,14 @@ function NewBlogNotification() {
                 className: "h-6 w-6"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 45,
+                lineNumber: 34,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                 children: language === "en" ? "New blog post available!" : "¡Nuevo post de blog disponible!"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 46,
+                lineNumber: 35,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -914,16 +904,16 @@ function NewBlogNotification() {
                 children: language === "en" ? "Read now" : "Leer ahora"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 47,
+                lineNumber: 36,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/NewBlogNotification.jsx",
-        lineNumber: 44,
+        lineNumber: 33,
         columnNumber: 5
     }, this);
-}
+} // Este componente se encargará de mostrar una notificación en la esquina inferior derecha
 _s(NewBlogNotification, "2te9r1Z4sOwQZFvXiNXbv0FJY2A=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLanguage"],

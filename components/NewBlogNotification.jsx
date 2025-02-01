@@ -12,25 +12,14 @@ export function NewBlogNotification() {
   const router = useRouter()
 
   useEffect(() => {
-    const checkForNewBlog = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/latest`)
-        if (response.ok) {
-          const latestBlog = await response.json()
-          const lastVisit = localStorage.getItem("lastVisit")
-          if (latestBlog && (!lastVisit || new Date(latestBlog.createdAt) > new Date(lastVisit))) {
-            setShowNotification(true)
-          }
-        } else {
-          console.error("Failed to fetch latest blog:", response.statusText)
-        }
-      } catch (error) {
-        console.error("Error checking for new blog:", error)
-      }
-    }
+    // Aquí puedes implementar la lógica para mostrar la notificación
+    // basada en los blogs que manejarás directamente en el frontend
+    // Por ahora, simplemente mostraremos la notificación después de un tiempo
+    const timer = setTimeout(() => {
+      setShowNotification(true)
+    }, 5000)
 
-    checkForNewBlog()
-    localStorage.setItem("lastVisit", new Date().toISOString())
+    return () => clearTimeout(timer)
   }, [])
 
   const handleNotificationClick = () => {
@@ -51,3 +40,4 @@ export function NewBlogNotification() {
   )
 }
 
+// Este componente se encargará de mostrar una notificación en la esquina inferior derecha
