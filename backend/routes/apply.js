@@ -5,6 +5,11 @@ import { sendApplicationEmail } from "../utils/email.js"
 
 const router = express.Router()
 
+// Añadimos una ruta GET para verificar que la ruta funciona
+router.get("/", (req, res) => {
+  res.status(200).json({ message: "Application route is working" })
+})
+
 router.post("/", async (req, res) => {
   console.log("Received application data:", JSON.stringify(req.body, null, 2))
   try {
@@ -16,8 +21,6 @@ router.post("/", async (req, res) => {
 
     // Create the application
     const application = await Application.create(applicationData)
-
-    console.log("Saved application data:", JSON.stringify(application, null, 2))
 
     // Send confirmation email with all application data
     await sendApplicationEmail(application)

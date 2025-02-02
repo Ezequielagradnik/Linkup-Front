@@ -4,7 +4,7 @@ export async function POST(req) {
   try {
     const applicationData = await req.json()
 
-    const response = await fetch(`${process.env.BACKEND_URL}/api/applications`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/apply`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export async function POST(req) {
     })
 
     if (!response.ok) {
-      throw new Error("Failed to submit application")
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
     const data = await response.json()

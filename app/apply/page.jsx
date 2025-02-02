@@ -143,16 +143,23 @@ export default function ApplyNow() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log("handleSubmit iniciado")
+    console.log("Datos del formulario:", formData)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/apply`, {
+      console.log("Intentando hacer fetch a:", `/api/apply`)
+      const response = await fetch(`/api/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       })
+      console.log("Respuesta recibida:", response)
+      console.log("Estado de la respuesta:", response.status)
 
       if (response.ok) {
+        const responseData = await response.json()
+        console.log("Datos de respuesta:", responseData)
         toast({
           title: t.toast.success,
           description: "We will review your application and get back to you soon.",
@@ -160,10 +167,11 @@ export default function ApplyNow() {
         router.push("/application-submitted")
       } else {
         const errorData = await response.json()
+        console.error("Error data:", errorData)
         throw new Error(errorData.message || "Failed to submit application")
       }
     } catch (error) {
-      console.error("Error submitting application:", error)
+      console.error("Error detallado:", error)
       toast({
         title: t.toast.error,
         description: error.message || "An unexpected error occurred",
@@ -424,6 +432,7 @@ export default function ApplyNow() {
                       onChange={handleInputChange}
                       placeholder={t.form.customersDetails}
                       className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
                     />
                   </div>
 
@@ -435,6 +444,7 @@ export default function ApplyNow() {
                       onChange={handleInputChange}
                       placeholder={t.form.links}
                       className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      required
                     />
                   </div>
 

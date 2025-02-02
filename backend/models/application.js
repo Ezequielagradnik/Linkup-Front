@@ -26,11 +26,12 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          len: [6, 100], // password length between 6 and 100 characters
+          len: [6, 100],
         },
       },
       linkedinProfile: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           isUrl: true,
         },
@@ -43,40 +44,52 @@ export default (sequelize, DataTypes) => {
         },
       },
       shortDescription: {
-        type: DataTypes.STRING(500), // Limit to 500 characters
+        type: DataTypes.STRING(500),
+        allowNull: false,
       },
       problemSolved: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       sector: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       stage: {
         type: DataTypes.ENUM("idea", "mvp", "market", "scaling"),
+        allowNull: false,
       },
       hasInvestment: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
       },
       seekingInvestment: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
       },
       hasCustomers: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
       },
       customersDetails: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       links: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       founderContact: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       whyJoinLinkUp: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       howHeardAboutLinkUp: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       status: {
         type: DataTypes.ENUM("pending", "accepted", "rejected"),
