@@ -8,6 +8,8 @@ import adminRoutes from "./routes/admin.js"
 
 const app = express()
 
+console.log("Starting server initialization")
+
 // Enable CORS for all routes
 app.use(
   cors({
@@ -15,9 +17,11 @@ app.use(
     credentials: true,
   }),
 )
+console.log("CORS middleware configured")
 
 // Middleware for parsing JSON bodies
 app.use(express.json())
+console.log("JSON body parser middleware configured")
 
 // Debug middleware
 app.use((req, res, next) => {
@@ -26,9 +30,11 @@ app.use((req, res, next) => {
   if (req.body) console.log("Body:", JSON.stringify(req.body, null, 2))
   next()
 })
+console.log("Debug middleware configured")
 
 // Health check route
 app.get("/", (req, res) => {
+  console.log("Health check route accessed")
   res.json({ status: "ok", message: "LinkUp API is running" })
 })
 
@@ -38,6 +44,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/apply", applicationRoutes)
 app.use("/api/admin", adminRoutes)
+console.log("Routes mounted successfully")
 
 // Test route for applications
 app.post("/api/apply-test", (req, res) => {
@@ -63,7 +70,8 @@ app.use((req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error("Error:", err)
+  console.error("Global error handler caught an error:")
+  console.error(err)
   res.status(500).json({
     error: err.message,
     stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
@@ -74,11 +82,13 @@ const PORT = process.env.PORT || 5000
 
 async function startServer() {
   try {
+    console.log("Attempting to connect to the database...")
     await sequelize.authenticate()
-    console.log("Database connected.")
+    console.log("Database connected successfully.")
 
+    console.log("Synchronizing database models...")
     await sequelize.sync()
-    console.log("Database synchronized.")
+    console.log("Database synchronized successfully.")
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`)
@@ -99,6 +109,9 @@ export default app
 
 // Start server if not running on Vercel
 if (process.env.NODE_ENV !== "production") {
+  console.log("Starting server in development mode")
   startServer()
+} else {
+  console.log("Server initialized for production mode")
 }
 

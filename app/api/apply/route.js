@@ -7,7 +7,7 @@ export async function POST(req) {
     console.log("Raw application data:", JSON.stringify(applicationData, null, 2))
 
     const backendUrl = process.env.BACKEND_URL || "https://linkup-backend.vercel.app"
-    const endpoint = `${backendUrl}/api/apply` // Make sure this matches the backend route
+    const endpoint = `${backendUrl}/api/apply`
 
     console.log("Backend URL:", backendUrl)
     console.log("Full endpoint:", endpoint)

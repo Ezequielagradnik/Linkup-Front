@@ -1,14 +1,6 @@
-@baseUrl = https://linkup-backend.vercel.app/api
+@baseUrl = https://linkup-eta.vercel.app/api
+
 @authToken = {{login.response.body.token}}
-
-### Test application endpoint
-GET {{baseUrl}}/apply/test
-
-{
-  "username": "testuser",
-  "email": "testuser@example.com",
-  "password": "password123"
-}
 
 ### Login
 # @name login
@@ -19,44 +11,6 @@ Content-Type: application/json
   "email": "testuser@example.com",
   "password": "password123"
 }
-
-### Get user profile
-GET {{baseUrl}}/users/profile
-Authorization: Bearer {{authToken}}
-
-### Create a new blog post
-POST {{baseUrl}}/blogs
-Authorization: Bearer {{authToken}}
-Content-Type: application/json
-
-{
-  "title": "My First Blog Post",
-  "content": "This is the content of my first blog post."
-}
-
-### Get all blog posts
-GET {{baseUrl}}/blogs
-
-### Get latest blog post
-GET {{baseUrl}}/blogs/latest
-
-### Create a new comment on a blog post
-POST {{baseUrl}}/comments
-Authorization: Bearer {{authToken}}
-Content-Type: application/json
-
-{
-  "content": "This is a great post!",
-  "blogId": "1"
-}
-
-
-### Get all comments for a specific blog post
-GET {{baseUrl}}/comments/blog/1
-
-### Delete a comment
-DELETE {{baseUrl}}/comments/1
-Authorization: Bearer {{authToken}}
 
 ### Submit application
 POST {{baseUrl}}/apply
