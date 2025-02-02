@@ -1,7 +1,5 @@
 import { Sequelize } from "sequelize"
 import UserModel from "./user.js"
-import BlogModel from "./blog.js"
-import CommentModel from "./comment.js"
 import ApplicationModel from "./application.js"
 import dotenv from "dotenv"
 import path from "path"
@@ -78,18 +76,7 @@ if (process.env.DATABASE_URL) {
 }
 
 const User = UserModel(sequelize, Sequelize)
-const Blog = BlogModel(sequelize, Sequelize)
-const Comment = CommentModel(sequelize, Sequelize)
 const Application = ApplicationModel(sequelize, Sequelize)
 
-User.hasMany(Blog)
-Blog.belongsTo(User)
-
-User.hasMany(Comment)
-Comment.belongsTo(User)
-
-Blog.hasMany(Comment)
-Comment.belongsTo(Blog)
-
-export { sequelize, User, Blog, Comment, Application }
+export { sequelize, User, Application }
 

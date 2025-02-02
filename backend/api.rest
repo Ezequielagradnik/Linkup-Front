@@ -61,13 +61,13 @@ Authorization: Bearer {{authToken}}
 
 ### Submit a new application
 # @name submitApplication
-POST {{baseUrl}}/applications
+POST {{baseUrl}}/apply
 Content-Type: application/json
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "48113056@est.ort.edu.ar",
+  "firstName": "turca",
+  "lastName": "said",
+  "email": "nicosaid@gmail.com",
   "password": "securepassword123",
   "linkedinProfile": "https://www.linkedin.com/in/johndoe",
   "startupName": "TechInnovate",

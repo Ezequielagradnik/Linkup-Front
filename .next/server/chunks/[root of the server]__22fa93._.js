@@ -61,22 +61,32 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$serv
 async function POST(req) {
     try {
         const applicationData = await req.json();
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/apply`, {
+        console.log('NEXT_PUBLIC_BACKEND_URL:', ("TURBOPACK compile-time value", "https://linkup-eta.vercel.app"));
+        console.log('applicationData:', applicationData);
+        if ("TURBOPACK compile-time falsy", 0) {
+            "TURBOPACK unreachable";
+        }
+        const response = await fetch(`${("TURBOPACK compile-time value", "https://linkup-eta.vercel.app")}/api/apply`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(applicationData)
         });
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            console.error('Error response text:', errorText);
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
         }
         const data = await response.json();
+        console.log('Response data:', data);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(data);
     } catch (error) {
         console.error("Error submitting application:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: "Failed to submit application"
+            error: error.message
         }, {
             status: 500
         });
