@@ -41,6 +41,8 @@ export default function ApplyNow() {
     howHeardAboutLinkUp: "",
   })
 
+  const [errors, setErrors] = useState({})
+
   const content = {
     en: {
       title: "Join LinkUp",
@@ -132,13 +134,34 @@ export default function ApplyNow() {
 
   const t = content[language]
 
+  const validateStep = (currentStep) => {
+    const fieldsToValidate = {
+      1: ["firstName", "lastName", "email", "password", "confirmPassword"],
+      2: ["linkedinProfile", "startupName", "shortDescription", "problemSolved", "sector", "stage"],
+      3: [
+        "hasInvestment",
+        "seekingInvestment",
+        "hasCustomers",
+        "customersDetails",
+        "links",
+        "founderContact",
+        "whyJoinLinkUp",
+        "howHeardAboutLinkUp",
+      ],
+    }
+
+    return fieldsToValidate[currentStep].every((field) => formData[field].trim() !== "")
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: value.trim() === "" ? "This field is required" : "" }))
   }
 
   const handleSelectChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: value === "" ? "This field is required" : "" }))
   }
 
   const handleSubmit = async (e) => {
@@ -233,9 +256,12 @@ export default function ApplyNow() {
                         value={formData.firstName}
                         onChange={handleInputChange}
                         placeholder={t.form.firstName}
-                        className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                        className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                          errors.firstName ? "border-red-500" : ""
+                        }`}
                         required
                       />
+                      {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm font-medium text-gray-700">{t.form.lastName}</Label>
@@ -244,9 +270,12 @@ export default function ApplyNow() {
                         value={formData.lastName}
                         onChange={handleInputChange}
                         placeholder={t.form.lastName}
-                        className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                        className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                          errors.lastName ? "border-red-500" : ""
+                        }`}
                         required
                       />
+                      {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
                     </div>
                   </div>
 
@@ -258,9 +287,12 @@ export default function ApplyNow() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder={t.form.email}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.email ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -271,9 +303,12 @@ export default function ApplyNow() {
                       value={formData.password}
                       onChange={handleInputChange}
                       placeholder={t.form.password}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.password ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -284,9 +319,12 @@ export default function ApplyNow() {
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
                       placeholder={t.form.confirmPassword}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.confirmPassword ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
                   </div>
                 </div>
               )}
@@ -300,9 +338,12 @@ export default function ApplyNow() {
                       value={formData.linkedinProfile}
                       onChange={handleInputChange}
                       placeholder={t.form.linkedinProfile}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.linkedinProfile ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.linkedinProfile && <p className="text-red-500 text-sm mt-1">{errors.linkedinProfile}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -312,9 +353,12 @@ export default function ApplyNow() {
                       value={formData.startupName}
                       onChange={handleInputChange}
                       placeholder={t.form.startupName}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.startupName ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.startupName && <p className="text-red-500 text-sm mt-1">{errors.startupName}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -324,9 +368,12 @@ export default function ApplyNow() {
                       value={formData.shortDescription}
                       onChange={handleInputChange}
                       placeholder={t.form.shortDescription}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.shortDescription ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.shortDescription && <p className="text-red-500 text-sm mt-1">{errors.shortDescription}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -336,9 +383,12 @@ export default function ApplyNow() {
                       value={formData.problemSolved}
                       onChange={handleInputChange}
                       placeholder={t.form.problemSolved}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.problemSolved ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.problemSolved && <p className="text-red-500 text-sm mt-1">{errors.problemSolved}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -348,15 +398,18 @@ export default function ApplyNow() {
                       value={formData.sector}
                       onChange={handleInputChange}
                       placeholder={t.form.sector}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.sector ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.sector && <p className="text-red-500 text-sm mt-1">{errors.sector}</p>}
                   </div>
 
                   <div className="space-y-2">
                     <Label className="text-sm font-medium text-gray-700">{t.form.stage.label}</Label>
                     <Select name="stage" onValueChange={(value) => handleSelectChange("stage", value)} required>
-                      <SelectTrigger className="rounded-xl border-gray-200">
+                      <SelectTrigger className={`rounded-xl border-gray-200 ${errors.stage ? "border-red-500" : ""}`}>
                         <SelectValue placeholder={t.form.stage.label} />
                       </SelectTrigger>
                       <SelectContent>
@@ -367,6 +420,7 @@ export default function ApplyNow() {
                         ))}
                       </SelectContent>
                     </Select>
+                    {errors.stage && <p className="text-red-500 text-sm mt-1">{errors.stage}</p>}
                   </div>
                 </div>
               )}
@@ -380,7 +434,9 @@ export default function ApplyNow() {
                       onValueChange={(value) => handleSelectChange("hasInvestment", value)}
                       required
                     >
-                      <SelectTrigger className="rounded-xl border-gray-200">
+                      <SelectTrigger
+                        className={`rounded-xl border-gray-200 ${errors.hasInvestment ? "border-red-500" : ""}`}
+                      >
                         <SelectValue placeholder={t.form.hasInvestment} />
                       </SelectTrigger>
                       <SelectContent>
@@ -388,6 +444,7 @@ export default function ApplyNow() {
                         <SelectItem value="no">No</SelectItem>
                       </SelectContent>
                     </Select>
+                    {errors.hasInvestment && <p className="text-red-500 text-sm mt-1">{errors.hasInvestment}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -397,7 +454,9 @@ export default function ApplyNow() {
                       onValueChange={(value) => handleSelectChange("seekingInvestment", value)}
                       required
                     >
-                      <SelectTrigger className="rounded-xl border-gray-200">
+                      <SelectTrigger
+                        className={`rounded-xl border-gray-200 ${errors.seekingInvestment ? "border-red-500" : ""}`}
+                      >
                         <SelectValue placeholder={t.form.seekingInvestment} />
                       </SelectTrigger>
                       <SelectContent>
@@ -405,6 +464,9 @@ export default function ApplyNow() {
                         <SelectItem value="no">No</SelectItem>
                       </SelectContent>
                     </Select>
+                    {errors.seekingInvestment && (
+                      <p className="text-red-500 text-sm mt-1">{errors.seekingInvestment}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -414,7 +476,9 @@ export default function ApplyNow() {
                       onValueChange={(value) => handleSelectChange("hasCustomers", value)}
                       required
                     >
-                      <SelectTrigger className="rounded-xl border-gray-200">
+                      <SelectTrigger
+                        className={`rounded-xl border-gray-200 ${errors.hasCustomers ? "border-red-500" : ""}`}
+                      >
                         <SelectValue placeholder={t.form.hasCustomers} />
                       </SelectTrigger>
                       <SelectContent>
@@ -422,6 +486,7 @@ export default function ApplyNow() {
                         <SelectItem value="no">No</SelectItem>
                       </SelectContent>
                     </Select>
+                    {errors.hasCustomers && <p className="text-red-500 text-sm mt-1">{errors.hasCustomers}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -431,9 +496,12 @@ export default function ApplyNow() {
                       value={formData.customersDetails}
                       onChange={handleInputChange}
                       placeholder={t.form.customersDetails}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.customersDetails ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.customersDetails && <p className="text-red-500 text-sm mt-1">{errors.customersDetails}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -443,9 +511,12 @@ export default function ApplyNow() {
                       value={formData.links}
                       onChange={handleInputChange}
                       placeholder={t.form.links}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.links ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.links && <p className="text-red-500 text-sm mt-1">{errors.links}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -455,9 +526,12 @@ export default function ApplyNow() {
                       value={formData.founderContact}
                       onChange={handleInputChange}
                       placeholder={t.form.founderContact}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.founderContact ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.founderContact && <p className="text-red-500 text-sm mt-1">{errors.founderContact}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -467,9 +541,12 @@ export default function ApplyNow() {
                       value={formData.whyJoinLinkUp}
                       onChange={handleInputChange}
                       placeholder={t.form.whyJoinLinkUp}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.whyJoinLinkUp ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.whyJoinLinkUp && <p className="text-red-500 text-sm mt-1">{errors.whyJoinLinkUp}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -479,9 +556,14 @@ export default function ApplyNow() {
                       value={formData.howHeardAboutLinkUp}
                       onChange={handleInputChange}
                       placeholder={t.form.howHeardAboutLinkUp}
-                      className="rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500"
+                      className={`rounded-xl border-gray-200 focus:border-secondary-500 focus:ring-secondary-500 ${
+                        errors.howHeardAboutLinkUp ? "border-red-500" : ""
+                      }`}
                       required
                     />
+                    {errors.howHeardAboutLinkUp && (
+                      <p className="text-red-500 text-sm mt-1">{errors.howHeardAboutLinkUp}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -502,7 +584,20 @@ export default function ApplyNow() {
                 {step < totalSteps ? (
                   <Button
                     type="button"
-                    onClick={() => setStep(step + 1)}
+                    onClick={() => {
+                      if (validateStep(step)) {
+                        setStep(step + 1)
+                      } else {
+                        toast({
+                          title: language === "en" ? "Incomplete Form" : "Formulario Incompleto",
+                          description:
+                            language === "en"
+                              ? "Please fill in all required fields before proceeding."
+                              : "Por favor, complete todos los campos requeridos antes de continuar.",
+                          variant: "destructive",
+                        })
+                      }
+                    }}
                     className="flex-1 rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 shadow-[0_4px_14px_0_rgb(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] text-lg font-medium"
                   >
                     {t.buttons.next}

@@ -794,6 +794,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navi
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/button.jsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/contexts/LanguageContext.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bell$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Bell$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/bell.js [app-ssr] (ecmascript) <export default as Bell>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-ssr] (ecmascript) <export default as X>");
 "use client";
 ;
 ;
@@ -806,54 +807,80 @@ function NewBlogNotification() {
     const { language } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useLanguage"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        // Aquí puedes implementar la lógica para mostrar la notificación
-        // basada en los blogs que manejarás directamente en el frontend
-        // Por ahora, simplemente mostraremos la notificación después de un tiempo
-        const timer = setTimeout(()=>{
+        const showTimer = setTimeout(()=>{
             setShowNotification(true);
         }, 5000);
-        return ()=>clearTimeout(timer);
+        return ()=>clearTimeout(showTimer);
     }, []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        let hideTimer;
+        if (showNotification) {
+            hideTimer = setTimeout(()=>{
+                setShowNotification(false);
+            }, 5000);
+        }
+        return ()=>clearTimeout(hideTimer);
+    }, [
+        showNotification
+    ]);
     const handleNotificationClick = ()=>{
         setShowNotification(false);
         router.push("/blog-podcast");
     };
+    const handleCloseClick = (e)=>{
+        e.stopPropagation();
+        setShowNotification(false);
+    };
     if (!showNotification) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed bottom-4 right-4 bg-secondary-500 text-white p-4 rounded-lg shadow-lg flex items-center space-x-2",
+        className: "fixed bottom-4 right-4 left-4 md:left-auto max-w-sm bg-secondary-500 text-white p-4 rounded-lg border-2 border-secondary-400 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm flex flex-wrap md:flex-nowrap items-center gap-3 md:gap-4 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bell$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Bell$3e$__["Bell"], {
-                className: "h-6 w-6"
+                className: "h-6 w-6 flex-shrink-0"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 34,
+                lineNumber: 46,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: "flex-grow text-sm md:text-base",
                 children: language === "en" ? "New blog post available!" : "¡Nuevo post de blog disponible!"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 35,
+                lineNumber: 47,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                 onClick: handleNotificationClick,
-                variant: "outline",
-                size: "sm",
-                className: "ml-2",
+                className: "w-full md:w-auto bg-white text-secondary-500 hover:bg-secondary-50 transition-all duration-200 font-semibold py-2 px-4 rounded-full text-sm shadow-md hover:shadow-lg border border-secondary-400",
                 children: language === "en" ? "Read now" : "Leer ahora"
             }, void 0, false, {
                 fileName: "[project]/components/NewBlogNotification.jsx",
-                lineNumber: 36,
+                lineNumber: 50,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                onClick: handleCloseClick,
+                className: "absolute top-1 right-1 p-1 bg-transparent hover:bg-secondary-400 rounded-full transition-colors duration-200",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
+                    className: "h-4 w-4"
+                }, void 0, false, {
+                    fileName: "[project]/components/NewBlogNotification.jsx",
+                    lineNumber: 60,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/NewBlogNotification.jsx",
+                lineNumber: 56,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/NewBlogNotification.jsx",
-        lineNumber: 33,
+        lineNumber: 45,
         columnNumber: 5
     }, this);
-} // Este componente se encargará de mostrar una notificación en la esquina inferior derecha
+}
 }}),
 "[externals]/next/dist/server/app-render/after-task-async-storage.external.js [external] (next/dist/server/app-render/after-task-async-storage.external.js, cjs)": (function(__turbopack_context__) {
 
