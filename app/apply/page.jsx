@@ -191,7 +191,7 @@ export default function ApplyNow() {
       } else {
         const errorData = await response.json()
         console.error("Error data:", errorData)
-        throw new Error(errorData.message || "Failed to submit application")
+        throw new Error(errorData.error || "Failed to submit application")
       }
     } catch (error) {
       console.error("Error detallado:", error)

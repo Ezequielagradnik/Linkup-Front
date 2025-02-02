@@ -59,34 +59,49 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/server.js [app-route] (ecmascript)");
 ;
 async function POST(req) {
+    console.log("POST request received in frontend apply route handler");
     try {
         const applicationData = await req.json();
-        console.log('NEXT_PUBLIC_BACKEND_URL:', ("TURBOPACK compile-time value", "https://linkup-eta.vercel.app"));
-        console.log('applicationData:', applicationData);
-        if ("TURBOPACK compile-time falsy", 0) {
-            "TURBOPACK unreachable";
-        }
-        const response = await fetch(`${("TURBOPACK compile-time value", "https://linkup-eta.vercel.app")}/api/apply`, {
+        console.log("Raw application data:", JSON.stringify(applicationData, null, 2));
+        const backendUrl = process.env.BACKEND_URL || "https://linkup-backend.vercel.app";
+        console.log("Backend URL:", backendUrl);
+        console.log("Attempting to submit application to:", `${backendUrl}/api/apply`);
+        console.log("Formatting application data...");
+        const formattedData = {
+            ...applicationData,
+            hasInvestment: applicationData.hasInvestment === "yes",
+            seekingInvestment: applicationData.seekingInvestment === "yes",
+            hasCustomers: applicationData.hasCustomers === "yes"
+        };
+        console.log("Formatted application data:", JSON.stringify(formattedData, null, 2));
+        console.log("Sending request to backend...");
+        const response = await fetch(`${backendUrl}/api/apply`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(applicationData)
+            body: JSON.stringify(formattedData)
         });
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
+        console.log("Received response from backend. Status:", response.status);
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Error response text:', errorText);
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            console.error("Backend error response:", errorText);
+            console.error("Response status:", response.status);
+            console.error("Response headers:", JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2));
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: `Failed to submit application. Status: ${response.status}`
+            }, {
+                status: response.status
+            });
         }
         const data = await response.json();
-        console.log('Response data:', data);
+        console.log("Successfully processed application. Response data:", JSON.stringify(data, null, 2));
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(data);
     } catch (error) {
-        console.error("Error submitting application:", error);
+        console.error("Error in apply route handler:", error);
+        console.error("Error stack:", error.stack);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: error.message
+            error: "An unexpected error occurred while processing your application"
         }, {
             status: 500
         });

@@ -5,45 +5,60 @@ import { sendApplicationEmail } from "../utils/email.js"
 
 const router = express.Router()
 
-// Añadimos una ruta GET para verificar que la ruta funciona
-router.get("/", (req, res) => {
-  res.status(200).json({ message: "Application route is working" })
-})
-
+// Explicit route handler for POST /api/apply
 router.post("/", async (req, res) => {
-  console.log("Received application data:", JSON.stringify(req.body, null, 2))
+  console.log("Application route handler called")
+  console.log("Request body:", req.body)
+
   try {
     const applicationData = req.body
 
-    // Hash the password
+    // Log each step
+    console.log("1. Starting application submission process")
+    console.log("Application data received:", applicationData)
+
+    console.log("2. Hashing password")
     const hashedPassword = await bcrypt.hash(applicationData.password, 10)
     applicationData.password = hashedPassword
 
-    // Create the application
+    console.log("3. Creating application in database")
     const application = await Application.create(applicationData)
+    console.log("4. Application created successfully:", application.id)
 
-    // Send confirmation email with all application data
+    console.log("5. Sending confirmation email")
     await sendApplicationEmail(application)
+    console.log("6. Confirmation email sent")
 
-    res.status(201).json({ message: "Application submitted successfully", applicationId: application.id })
+    res.status(201).json({
+      message: "Application submitted successfully",
+      applicationId: application.id,
+    })
   } catch (error) {
-    console.error("Error submitting application:", error)
+    console.error("Error in application submission:", error)
+    console.error("Stack trace:", error.stack)
 
     if (error.name === "SequelizeValidationError") {
-      // Handle validation errors
-      const validationErrors = error.errors.map((err) => ({
-        field: err.path,
-        message: err.message,
-      }))
-      res.status(400).json({ message: "Validation error", errors: validationErrors })
+      res.status(400).json({
+        message: "Validation error",
+        errors: error.errors.map((err) => ({
+          field: err.path,
+          message: err.message,
+        })),
+      })
     } else if (error.name === "SequelizeUniqueConstraintError") {
-      // Handle unique constraint errors (e.g., duplicate email)
       res.status(400).json({ message: "Email already in use" })
     } else {
-      // Handle other types of errors
-      res.status(500).json({ message: "Error submitting application", error: error.message })
+      res.status(500).json({
+        message: "Error submitting application",
+        error: error.message,
+      })
     }
   }
+})
+
+// Test route
+router.get("/test", (req, res) => {
+  res.json({ message: "Application route is working" })
 })
 
 export default router

@@ -1,30 +1,3 @@
-import dotenv from "dotenv"
-import path from "path"
-import { fileURLToPath } from "url"
-import fs from "fs"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-console.log("Current working directory:", process.cwd())
-console.log("__dirname:", __dirname)
-
-const envPath = path.resolve(__dirname, ".env")
-console.log("Attempting to load .env file from:", envPath)
-
-try {
-  const envConfig = dotenv.parse(fs.readFileSync(envPath))
-  for (const k in envConfig) {
-    process.env[k] = envConfig[k]
-  }
-  console.log(".env file loaded successfully")
-} catch (error) {
-  console.error("Error loading .env file:", error)
-}
-
-console.log("Environment variables:")
-console.log(JSON.stringify(process.env, null, 2))
-
 import express from "express"
 import cors from "cors"
 import { sequelize } from "./models/index.js"
@@ -35,19 +8,67 @@ import adminRoutes from "./routes/admin.js"
 
 const app = express()
 
+// Enable CORS for all routes
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: ["https://linkup-eta.vercel.app", "http://localhost:3000"],
+    credentials: true,
   }),
 )
+
+// Middleware for parsing JSON bodies
 app.use(express.json())
 
+// Debug middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`)
+  console.log("Headers:", JSON.stringify(req.headers, null, 2))
+  if (req.body) console.log("Body:", JSON.stringify(req.body, null, 2))
+  next()
+})
+
+// Health check route
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "LinkUp API is running" })
+})
+
+// Mount API routes
+console.log("Mounting routes...")
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/apply", applicationRoutes)
 app.use("/api/admin", adminRoutes)
+
+// Test route for applications
+app.post("/api/apply-test", (req, res) => {
+  console.log("Test application route hit")
+  res.json({ message: "Test application endpoint working" })
+})
+
+// Debug 404 handler
+app.use((req, res) => {
+  console.log(`404: ${req.method} ${req.originalUrl} not found`)
+  res.status(404).json({
+    error: `Route not found`,
+    method: req.method,
+    path: req.originalUrl,
+    availableRoutes: [
+      "POST /api/apply",
+      "GET /api/admin/applications",
+      "POST /api/auth/login",
+      "GET /api/users/profile",
+    ],
+  })
+})
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error("Error:", err)
+  res.status(500).json({
+    error: err.message,
+    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+  })
+})
 
 const PORT = process.env.PORT || 5000
 
@@ -59,11 +80,25 @@ async function startServer() {
     await sequelize.sync()
     console.log("Database synchronized.")
 
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`)
+      console.log("Available routes:")
+      console.log("- POST /api/apply")
+      console.log("- GET /api/admin/applications")
+      console.log("- POST /api/auth/login")
+      console.log("- GET /api/users/profile")
+    })
   } catch (error) {
     console.error("Unable to start the server:", error)
+    process.exit(1)
   }
 }
 
-startServer()
+// Export for Vercel
+export default app
+
+// Start server if not running on Vercel
+if (process.env.NODE_ENV !== "production") {
+  startServer()
+}
 
