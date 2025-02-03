@@ -15,39 +15,28 @@ export default function PricingPage() {
       description: "Choose the plan that best fits your needs and start your journey to success",
       plans: [
         {
-          name: "Basic Plan",
-          price: "349",
+          name: "Starter Plan (Basic)",
+          price: "499",
           description: "Perfect for starting your journey as a founder",
           features: [
             "Startup School",
-            "AI Mentor 24/7",
-            "Founders Community",
-            "Downloadable Resources",
-            "Access to Monthly Webinars",
-          ],
-        },
-        {
-          name: "Intermediate Plan",
-          price: "499",
-          description: "The most popular plan for committed founders",
-          features: [
-            "Everything in Basic Plan",
-            "Access to Vefy",
-            "Demo Day Events",
-            "Exposure to Investors and Key People",
-            "Potential Prospects",
-          ],
+            "24/7 AI Mentor with personalized responses.",
+            "Access to the private community of founders",
+            "Exclusive resources: templates, tools and practical guides",
+            " Interactive Guide prepared for your startup, (from idea to functional startup)",          ],
         },
         {
           name: "Pro Plan",
-          price: "999",
+          price: "849",
           description: "Maximum support for growing startups",
           features: [
-            "Everything in Intermediate Plan",
+            "Everything in Starter Plan",
             "Lifetime Access to LinkUp Courses and Content",
-            "VIP WhatsApp Community",
-            "Weekly Calls with Investors",
-            "Monthly Personalized Mentoring",
+            "Access to the PRO Community: High-level networking with advanced founders",
+            "Access to Vefy.Site: Platform to connect with investors and prepare your startup for investment",
+            "Premium resources: Templates, tools and exclusive content to boost your startup",
+            "Access to Events and Webinars",
+            "Access to advanced content: Courses, tools of great value for startups and/or entrepreneurs",
           ],
         },
       ],
@@ -63,39 +52,30 @@ export default function PricingPage() {
       description: "Elige el plan que mejor se adapte a tus necesidades y alcanza el éxito con nosotros",
       plans: [
         {
-          name: "Plan Básico",
+          name: "Plan Starter (Básico)",
           price: "349",
           description: "Perfecto para iniciar tu desarrollo empresarial",
           features: [
             "Escuela de Startups",
-            "Mentor IA 24/7",
-            "Comunidad Founders",
-            "Recursos descargables",
-            "Acceso a webinars mensuales",
-          ],
-        },
-        {
-          name: "Plan Intermedio",
-          price: "499",
-          description: "El plan más popular para emprendedores comprometidos",
-          features: [
-            "Todo lo del plan Básico",
-            "Acceso a Vefy",
-            "Eventos Demo Days",
-            "Exposición a Inversores y Gente Clave",
-            "Potenciales Prospecciones",
+            "Mentor IA 24/7 con respuestas personalizadas",
+            " Acceso a la comunidad privada de founders",
+            "Recursos exclusivos: plantillas, herramientas y guías prácticas",
+            "Guia Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
           ],
         },
         {
           name: "Plan Pro",
-          price: "999",
+          price: "849",
           description: "Máximo apoyo para startups en crecimiento",
           features: [
-            "Todo lo del plan Intermedio",
-            "Acceso a cursos y contenido de LinkUp de por vida",
-            "Comunidad VIP en WhatsApp",
-            "Calls semanales con inversores",
-            "Mentoría personalizada mensual",
+            "Todo lo del plan Basico, más:",
+            "Acceso a LinkUp de por vida",
+            "Acceso a la Comunidad PRO: Networking de alto nivel con founders avanzados",
+            "Acceso a Vefy.Site: Plataforma para conectar con inversionistas y preparar tu startup para inversión",
+            "Recursos premium: Plantillas, herramientas y contenido exclusivo para potenciar tu startup",
+            "Acceso a Eventos y Webinars",
+            "Acceso a contenido avanzado: Cursos, herramientas de gran valor para startups y/o emprendedores",
+
           ],
         },
       ],
@@ -126,7 +106,7 @@ export default function PricingPage() {
           <p className="text-lg text-primary-700 max-w-2xl mx-auto">{t.description}</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto">
           {t.plans.map((plan, index) => (
             <Card key={index} className="bg-white hover:shadow-lg transition-all duration-300">
               <CardHeader>

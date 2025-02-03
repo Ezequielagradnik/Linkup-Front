@@ -104,7 +104,7 @@ export function Pricing({ language }) {
           <h2 className="text-3xl font-bold text-primary-900 mb-4">{t.title}</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t.description}</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-12">
           {t.plans.map((plan, index) => (
             <Card
               key={index}
