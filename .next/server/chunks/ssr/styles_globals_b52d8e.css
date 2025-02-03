@@ -537,6 +537,10 @@ img, video {
   margin-top: 2rem;
 }
 
+.mr-3 {
+  margin-right: .75rem;
+}
+
 .block {
   display: block;
 }
@@ -637,6 +641,10 @@ img, video {
   height: 1px;
 }
 
+.h-2 {
+  height: .5rem;
+}
+
 .max-h-\[80vh\] {
   max-height: 80vh;
 }
@@ -719,6 +727,10 @@ img, video {
 
 .w-full {
   width: 100%;
+}
+
+.w-2 {
+  width: .5rem;
 }
 
 .min-w-\[8rem\] {
@@ -1369,6 +1381,14 @@ img, video {
 
 .pt-20 {
   padding-top: 5rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-left {

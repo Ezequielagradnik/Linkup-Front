@@ -32,15 +32,14 @@ export function WeeklyPosts({ language }) {
     setPosts([
       {
         id: 1,
-        title: "How to Validate Your Startup Idea",
-        content: "Learn the essential steps to validate your startup idea before investing time and resources...",
-        createdAt: new Date().toISOString(),
+        title: "How to Build a Product People Want (Real Example)",
+        content: "💡 Did you know that Dropbox validated their idea with a simple video before writing a single line of code?...",
       },
       {
         id: 2,
-        title: "Securing Your First Investment",
-        content: "Discover the key strategies for attracting and securing your first startup investment...",
-        createdAt: new Date().toISOString(),
+        title: "The Secret to Startup Success Isn't in the Product",
+        content: "🚀 The biggest differentiator between a successful startup and one that fails isn't the product, it's the execution....",
+
       },
     ])
   }, [])
@@ -57,7 +56,6 @@ export function WeeklyPosts({ language }) {
             <Card key={post.id} className="bg-white hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</span>
                   <TrendingUp className="h-5 w-5 text-secondary-500" />
                 </div>
                 <CardTitle className="text-xl font-bold text-primary-900 mb-2">{post.title}</CardTitle>
@@ -76,7 +74,7 @@ export function WeeklyPosts({ language }) {
             <Link href="/blog-podcast">{t.readMore}</Link>
           </Button>
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700 rounded-full">
-            <Link href="/register">{t.joinCommunity}</Link>
+            <Link href="/JoinUs">{t.joinCommunity}</Link>
           </Button>
         </div>
       </div>
