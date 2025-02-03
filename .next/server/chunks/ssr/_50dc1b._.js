@@ -1009,7 +1009,7 @@ function Pricing({ language }) {
                         "Everything in Starter Plan",
                         "Lifetime Access to LinkUp Courses and Content",
                         "Access to the PRO Community: High-level networking with advanced founders",
-                        "Access to Vefy.Site: Platform to connect with investors and prepare your startup for investment",
+                        "Access to Vefy.Site: Platform to connect with investors",
                         "Premium resources: Templates, tools and exclusive content to boost your startup",
                         "Access to Events and Webinars",
                         "Access to advanced content: Courses, tools of great value for startups and/or entrepreneurs"
@@ -1047,7 +1047,7 @@ function Pricing({ language }) {
                         "Todo lo del plan Basico, más:",
                         "Acceso a LinkUp de por vida",
                         "Acceso a la Comunidad PRO: Networking de alto nivel con founders avanzados",
-                        "Acceso a Vefy.Site: Plataforma para conectar con inversionistas y preparar tu startup para inversión",
+                        "Acceso a Vefy.Site: Plataforma para conectar con inversores",
                         "Recursos premium: Plantillas, herramientas y contenido exclusivo para potenciar tu startup",
                         "Acceso a Eventos y Webinars",
                         "Acceso a contenido avanzado: Cursos, herramientas de gran valor para startups y/o emprendedores"
