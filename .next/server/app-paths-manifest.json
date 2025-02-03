@@ -1,9 +1,1 @@
-{
-  "/pricing/page": "app/pricing/page.js",
-  "/apply/page": "app/apply/page.js",
-  "/api/apply/route": "app/api/apply/route.js",
-  "/blog-podcast/page": "app/blog-podcast/page.js",
-  "/page": "app/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/JoinUs/page": "app/JoinUs/page.js"
-}
+{}
