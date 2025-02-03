@@ -46,12 +46,6 @@ app.use("/api/apply", applicationRoutes)
 app.use("/api/admin", adminRoutes)
 console.log("Routes mounted successfully")
 
-// Test route for applications
-app.post("/api/apply-test", (req, res) => {
-  console.log("Test application route hit")
-  res.json({ message: "Test application endpoint working" })
-})
-
 // Debug 404 handler
 app.use((req, res) => {
   console.log(`404: ${req.method} ${req.originalUrl} not found`)
@@ -104,9 +98,6 @@ async function startServer() {
   }
 }
 
-// Export for Vercel
-export default app
-
 // Start server if not running on Vercel
 if (process.env.NODE_ENV !== "production") {
   console.log("Starting server in development mode")
@@ -114,4 +105,6 @@ if (process.env.NODE_ENV !== "production") {
 } else {
   console.log("Server initialized for production mode")
 }
+
+export default app
 
