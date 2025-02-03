@@ -67,21 +67,13 @@ async function POST(req) {
         const endpoint = `${backendUrl}/api/apply`;
         console.log("Backend URL:", backendUrl);
         console.log("Full endpoint:", endpoint);
-        console.log("Formatting application data...");
-        const formattedData = {
-            ...applicationData,
-            hasInvestment: applicationData.hasInvestment === "yes",
-            seekingInvestment: applicationData.seekingInvestment === "yes",
-            hasCustomers: applicationData.hasCustomers === "yes"
-        };
-        console.log("Formatted application data:", JSON.stringify(formattedData, null, 2));
         console.log("Sending request to backend...");
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(formattedData)
+            body: JSON.stringify(applicationData)
         });
         console.log("Response status:", response.status);
         console.log("Response headers:", Object.fromEntries(response.headers.entries()));

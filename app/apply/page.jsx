@@ -41,7 +41,9 @@ export default function ApplyNow() {
     howHeardAboutLinkUp: "",
   })
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    passwordMismatch: "",
+  })
 
   const content = {
     en: {
@@ -150,18 +152,22 @@ export default function ApplyNow() {
       ],
     }
 
-    return fieldsToValidate[currentStep].every((field) => formData[field].trim() !== "")
+    return fieldsToValidate[currentStep].every((field) => formData[field].trim() !== "") && !errors.passwordMismatch
   }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
     setErrors((prev) => ({ ...prev, [name]: value.trim() === "" ? "This field is required" : "" }))
-  }
 
-  const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    setErrors((prev) => ({ ...prev, [name]: value === "" ? "This field is required" : "" }))
+    if (name === "password" || name === "confirmPassword") {
+      const otherField = name === "password" ? "confirmPassword" : "password"
+      if (value !== formData[otherField]) {
+        setErrors((prev) => ({ ...prev, passwordMismatch: "Passwords do not match" }))
+      } else {
+        setErrors((prev) => ({ ...prev, passwordMismatch: "" }))
+      }
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -191,7 +197,7 @@ export default function ApplyNow() {
       } else {
         const errorData = await response.json()
         console.error("Error data:", errorData)
-        throw new Error(errorData.error || "Failed to submit application")
+        throw new Error(errorData.message || "Failed to submit application")
       }
     } catch (error) {
       console.error("Error detallado:", error)
@@ -325,6 +331,7 @@ export default function ApplyNow() {
                       required
                     />
                     {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+                    {errors.passwordMismatch && <p className="text-red-500 text-sm mt-1">{errors.passwordMismatch}</p>}
                   </div>
                 </div>
               )}
