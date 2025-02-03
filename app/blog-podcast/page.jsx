@@ -3,9 +3,7 @@
 import { useState } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { MessageCircle, Share2 } from "lucide-react"
 
 export default function BlogAndPodcast() {
   const { language } = useLanguage()
@@ -18,7 +16,6 @@ export default function BlogAndPodcast() {
       blogTab: "Blog",
       podcastTab: "Podcast",
       podcastComingSoon: "Coming soon! Find more of our posts on our website's blog and in our growing community.",
-      shareText: "Share your experience",
       joinCommunity: "Want to be part of our community? Leave us a comment.",
       blogs: [
         {
@@ -67,7 +64,6 @@ Is your startup executing quickly or just building without feedback?
       podcastTab: "Podcast",
       podcastComingSoon:
         "¡Próximamente encuentra más de nuestros posts en nuestro blog en nuestra página web y en nuestra comunidad que va creciendo poco a poco!",
-      shareText: "Comparte tu experiencia",
       joinCommunity: "¿Quieres ser parte de nuestra comunidad? Déjanos un comentario.",
       blogs: [
         {
@@ -146,20 +142,8 @@ Los founders que escuchan el mercado, iteran rápido y prueban constantemente so
                     <CardTitle className="text-xl font-bold text-primary-900 mb-2">{blog.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="prose max-w-none mb-6">
+                    <div className="prose max-w-none">
                       <p className="whitespace-pre-line text-gray-600">{blog.content}</p>
-                    </div>
-                    <div className="flex items-center justify-between mt-6">
-                      <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="sm" className="flex items-center gap-2 rounded-full">
-                          <MessageCircle className="h-4 w-4" />
-                          <span>{t.shareText}</span>
-                        </Button>
-                        <Button variant="ghost" size="sm" className="flex items-center gap-2 rounded-full">
-                          <Share2 className="h-4 w-4" />
-                          <span>Share</span>
-                        </Button>
-                      </div>
                     </div>
                   </CardContent>
                 </Card>
