@@ -5,7 +5,6 @@ import { sendApplicationEmail } from "../utils/email.js"
 
 const router = express.Router()
 
-// Explicit route handler for POST /api/apply
 router.post("/", async (req, res) => {
   console.log("==== Application Submission Process Started ====")
   console.log("Timestamp:", new Date().toISOString())
@@ -46,7 +45,6 @@ router.post("/", async (req, res) => {
     console.error("Stack trace:", error.stack)
 
     if (error.name === "SequelizeValidationError") {
-      console.log("Validation error detected")
       res.status(400).json({
         message: "Validation error",
         errors: error.errors.map((err) => ({
@@ -55,22 +53,14 @@ router.post("/", async (req, res) => {
         })),
       })
     } else if (error.name === "SequelizeUniqueConstraintError") {
-      console.log("Unique constraint error detected")
       res.status(400).json({ message: "Email already in use" })
     } else {
-      console.log("Unhandled error detected")
       res.status(500).json({
         message: "Error submitting application",
         error: error.message,
       })
     }
   }
-})
-
-// Test route
-router.get("/test", (req, res) => {
-  console.log("Test route accessed")
-  res.json({ message: "Application route is working" })
 })
 
 export default router
