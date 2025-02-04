@@ -65,7 +65,7 @@ async function POST(req) {
     try {
         const applicationData = await req.json();
         console.log("Application data:", JSON.stringify(applicationData, null, 2));
-        const backendUrl = process.env.BACKEND_URL || "https://linkup-backend.vercel.app";
+        const backendUrl = process.env.BACKEND_URL || "https://linkup-back.vercel.app";
         console.log("Backend URL:", backendUrl);
         console.log("Full endpoint:", `${backendUrl}/api/apply`);
         console.log("Sending request to backend...");
