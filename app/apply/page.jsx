@@ -179,9 +179,10 @@ export default function ApplyNow() {
     e.preventDefault()
     console.log("handleSubmit iniciado")
     console.log("Datos del formulario:", formData)
+    const apiUrl = process.env.NODE_ENV === "production" ? "https://linkup-backend.vercel.app" : "http://localhost:5000" // Ajusta este puerto si es diferente
     try {
-      console.log("Intentando hacer fetch a:", `/api/apply`)
-      const response = await fetch(`/api/apply`, {
+      console.log("Intentando hacer fetch a:", `${apiUrl}/api/apply`)
+      const response = await fetch(`${apiUrl}/api/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
