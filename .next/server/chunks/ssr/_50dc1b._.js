@@ -1030,7 +1030,7 @@ function Pricing({ language }) {
             plans: [
                 {
                     name: "Plan Starter (Básico)",
-                    price: "349",
+                    price: "499",
                     description: "Perfecto para iniciar tu desarrollo empresarial",
                     features: [
                         "Escuela de Startups",
