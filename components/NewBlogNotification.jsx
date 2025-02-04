@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Bell, X } from "lucide-react"
+import { Bell } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/contexts/LanguageContext"
 
@@ -34,11 +34,6 @@ export function NewBlogNotification() {
     router.push("/blog-podcast")
   }
 
-  const handleCloseClick = (e) => {
-    e.stopPropagation()
-    setShowNotification(false)
-  }
-
   if (!showNotification) return null
 
   return (
@@ -65,12 +60,6 @@ export function NewBlogNotification() {
           className="bg-white text-secondary-500 hover:bg-secondary-50 transition-all duration-200 font-semibold py-2 px-4 rounded-full text-sm shadow-md hover:shadow-lg border border-secondary-400"
         >
           {language === "en" ? "Read now" : "Leer ahora"}
-        </Button>
-        <Button
-          onClick={handleCloseClick}
-          className="absolute top-1 right-1 p-1 bg-transparent hover:bg-secondary-400 rounded-full transition-colors duration-200"
-        >
-          <X className="h-4 w-4" />
         </Button>
       </div>
     </div>
