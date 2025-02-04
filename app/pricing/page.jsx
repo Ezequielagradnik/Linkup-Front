@@ -23,7 +23,9 @@ export default function PricingPage() {
             "24/7 AI Mentor with personalized responses.",
             "Access to the private community of founders",
             "Exclusive resources: templates, tools and practical guides",
-            " Interactive Guide prepared for your startup, (from idea to functional startup)",          ],
+            " Interactive Guide prepared for your startup, (from idea to functional startup)",  
+            "The selected startups will gain access to the benefits of the Pro Plan"
+                  ],
         },
         {
           name: "Pro Plan",
@@ -61,6 +63,7 @@ export default function PricingPage() {
             " Acceso a la comunidad privada de founders",
             "Recursos exclusivos: plantillas, herramientas y guías prácticas",
             "Guia Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
+            "Las startups seleccionadas accederán a los beneficios del Plan Pro",
           ],
         },
         {

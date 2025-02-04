@@ -1,5 +1,10 @@
 {
   "/api/apply/route": "app/api/apply/route.js",
   "/application-submitted/page": "app/application-submitted/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/apply/page": "app/apply/page.js",
+  "/login/page": "app/login/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/api/admin/applications/route": "app/api/admin/applications/route.js",
+  "/pricing/page": "app/pricing/page.js"
 }

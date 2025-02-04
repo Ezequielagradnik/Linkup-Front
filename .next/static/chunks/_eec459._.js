@@ -140,7 +140,8 @@ function PricingPage() {
                         "24/7 AI Mentor with personalized responses.",
                         "Access to the private community of founders",
                         "Exclusive resources: templates, tools and practical guides",
-                        " Interactive Guide prepared for your startup, (from idea to functional startup)"
+                        " Interactive Guide prepared for your startup, (from idea to functional startup)",
+                        "The selected startups will gain access to the benefits of the Pro Plan"
                     ]
                 },
                 {
@@ -178,7 +179,8 @@ function PricingPage() {
                         "Mentor IA 24/7 con respuestas personalizadas",
                         " Acceso a la comunidad privada de founders",
                         "Recursos exclusivos: plantillas, herramientas y guías prácticas",
-                        "Guia Interactiva preparada para tu startup, (desde idea hasta startup funcional)"
+                        "Guia Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
+                        "Las startups seleccionadas accederán a los beneficios del Plan Pro"
                     ]
                 },
                 {
@@ -222,7 +224,7 @@ function PricingPage() {
                             children: t.title
                         }, void 0, false, {
                             fileName: "[project]/app/pricing/page.jsx",
-                            lineNumber: 104,
+                            lineNumber: 107,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -230,13 +232,13 @@ function PricingPage() {
                             children: t.description
                         }, void 0, false, {
                             fileName: "[project]/app/pricing/page.jsx",
-                            lineNumber: 105,
+                            lineNumber: 108,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/pricing/page.jsx",
-                    lineNumber: 103,
+                    lineNumber: 106,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -252,7 +254,7 @@ function PricingPage() {
                                                 children: plan.name
                                             }, void 0, false, {
                                                 fileName: "[project]/app/pricing/page.jsx",
-                                                lineNumber: 113,
+                                                lineNumber: 116,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -266,7 +268,7 @@ function PricingPage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/pricing/page.jsx",
-                                                        lineNumber: 115,
+                                                        lineNumber: 118,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -274,13 +276,13 @@ function PricingPage() {
                                                         children: "/mes"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/pricing/page.jsx",
-                                                        lineNumber: 116,
+                                                        lineNumber: 119,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/pricing/page.jsx",
-                                                lineNumber: 114,
+                                                lineNumber: 117,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -288,18 +290,18 @@ function PricingPage() {
                                                 children: plan.description
                                             }, void 0, false, {
                                                 fileName: "[project]/app/pricing/page.jsx",
-                                                lineNumber: 118,
+                                                lineNumber: 121,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/pricing/page.jsx",
-                                        lineNumber: 112,
+                                        lineNumber: 115,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/pricing/page.jsx",
-                                    lineNumber: 111,
+                                    lineNumber: 114,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -313,7 +315,7 @@ function PricingPage() {
                                                             className: "h-5 w-5 text-secondary-500 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/pricing/page.jsx",
-                                                            lineNumber: 125,
+                                                            lineNumber: 128,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -321,18 +323,18 @@ function PricingPage() {
                                                             children: feature
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/pricing/page.jsx",
-                                                            lineNumber: 126,
+                                                            lineNumber: 129,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, i, true, {
                                                     fileName: "[project]/app/pricing/page.jsx",
-                                                    lineNumber: 124,
+                                                    lineNumber: 127,
                                                     columnNumber: 21
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/pricing/page.jsx",
-                                            lineNumber: 122,
+                                            lineNumber: 125,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -345,34 +347,34 @@ function PricingPage() {
                                                     children: t.cta
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/pricing/page.jsx",
-                                                    lineNumber: 137,
+                                                    lineNumber: 140,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/pricing/page.jsx",
-                                                lineNumber: 136,
+                                                lineNumber: 139,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/pricing/page.jsx",
-                                            lineNumber: 130,
+                                            lineNumber: 133,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/pricing/page.jsx",
-                                    lineNumber: 121,
+                                    lineNumber: 124,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/app/pricing/page.jsx",
-                            lineNumber: 110,
+                            lineNumber: 113,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/app/pricing/page.jsx",
-                    lineNumber: 108,
+                    lineNumber: 111,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -387,7 +389,7 @@ function PricingPage() {
                                     children: t.enterprise.title
                                 }, void 0, false, {
                                     fileName: "[project]/app/pricing/page.jsx",
-                                    lineNumber: 148,
+                                    lineNumber: 151,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -395,7 +397,7 @@ function PricingPage() {
                                     children: t.enterprise.description
                                 }, void 0, false, {
                                     fileName: "[project]/app/pricing/page.jsx",
-                                    lineNumber: 149,
+                                    lineNumber: 152,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -404,34 +406,34 @@ function PricingPage() {
                                     children: t.enterprise.button
                                 }, void 0, false, {
                                     fileName: "[project]/app/pricing/page.jsx",
-                                    lineNumber: 150,
+                                    lineNumber: 153,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/pricing/page.jsx",
-                            lineNumber: 147,
+                            lineNumber: 150,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/pricing/page.jsx",
-                        lineNumber: 146,
+                        lineNumber: 149,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/pricing/page.jsx",
-                    lineNumber: 145,
+                    lineNumber: 148,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/pricing/page.jsx",
-            lineNumber: 102,
+            lineNumber: 105,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/pricing/page.jsx",
-        lineNumber: 101,
+        lineNumber: 104,
         columnNumber: 5
     }, this);
 }
