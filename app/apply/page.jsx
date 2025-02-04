@@ -170,6 +170,11 @@ export default function ApplyNow() {
     }
   }
 
+  const handleSelectChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: value.trim() === "" ? "This field is required" : "" }))
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log("handleSubmit iniciado")
