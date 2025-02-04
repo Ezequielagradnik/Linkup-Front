@@ -4,6 +4,7 @@ import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+
 import { useLanguage } from "@/contexts/LanguageContext"
 
 export default function PricingPage() {
@@ -17,27 +18,30 @@ export default function PricingPage() {
         {
           name: "Starter Plan (Basic)",
           price: "499",
-          description: "Perfect for starting your journey as a founder",
+          description: "Perfect for starting your journey as a founder (Price for 4 months if paid upfront)",
           features: [
             "Startup School",
             "24/7 AI Mentor with personalized responses.",
             "Access to the private community of founders",
             "Exclusive resources: templates, tools and practical guides",
-            " Interactive Guide prepared for your startup, (from idea to functional startup)",  
-            "The selected startups will gain access to the benefits of the Pro Plan"
-                  ],
+            "Interactive Guide prepared for your startup, (from idea to functional startup)",  
+            "The selected startups will gain access to the benefits of the Pro Plan",
+            "Installment payment available but at a higher total cost"
+          ],
         },
         {
           name: "Pro Plan",
           price: "849",
-          description: "Maximum support for growing startups",
+          description: "Maximum support for growing startups (Price for 4 months if paid upfront)",
           features: [
             "Everything in Starter Plan",
             "Lifetime Access to LinkUp Courses and Content",
             "Access to the PRO Community: High-level networking with advanced founders",
             "Access to Vefy.Site: Platform to connect with investors",
             "Premium resources: Templates, courses, tools and exclusive content to boost your startup",
-            "Access to Events and Webinars",          ],
+            "Access to Events and Webinars",
+            "Installment payment available but at a higher total cost"
+          ],
         },
       ],
       cta: "Start Now",
@@ -53,28 +57,30 @@ export default function PricingPage() {
       plans: [
         {
           name: "Plan Starter (Básico)",
-          price: "349",
-          description: "Perfecto para iniciar tu desarrollo empresarial",
+          price: "499",
+          description: "Perfecto para iniciar tu desarrollo empresarial (Precio por 4 meses si se paga de una sola vez)",
           features: [
             "Escuela de Startups",
             "Mentor IA 24/7 con respuestas personalizadas",
-            " Acceso a la comunidad privada de founders",
+            "Acceso a la comunidad privada de founders",
             "Recursos exclusivos: plantillas, herramientas y guías prácticas",
-            "Guia Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
+            "Guía Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
             "Las startups seleccionadas accederán a los beneficios del Plan Pro",
+            "Pago en cuotas disponible, pero con un costo total mayor"
           ],
         },
         {
           name: "Plan Pro",
           price: "849",
-          description: "Máximo apoyo para startups en crecimiento",
+          description: "Máximo apoyo para startups en crecimiento (Precio por 4 meses si se paga de una sola vez)",
           features: [
-            "Todo lo del plan Basico, más:",
+            "Todo lo del plan Básico, más:",
             "Acceso a LinkUp de por vida",
             "Acceso a la Comunidad PRO: Networking de alto nivel con founders avanzados",
             "Acceso a Vefy.Site: Plataforma para conectar con inversores",
             "Recursos premium: Plantillas, herramientas, cursos y contenido exclusivo para potenciar tu startup",
-            "Acceso a Eventos y Webinars",
+            "Acceso a Eventos y Webinars",
+            "Pago en cuotas disponible, pero con un costo total mayor"
           ],
         },
       ],
@@ -113,7 +119,7 @@ export default function PricingPage() {
                   <div className="text-2xl font-bold text-primary-800 mb-2">{plan.name}</div>
                   <div className="flex items-baseline mb-2">
                     <span className="text-4xl font-bold text-primary-900">${plan.price}</span>
-                    <span className="text-primary-600 ml-2">/mes</span>
+                    <span className="text-primary-600 ml-2"></span>
                   </div>
                   <p className="text-sm text-primary-600">{plan.description}</p>
                 </CardTitle>

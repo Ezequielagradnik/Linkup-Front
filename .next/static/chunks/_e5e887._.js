@@ -1050,28 +1050,29 @@ function Pricing({ language }) {
                 {
                     name: "Starter Plan (Basic)",
                     price: "499",
-                    description: "Perfect for starting your journey as a founder",
+                    description: "Perfect for starting your journey as a founder (Price for 4 months if paid upfront)",
                     features: [
                         "Startup School",
                         "24/7 AI Mentor with personalized responses.",
                         "Access to the private community of founders",
                         "Exclusive resources: templates, tools and practical guides",
                         "Interactive Guide prepared for your startup, (from idea to functional startup)",
-                        "The selected startups will gain access to the benefits of the Pro Plan"
+                        "The selected startups will gain access to the benefits of the Pro Plan",
+                        "Installment payment available but at a higher total cost"
                     ]
                 },
                 {
                     name: "Pro Plan",
                     price: "849",
-                    description: "Maximum support for growing startups",
+                    description: "Maximum support for growing startups (Price for 4 months if paid upfront)",
                     features: [
                         "Everything in Starter Plan",
                         "Lifetime Access to LinkUp Courses and Content",
                         "Access to the PRO Community: High-level networking with advanced founders",
                         "Access to Vefy.Site: Platform to connect with investors",
-                        "Premium resources: Templates, tools and exclusive content to boost your startup",
+                        "Premium resources: Templates, courses, tools and exclusive content to boost your startup",
                         "Access to Events and Webinars",
-                        "Access to advanced content: Courses, tools of great value for startups and/or entrepreneurs"
+                        "Installment payment available but at a higher total cost"
                     ]
                 }
             ],
@@ -1089,28 +1090,29 @@ function Pricing({ language }) {
                 {
                     name: "Plan Starter (Básico)",
                     price: "499",
-                    description: "Perfecto para iniciar tu desarrollo empresarial",
+                    description: "Perfecto para iniciar tu desarrollo empresarial (Precio por 4 meses si se paga de una sola vez)",
                     features: [
                         "Escuela de Startups",
                         "Mentor IA 24/7 con respuestas personalizadas",
-                        " Acceso a la comunidad privada de founders",
+                        "Acceso a la comunidad privada de founders",
                         "Recursos exclusivos: plantillas, herramientas y guías prácticas",
-                        "Guia Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
-                        "Las startups seleccionadas tendrán acceso a los beneficios del Plan Pro"
+                        "Guía Interactiva preparada para tu startup, (desde idea hasta startup funcional)",
+                        "Las startups seleccionadas accederán a los beneficios del Plan Pro",
+                        "Pago en cuotas disponible, pero con un costo total mayor"
                     ]
                 },
                 {
                     name: "Plan Pro",
                     price: "849",
-                    description: "Máximo apoyo para startups en crecimiento",
+                    description: "Máximo apoyo para startups en crecimiento (Precio por 4 meses si se paga de una sola vez)",
                     features: [
-                        "Todo lo del plan Basico, más:",
+                        "Todo lo del plan Básico, más:",
                         "Acceso a LinkUp de por vida",
                         "Acceso a la Comunidad PRO: Networking de alto nivel con founders avanzados",
                         "Acceso a Vefy.Site: Plataforma para conectar con inversores",
-                        "Recursos premium: Plantillas, herramientas y contenido exclusivo para potenciar tu startup",
-                        "Acceso a Eventos y Webinars",
-                        "Acceso a contenido avanzado: Cursos, herramientas de gran valor para startups y/o emprendedores"
+                        "Recursos premium: Plantillas, herramientas, cursos y contenido exclusivo para potenciar tu startup",
+                        "Acceso a Eventos y Webinars",
+                        "Pago en cuotas disponible, pero con un costo total mayor"
                     ]
                 }
             ],
@@ -1140,7 +1142,7 @@ function Pricing({ language }) {
                             children: t.title
                         }, void 0, false, {
                             fileName: "[project]/components/pricing.jsx",
-                            lineNumber: 107,
+                            lineNumber: 108,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1148,13 +1150,13 @@ function Pricing({ language }) {
                             children: t.description
                         }, void 0, false, {
                             fileName: "[project]/components/pricing.jsx",
-                            lineNumber: 108,
+                            lineNumber: 109,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/pricing.jsx",
-                    lineNumber: 106,
+                    lineNumber: 107,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1170,7 +1172,7 @@ function Pricing({ language }) {
                                                 children: plan.name
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pricing.jsx",
-                                                lineNumber: 118,
+                                                lineNumber: 119,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1184,21 +1186,20 @@ function Pricing({ language }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pricing.jsx",
-                                                        lineNumber: 120,
+                                                        lineNumber: 121,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-gray-600 ml-2",
-                                                        children: "/mes"
+                                                        className: "text-gray-600 ml-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/pricing.jsx",
-                                                        lineNumber: 121,
+                                                        lineNumber: 122,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/pricing.jsx",
-                                                lineNumber: 119,
+                                                lineNumber: 120,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1206,18 +1207,18 @@ function Pricing({ language }) {
                                                 children: plan.description
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pricing.jsx",
-                                                lineNumber: 123,
+                                                lineNumber: 124,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pricing.jsx",
-                                        lineNumber: 117,
+                                        lineNumber: 118,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/pricing.jsx",
-                                    lineNumber: 116,
+                                    lineNumber: 117,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1231,7 +1232,7 @@ function Pricing({ language }) {
                                                             className: "h-5 w-5 text-secondary-500 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pricing.jsx",
-                                                            lineNumber: 130,
+                                                            lineNumber: 131,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1239,18 +1240,18 @@ function Pricing({ language }) {
                                                             children: feature
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pricing.jsx",
-                                                            lineNumber: 131,
+                                                            lineNumber: 132,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, i, true, {
                                                     fileName: "[project]/components/pricing.jsx",
-                                                    lineNumber: 129,
+                                                    lineNumber: 130,
                                                     columnNumber: 21
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/components/pricing.jsx",
-                                            lineNumber: 127,
+                                            lineNumber: 128,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1263,34 +1264,34 @@ function Pricing({ language }) {
                                                     children: t.cta
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pricing.jsx",
-                                                    lineNumber: 142,
+                                                    lineNumber: 143,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pricing.jsx",
-                                                lineNumber: 141,
+                                                lineNumber: 142,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/pricing.jsx",
-                                            lineNumber: 135,
+                                            lineNumber: 136,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pricing.jsx",
-                                    lineNumber: 126,
+                                    lineNumber: 127,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/components/pricing.jsx",
-                            lineNumber: 112,
+                            lineNumber: 113,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/pricing.jsx",
-                    lineNumber: 110,
+                    lineNumber: 111,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1305,7 +1306,7 @@ function Pricing({ language }) {
                                     children: t.enterprise.title
                                 }, void 0, false, {
                                     fileName: "[project]/components/pricing.jsx",
-                                    lineNumber: 154,
+                                    lineNumber: 155,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1313,7 +1314,7 @@ function Pricing({ language }) {
                                     children: t.enterprise.description
                                 }, void 0, false, {
                                     fileName: "[project]/components/pricing.jsx",
-                                    lineNumber: 155,
+                                    lineNumber: 156,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1322,34 +1323,34 @@ function Pricing({ language }) {
                                     children: t.enterprise.button
                                 }, void 0, false, {
                                     fileName: "[project]/components/pricing.jsx",
-                                    lineNumber: 156,
+                                    lineNumber: 157,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/pricing.jsx",
-                            lineNumber: 153,
+                            lineNumber: 154,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/pricing.jsx",
-                        lineNumber: 152,
+                        lineNumber: 153,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/pricing.jsx",
-                    lineNumber: 151,
+                    lineNumber: 152,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/pricing.jsx",
-            lineNumber: 105,
+            lineNumber: 106,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/pricing.jsx",
-        lineNumber: 104,
+        lineNumber: 105,
         columnNumber: 5
     }, this);
 }
