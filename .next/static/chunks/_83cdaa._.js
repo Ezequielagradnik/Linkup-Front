@@ -759,7 +759,18 @@ function ApplyNow() {
                 "howHeardAboutLinkUp"
             ]
         };
-        return fieldsToValidate[currentStep].every((field)=>formData[field].trim() !== "") && !errors.passwordMismatch;
+        const isValid = fieldsToValidate[currentStep].every((field)=>formData[field].trim() !== "");
+        if (isValid && currentStep === 1) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                setErrors((prev)=>({
+                        ...prev,
+                        email: "Please enter a valid email address"
+                    }));
+                return false;
+            }
+        }
+        return isValid && !errors.passwordMismatch;
     };
     const handleInputChange = (e)=>{
         const { name, value } = e.target;
@@ -767,10 +778,24 @@ function ApplyNow() {
                 ...prev,
                 [name]: value
             }));
-        setErrors((prev)=>({
-                ...prev,
-                [name]: value.trim() === "" ? "This field is required" : ""
-            }));
+        if (name === "email") {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            setErrors((prev)=>({
+                    ...prev,
+                    [name]: emailRegex.test(value) ? "" : "Please enter a valid email address"
+                }));
+        } else if (name === "linkedinProfile") {
+            const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+            setErrors((prev)=>({
+                    ...prev,
+                    [name]: urlRegex.test(value) ? "" : "Please enter a valid URL"
+                }));
+        } else {
+            setErrors((prev)=>({
+                    ...prev,
+                    [name]: value.trim() === "" ? "This field is required" : ""
+                }));
+        }
         if (name === "password" || name === "confirmPassword") {
             const otherField = name === "password" ? "confirmPassword" : "password";
             if (value !== formData[otherField]) {
@@ -800,8 +825,7 @@ function ApplyNow() {
         e.preventDefault();
         console.log("handleSubmit iniciado");
         console.log("Datos del formulario:", formData);
-        const apiUrl = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:5000" // Ajusta este puerto si es diferente
-        ;
+        const apiUrl = ("TURBOPACK compile-time falsy", 0) ? ("TURBOPACK unreachable", undefined) : "http://localhost:5000";
         try {
             console.log("Intentando hacer fetch a:", `${apiUrl}/api/apply`);
             const response = await fetch(`${apiUrl}/api/apply`, {
@@ -824,7 +848,21 @@ function ApplyNow() {
             } else {
                 const errorData = await response.json();
                 console.error("Error data:", errorData);
-                throw new Error(errorData.message || "Failed to submit application");
+                if (errorData.errors && Array.isArray(errorData.errors)) {
+                    errorData.errors.forEach((error)=>{
+                        setErrors((prev)=>({
+                                ...prev,
+                                [error.field]: error.message
+                            }));
+                    });
+                    toast({
+                        title: t.toast.error,
+                        description: "Please correct the errors in the form and try again.",
+                        variant: "destructive"
+                    });
+                } else {
+                    throw new Error(errorData.message || "Failed to submit application");
+                }
             }
         } catch (error) {
             console.error("Error detallado:", error);
@@ -847,7 +885,7 @@ function ApplyNow() {
                             className: "absolute inset-0 bg-grid-white/10"
                         }, void 0, false, {
                             fileName: "[project]/app/apply/page.jsx",
-                            lineNumber: 223,
+                            lineNumber: 259,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -855,7 +893,7 @@ function ApplyNow() {
                             children: t.title
                         }, void 0, false, {
                             fileName: "[project]/app/apply/page.jsx",
-                            lineNumber: 224,
+                            lineNumber: 260,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -863,13 +901,13 @@ function ApplyNow() {
                             children: t.subtitle
                         }, void 0, false, {
                             fileName: "[project]/app/apply/page.jsx",
-                            lineNumber: 225,
+                            lineNumber: 261,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/apply/page.jsx",
-                    lineNumber: 222,
+                    lineNumber: 258,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -893,35 +931,35 @@ function ApplyNow() {
                                             className: "w-5 h-5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 244,
+                                            lineNumber: 280,
                                             columnNumber: 31
                                         }, this) : i
                                     }, void 0, false, {
                                         fileName: "[project]/app/apply/page.jsx",
-                                        lineNumber: 233,
+                                        lineNumber: 269,
                                         columnNumber: 17
                                     }, this),
                                     i < totalSteps && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: `w-16 h-1 mx-2 rounded transition-all duration-300 ${step > i ? "bg-secondary-500" : "bg-gray-100"}`
                                     }, void 0, false, {
                                         fileName: "[project]/app/apply/page.jsx",
-                                        lineNumber: 247,
+                                        lineNumber: 283,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, i, true, {
                                 fileName: "[project]/app/apply/page.jsx",
-                                lineNumber: 232,
+                                lineNumber: 268,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/apply/page.jsx",
-                        lineNumber: 230,
+                        lineNumber: 266,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/apply/page.jsx",
-                    lineNumber: 229,
+                    lineNumber: 265,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -945,7 +983,7 @@ function ApplyNow() {
                                                             children: t.form.firstName
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 265,
+                                                            lineNumber: 301,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -957,7 +995,7 @@ function ApplyNow() {
                                                             required: true
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 266,
+                                                            lineNumber: 302,
                                                             columnNumber: 23
                                                         }, this),
                                                         errors.firstName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -965,13 +1003,13 @@ function ApplyNow() {
                                                             children: errors.firstName
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 276,
+                                                            lineNumber: 312,
                                                             columnNumber: 44
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 264,
+                                                    lineNumber: 300,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -982,7 +1020,7 @@ function ApplyNow() {
                                                             children: t.form.lastName
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 279,
+                                                            lineNumber: 315,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -994,7 +1032,7 @@ function ApplyNow() {
                                                             required: true
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 280,
+                                                            lineNumber: 316,
                                                             columnNumber: 23
                                                         }, this),
                                                         errors.lastName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1002,19 +1040,19 @@ function ApplyNow() {
                                                             children: errors.lastName
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 290,
+                                                            lineNumber: 326,
                                                             columnNumber: 43
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 278,
+                                                    lineNumber: 314,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 263,
+                                            lineNumber: 299,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1025,7 +1063,7 @@ function ApplyNow() {
                                                     children: t.form.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 295,
+                                                    lineNumber: 331,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1038,7 +1076,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 296,
+                                                    lineNumber: 332,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1046,13 +1084,13 @@ function ApplyNow() {
                                                     children: errors.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 307,
+                                                    lineNumber: 343,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 294,
+                                            lineNumber: 330,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1063,7 +1101,7 @@ function ApplyNow() {
                                                     children: t.form.password
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 311,
+                                                    lineNumber: 347,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1076,7 +1114,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 312,
+                                                    lineNumber: 348,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.password && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1084,13 +1122,13 @@ function ApplyNow() {
                                                     children: errors.password
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 323,
+                                                    lineNumber: 359,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 310,
+                                            lineNumber: 346,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1101,7 +1139,7 @@ function ApplyNow() {
                                                     children: t.form.confirmPassword
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 327,
+                                                    lineNumber: 363,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1114,7 +1152,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 328,
+                                                    lineNumber: 364,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.confirmPassword && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1122,7 +1160,7 @@ function ApplyNow() {
                                                     children: errors.confirmPassword
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 339,
+                                                    lineNumber: 375,
                                                     columnNumber: 48
                                                 }, this),
                                                 errors.passwordMismatch && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1130,19 +1168,19 @@ function ApplyNow() {
                                                     children: errors.passwordMismatch
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 340,
+                                                    lineNumber: 376,
                                                     columnNumber: 49
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 326,
+                                            lineNumber: 362,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/apply/page.jsx",
-                                    lineNumber: 262,
+                                    lineNumber: 298,
                                     columnNumber: 17
                                 }, this),
                                 step === 2 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1156,7 +1194,7 @@ function ApplyNow() {
                                                     children: t.form.linkedinProfile
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 348,
+                                                    lineNumber: 384,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1168,7 +1206,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 349,
+                                                    lineNumber: 385,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.linkedinProfile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1176,13 +1214,13 @@ function ApplyNow() {
                                                     children: errors.linkedinProfile
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 359,
+                                                    lineNumber: 395,
                                                     columnNumber: 48
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 347,
+                                            lineNumber: 383,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1193,7 +1231,7 @@ function ApplyNow() {
                                                     children: t.form.startupName
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 363,
+                                                    lineNumber: 399,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1205,7 +1243,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 364,
+                                                    lineNumber: 400,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.startupName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1213,13 +1251,13 @@ function ApplyNow() {
                                                     children: errors.startupName
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 374,
+                                                    lineNumber: 410,
                                                     columnNumber: 44
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 362,
+                                            lineNumber: 398,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1230,7 +1268,7 @@ function ApplyNow() {
                                                     children: t.form.shortDescription
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 378,
+                                                    lineNumber: 414,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1242,7 +1280,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 379,
+                                                    lineNumber: 415,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.shortDescription && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1250,13 +1288,13 @@ function ApplyNow() {
                                                     children: errors.shortDescription
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 389,
+                                                    lineNumber: 425,
                                                     columnNumber: 49
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 377,
+                                            lineNumber: 413,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1267,7 +1305,7 @@ function ApplyNow() {
                                                     children: t.form.problemSolved
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 393,
+                                                    lineNumber: 429,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1279,7 +1317,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 394,
+                                                    lineNumber: 430,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.problemSolved && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1287,13 +1325,13 @@ function ApplyNow() {
                                                     children: errors.problemSolved
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 404,
+                                                    lineNumber: 440,
                                                     columnNumber: 46
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 392,
+                                            lineNumber: 428,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1304,7 +1342,7 @@ function ApplyNow() {
                                                     children: t.form.sector
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 408,
+                                                    lineNumber: 444,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1316,7 +1354,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 409,
+                                                    lineNumber: 445,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.sector && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1324,13 +1362,13 @@ function ApplyNow() {
                                                     children: errors.sector
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 419,
+                                                    lineNumber: 455,
                                                     columnNumber: 39
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 407,
+                                            lineNumber: 443,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1341,7 +1379,7 @@ function ApplyNow() {
                                                     children: t.form.stage.label
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 423,
+                                                    lineNumber: 459,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -1355,12 +1393,12 @@ function ApplyNow() {
                                                                 placeholder: t.form.stage.label
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/apply/page.jsx",
-                                                                lineNumber: 426,
+                                                                lineNumber: 462,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 425,
+                                                            lineNumber: 461,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1369,18 +1407,18 @@ function ApplyNow() {
                                                                     children: option.label
                                                                 }, option.value, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 430,
+                                                                    lineNumber: 466,
                                                                     columnNumber: 27
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 428,
+                                                            lineNumber: 464,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 424,
+                                                    lineNumber: 460,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.stage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1388,19 +1426,19 @@ function ApplyNow() {
                                                     children: errors.stage
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 436,
+                                                    lineNumber: 472,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 422,
+                                            lineNumber: 458,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/apply/page.jsx",
-                                    lineNumber: 346,
+                                    lineNumber: 382,
                                     columnNumber: 17
                                 }, this),
                                 step === 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1414,7 +1452,7 @@ function ApplyNow() {
                                                     children: t.form.hasInvestment
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 444,
+                                                    lineNumber: 480,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -1428,12 +1466,12 @@ function ApplyNow() {
                                                                 placeholder: t.form.hasInvestment
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/apply/page.jsx",
-                                                                lineNumber: 453,
+                                                                lineNumber: 489,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 450,
+                                                            lineNumber: 486,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1443,7 +1481,7 @@ function ApplyNow() {
                                                                     children: language === "en" ? "Yes" : "Sí"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 456,
+                                                                    lineNumber: 492,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1451,19 +1489,19 @@ function ApplyNow() {
                                                                     children: "No"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 457,
+                                                                    lineNumber: 493,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 455,
+                                                            lineNumber: 491,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 445,
+                                                    lineNumber: 481,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.hasInvestment && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1471,13 +1509,13 @@ function ApplyNow() {
                                                     children: errors.hasInvestment
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 460,
+                                                    lineNumber: 496,
                                                     columnNumber: 46
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 443,
+                                            lineNumber: 479,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1488,7 +1526,7 @@ function ApplyNow() {
                                                     children: t.form.seekingInvestment
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 464,
+                                                    lineNumber: 500,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -1502,12 +1540,12 @@ function ApplyNow() {
                                                                 placeholder: t.form.seekingInvestment
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/apply/page.jsx",
-                                                                lineNumber: 473,
+                                                                lineNumber: 509,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 470,
+                                                            lineNumber: 506,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1517,7 +1555,7 @@ function ApplyNow() {
                                                                     children: language === "en" ? "Yes" : "Sí"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 476,
+                                                                    lineNumber: 512,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1525,19 +1563,19 @@ function ApplyNow() {
                                                                     children: "No"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 477,
+                                                                    lineNumber: 513,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 475,
+                                                            lineNumber: 511,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 465,
+                                                    lineNumber: 501,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.seekingInvestment && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1545,13 +1583,13 @@ function ApplyNow() {
                                                     children: errors.seekingInvestment
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 481,
+                                                    lineNumber: 517,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 463,
+                                            lineNumber: 499,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1562,7 +1600,7 @@ function ApplyNow() {
                                                     children: t.form.hasCustomers
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 486,
+                                                    lineNumber: 522,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -1576,12 +1614,12 @@ function ApplyNow() {
                                                                 placeholder: t.form.hasCustomers
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/apply/page.jsx",
-                                                                lineNumber: 495,
+                                                                lineNumber: 531,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 492,
+                                                            lineNumber: 528,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1591,7 +1629,7 @@ function ApplyNow() {
                                                                     children: language === "en" ? "Yes" : "Sí"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 498,
+                                                                    lineNumber: 534,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1599,19 +1637,19 @@ function ApplyNow() {
                                                                     children: "No"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/apply/page.jsx",
-                                                                    lineNumber: 499,
+                                                                    lineNumber: 535,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/apply/page.jsx",
-                                                            lineNumber: 497,
+                                                            lineNumber: 533,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 487,
+                                                    lineNumber: 523,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.hasCustomers && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1619,13 +1657,13 @@ function ApplyNow() {
                                                     children: errors.hasCustomers
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 502,
+                                                    lineNumber: 538,
                                                     columnNumber: 45
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 485,
+                                            lineNumber: 521,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1636,7 +1674,7 @@ function ApplyNow() {
                                                     children: t.form.customersDetails
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 506,
+                                                    lineNumber: 542,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1648,7 +1686,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 507,
+                                                    lineNumber: 543,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.customersDetails && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1656,13 +1694,13 @@ function ApplyNow() {
                                                     children: errors.customersDetails
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 517,
+                                                    lineNumber: 553,
                                                     columnNumber: 49
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 505,
+                                            lineNumber: 541,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1673,7 +1711,7 @@ function ApplyNow() {
                                                     children: t.form.links
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 521,
+                                                    lineNumber: 557,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1685,7 +1723,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 522,
+                                                    lineNumber: 558,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.links && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1693,13 +1731,13 @@ function ApplyNow() {
                                                     children: errors.links
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 532,
+                                                    lineNumber: 568,
                                                     columnNumber: 38
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 520,
+                                            lineNumber: 556,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1710,7 +1748,7 @@ function ApplyNow() {
                                                     children: t.form.founderContact
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 536,
+                                                    lineNumber: 572,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1722,7 +1760,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 537,
+                                                    lineNumber: 573,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.founderContact && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1730,13 +1768,13 @@ function ApplyNow() {
                                                     children: errors.founderContact
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 547,
+                                                    lineNumber: 583,
                                                     columnNumber: 47
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 535,
+                                            lineNumber: 571,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1747,7 +1785,7 @@ function ApplyNow() {
                                                     children: t.form.whyJoinLinkUp
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 551,
+                                                    lineNumber: 587,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1759,7 +1797,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 552,
+                                                    lineNumber: 588,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.whyJoinLinkUp && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1767,13 +1805,13 @@ function ApplyNow() {
                                                     children: errors.whyJoinLinkUp
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 562,
+                                                    lineNumber: 598,
                                                     columnNumber: 46
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 550,
+                                            lineNumber: 586,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1784,7 +1822,7 @@ function ApplyNow() {
                                                     children: t.form.howHeardAboutLinkUp
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 566,
+                                                    lineNumber: 602,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1796,7 +1834,7 @@ function ApplyNow() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 567,
+                                                    lineNumber: 603,
                                                     columnNumber: 21
                                                 }, this),
                                                 errors.howHeardAboutLinkUp && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1804,19 +1842,19 @@ function ApplyNow() {
                                                     children: errors.howHeardAboutLinkUp
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 578,
+                                                    lineNumber: 614,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 565,
+                                            lineNumber: 601,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/apply/page.jsx",
-                                    lineNumber: 442,
+                                    lineNumber: 478,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1832,14 +1870,14 @@ function ApplyNow() {
                                                     className: "w-5 h-5 mr-2"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 592,
+                                                    lineNumber: 628,
                                                     columnNumber: 21
                                                 }, this),
                                                 t.buttons.back
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 586,
+                                            lineNumber: 622,
                                             columnNumber: 19
                                         }, this),
                                         step < totalSteps ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1862,13 +1900,13 @@ function ApplyNow() {
                                                     className: "w-5 h-5 ml-2"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/apply/page.jsx",
-                                                    lineNumber: 617,
+                                                    lineNumber: 653,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 598,
+                                            lineNumber: 634,
                                             columnNumber: 19
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             type: "submit",
@@ -1876,40 +1914,40 @@ function ApplyNow() {
                                             children: t.buttons.submit
                                         }, void 0, false, {
                                             fileName: "[project]/app/apply/page.jsx",
-                                            lineNumber: 620,
+                                            lineNumber: 656,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/apply/page.jsx",
-                                    lineNumber: 584,
+                                    lineNumber: 620,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/apply/page.jsx",
-                            lineNumber: 260,
+                            lineNumber: 296,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/apply/page.jsx",
-                        lineNumber: 259,
+                        lineNumber: 295,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/apply/page.jsx",
-                    lineNumber: 258,
+                    lineNumber: 294,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/apply/page.jsx",
-            lineNumber: 220,
+            lineNumber: 256,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/apply/page.jsx",
-        lineNumber: 219,
+        lineNumber: 255,
         columnNumber: 5
     }, this);
 }
