@@ -15,28 +15,45 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function AdminDashboard() {
   const [applications, setApplications] = useState([])
   const [selectedApplication, setSelectedApplication] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const router = useRouter()
   const { user } = useAuth()
+  const { toast } = useToast()
 
   useEffect(() => {
     const fetchApplications = async () => {
       try {
+        setLoading(true)
+        setError(null)
         const token = localStorage.getItem("token")
+        console.log("Fetching applications with token:", token)
         const response = await fetch("/api/admin/applications", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        if (response.ok) {
-          const data = await response.json()
-          setApplications(data)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
         }
+        const data = await response.json()
+        console.log("Fetched applications:", data)
+        setApplications(data)
       } catch (error) {
         console.error("Error fetching applications:", error)
+        setError("Failed to fetch applications. Please try again.")
+        toast({
+          title: "Error",
+          description: "Failed to fetch applications. Please try again.",
+          variant: "destructive",
+        })
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -45,7 +62,7 @@ export default function AdminDashboard() {
     } else {
       router.push("/")
     }
-  }, [user, router])
+  }, [user, router, toast])
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -65,6 +82,14 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Error updating application status:", error)
     }
+  }
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>
   }
 
   if (!user || !user.isAdmin) {
