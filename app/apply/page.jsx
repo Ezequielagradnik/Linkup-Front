@@ -152,13 +152,38 @@ export default function ApplyNow() {
       ],
     }
 
-    return fieldsToValidate[currentStep].every((field) => formData[field].trim() !== "") && !errors.passwordMismatch
+    const isValid = fieldsToValidate[currentStep].every((field) => formData[field].trim() !== "")
+
+    if (isValid && currentStep === 1) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(formData.email)) {
+        setErrors((prev) => ({ ...prev, email: "Please enter a valid email address" }))
+        return false
+      }
+    }
+
+    return isValid && !errors.passwordMismatch
   }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    setErrors((prev) => ({ ...prev, [name]: value.trim() === "" ? "This field is required" : "" }))
+
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      setErrors((prev) => ({
+        ...prev,
+        [name]: emailRegex.test(value) ? "" : "Please enter a valid email address",
+      }))
+    } else if (name === "linkedinProfile") {
+      const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
+      setErrors((prev) => ({
+        ...prev,
+        [name]: urlRegex.test(value) ? "" : "Please enter a valid URL",
+      }))
+    } else {
+      setErrors((prev) => ({ ...prev, [name]: value.trim() === "" ? "This field is required" : "" }))
+    }
 
     if (name === "password" || name === "confirmPassword") {
       const otherField = name === "password" ? "confirmPassword" : "password"
@@ -179,7 +204,7 @@ export default function ApplyNow() {
     e.preventDefault()
     console.log("handleSubmit iniciado")
     console.log("Datos del formulario:", formData)
-    const apiUrl = process.env.NODE_ENV === "production" ? "https://linkup-backend.vercel.app" : "http://localhost:5000" // Ajusta este puerto si es diferente
+    const apiUrl = process.env.NODE_ENV === "production" ? "https://linkup-back.vercel.app" : "http://localhost:5000"
     try {
       console.log("Intentando hacer fetch a:", `${apiUrl}/api/apply`)
       const response = await fetch(`${apiUrl}/api/apply`, {
@@ -203,7 +228,18 @@ export default function ApplyNow() {
       } else {
         const errorData = await response.json()
         console.error("Error data:", errorData)
-        throw new Error(errorData.message || "Failed to submit application")
+        if (errorData.errors && Array.isArray(errorData.errors)) {
+          errorData.errors.forEach((error) => {
+            setErrors((prev) => ({ ...prev, [error.field]: error.message }))
+          })
+          toast({
+            title: t.toast.error,
+            description: "Please correct the errors in the form and try again.",
+            variant: "destructive",
+          })
+        } else {
+          throw new Error(errorData.message || "Failed to submit application")
+        }
       }
     } catch (error) {
       console.error("Error detallado:", error)

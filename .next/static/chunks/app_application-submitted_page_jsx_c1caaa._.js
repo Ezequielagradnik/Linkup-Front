@@ -27,9 +27,8 @@ function ApplicationSubmitted() {
             message: "Thank you for applying to LinkUp! We have received your application and will review it shortly.",
             nextSteps: "Next steps:",
             steps: [
-                "Our team will review your application within 48 hours.",
-                "You will receive an email with further instructions.",
-                "If selected, we will schedule a call to discuss your startup in more detail."
+                "Our team will send you a link to join the meeting.",
+                "You will receive an email with further instructions."
             ],
             backToHome: "Back to Home"
         },
@@ -38,9 +37,8 @@ function ApplicationSubmitted() {
             message: "¡Gracias por aplicar a LinkUp! Hemos recibido tu solicitud y la revisaremos en breve.",
             nextSteps: "Próximos pasos:",
             steps: [
-                "Nuestro equipo revisará tu solicitud en las próximas 48 horas.",
-                "Recibirás un correo electrónico con instrucciones adicionales.",
-                "Si eres seleccionado, programaremos una llamada para discutir tu startup en más detalle."
+                "Nuestro equipo te enviara un link para unirte a la reunion.",
+                "Recibirás un correo electrónico con instrucciones adicionales."
             ],
             backToHome: "Volver al Inicio"
         }
@@ -58,7 +56,7 @@ function ApplicationSubmitted() {
                             children: t.title
                         }, void 0, false, {
                             fileName: "[project]/app/application-submitted/page.jsx",
-                            lineNumber: 41,
+                            lineNumber: 39,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -66,13 +64,13 @@ function ApplicationSubmitted() {
                             children: t.message
                         }, void 0, false, {
                             fileName: "[project]/app/application-submitted/page.jsx",
-                            lineNumber: 42,
+                            lineNumber: 40,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/application-submitted/page.jsx",
-                    lineNumber: 40,
+                    lineNumber: 38,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -87,12 +85,12 @@ function ApplicationSubmitted() {
                                         className: "absolute inset-0 bg-grid-gray-900/10"
                                     }, void 0, false, {
                                         fileName: "[project]/app/application-submitted/page.jsx",
-                                        lineNumber: 47,
+                                        lineNumber: 45,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/application-submitted/page.jsx",
-                                    lineNumber: 46,
+                                    lineNumber: 44,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -103,7 +101,7 @@ function ApplicationSubmitted() {
                                             children: t.nextSteps
                                         }, void 0, false, {
                                             fileName: "[project]/app/application-submitted/page.jsx",
-                                            lineNumber: 50,
+                                            lineNumber: 48,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -116,31 +114,31 @@ function ApplicationSubmitted() {
                                                             children: index + 1
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/application-submitted/page.jsx",
-                                                            lineNumber: 54,
+                                                            lineNumber: 52,
                                                             columnNumber: 21
                                                         }, this),
                                                         step
                                                     ]
                                                 }, index, true, {
                                                     fileName: "[project]/app/application-submitted/page.jsx",
-                                                    lineNumber: 53,
+                                                    lineNumber: 51,
                                                     columnNumber: 19
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/application-submitted/page.jsx",
-                                            lineNumber: 51,
+                                            lineNumber: 49,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/application-submitted/page.jsx",
-                                    lineNumber: 49,
+                                    lineNumber: 47,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/application-submitted/page.jsx",
-                            lineNumber: 45,
+                            lineNumber: 43,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -165,41 +163,41 @@ function ApplicationSubmitted() {
                                             d: "m15 18-6-6 6-6"
                                         }, void 0, false, {
                                             fileName: "[project]/app/application-submitted/page.jsx",
-                                            lineNumber: 80,
+                                            lineNumber: 78,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/application-submitted/page.jsx",
-                                        lineNumber: 68,
+                                        lineNumber: 66,
                                         columnNumber: 15
                                     }, this),
                                     t.backToHome
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/application-submitted/page.jsx",
-                                lineNumber: 67,
+                                lineNumber: 65,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/application-submitted/page.jsx",
-                            lineNumber: 63,
+                            lineNumber: 61,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/application-submitted/page.jsx",
-                    lineNumber: 44,
+                    lineNumber: 42,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/application-submitted/page.jsx",
-            lineNumber: 39,
+            lineNumber: 37,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/application-submitted/page.jsx",
-        lineNumber: 38,
+        lineNumber: 36,
         columnNumber: 5
     }, this);
 }

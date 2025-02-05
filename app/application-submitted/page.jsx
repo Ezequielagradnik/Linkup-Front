@@ -13,9 +13,7 @@ export default function ApplicationSubmitted() {
       message: "Thank you for applying to LinkUp! We have received your application and will review it shortly.",
       nextSteps: "Next steps:",
       steps: [
-        "Our team will review your application within 48 hours.",
-        "You will receive an email with further instructions.",
-        "If selected, we will schedule a call to discuss your startup in more detail.",
+"Our team will send you a link to join the meeting.",        "You will receive an email with further instructions.",
       ],
       backToHome: "Back to Home",
     },
@@ -24,9 +22,9 @@ export default function ApplicationSubmitted() {
       message: "¡Gracias por aplicar a LinkUp! Hemos recibido tu solicitud y la revisaremos en breve.",
       nextSteps: "Próximos pasos:",
       steps: [
-        "Nuestro equipo revisará tu solicitud en las próximas 48 horas.",
+        "Nuestro equipo te enviara un link para unirte a la reunion.",
         "Recibirás un correo electrónico con instrucciones adicionales.",
-        "Si eres seleccionado, programaremos una llamada para discutir tu startup en más detalle.",
+       
       ],
       backToHome: "Volver al Inicio",
     },
