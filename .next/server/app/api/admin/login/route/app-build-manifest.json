@@ -1,15 +1,6 @@
 {
   "pages": {
-    "/admin/dashboard/page": [
-      "static/chunks/_fd74a8._.css",
-      "static/chunks/node_modules_241b30._.js",
-      "static/chunks/_fdf0c3._.js",
-      "static/chunks/app_layout_jsx_61af54._.js",
-      "static/chunks/app_not-found_jsx_2d3402._.js",
-      "static/chunks/app_not-found_jsx_72fdc4._.js",
-      "static/chunks/_bb3b4e._.js",
-      "static/chunks/node_modules_14e4c6._.js",
-      "static/chunks/app_admin_dashboard_page_jsx_72fdc4._.js",
+    "/api/admin/login/route": [
       "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
       "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
       "static/chunks/node_modules_next_dist_client_523921._.js",
