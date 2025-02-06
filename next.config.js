@@ -4,15 +4,16 @@ const nextConfig = {
       return [
         {
           source: "/api/:path*",
-          destination:
-            process.env.NODE_ENV === "production"
-              ? "https://linkup-backend.vercel.app/api/:path*"
-              : "http://localhost:5000/api/:path*", // Ajusta este puerto si es diferente
+          destination: `${process.env.BACKEND_URL}/api/:path*`,
         },
       ]
+    },
+    env: {
+      BACKEND_URL: process.env.BACKEND_URL || "https://linkup-backend.vercel.app",
     },
   }
   
   module.exports = nextConfig
+  
   
   

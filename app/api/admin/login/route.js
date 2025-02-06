@@ -6,7 +6,10 @@ export async function POST(req) {
 
     console.log("Admin login attempt:", email)
 
-    const response = await fetch(`${process.env.BACKEND_URL}/api/admin/login`, {
+    const backendUrl = process.env.BACKEND_URL || "https://linkup-backend.vercel.app"
+    console.log("Backend URL:", backendUrl)
+
+    const response = await fetch(`${backendUrl}/api/admin/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,18 +17,23 @@ export async function POST(req) {
       body: JSON.stringify({ email, password }),
     })
 
-    if (!response.ok) {
-      const errorData = await response.json()
-      console.error("Backend error:", errorData)
-      return NextResponse.json({ error: errorData.message }, { status: response.status })
+    const contentType = response.headers.get("content-type")
+    if (contentType && contentType.includes("application/json")) {
+      const data = await response.json()
+      if (!response.ok) {
+        console.error("Backend error:", data)
+        return NextResponse.json({ error: data.message }, { status: response.status })
+      }
+      console.log("Admin login successful")
+      return NextResponse.json(data)
+    } else {
+      const text = await response.text()
+      console.error("Unexpected response:", text)
+      return NextResponse.json({ error: "Unexpected server response" }, { status: 500 })
     }
-
-    const data = await response.json()
-    console.log("Admin login successful")
-    return NextResponse.json(data)
   } catch (error) {
     console.error("Admin login error:", error)
-    return NextResponse.json({ error: "An error occurred during admin login" }, { status: 500 })
+    return NextResponse.json({ error: "An error occurred during admin login", details: error.message }, { status: 500 })
   }
 }
 
