@@ -62,7 +62,7 @@ async function POST(req) {
     try {
         const { email, password } = await req.json();
         console.log("Admin login attempt:", email);
-        const backendUrl = ("TURBOPACK compile-time value", "https://linkup-backend.vercel.app") || "https://linkup-back.vercel.app";
+        const backendUrl = ("TURBOPACK compile-time value", "https://linkup-back.vercel.app") || "https://linkup-back.vercel.app";
         console.log("Backend URL:", backendUrl);
         const response = await fetch(`${backendUrl}/api/admin/login`, {
             method: "POST",

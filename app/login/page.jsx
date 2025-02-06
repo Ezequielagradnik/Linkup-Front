@@ -56,43 +56,37 @@ export default function Login() {
     setLoading(true)
     console.log("Login attempt initiated")
 
-    const apiUrl = process.env.NODE_ENV === "production" ? "https://linkup-back.vercel.app" : "http://localhost:5000"
-
     try {
-      console.log("Attempting to fetch from:", `${apiUrl}/api/login`)
-      const response = await fetch(`${apiUrl}/api/login`, {
+      let loginEndpoint = "/api/login"
+      if (email === "linkup.startups@gmail.com") {
+        loginEndpoint = "/api/admin/login"
+      }
+
+      const response = await fetch(loginEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       })
-      console.log("Response received:", response)
-      console.log("Response status:", response.status)
+
+      const data = await response.json()
 
       if (response.ok) {
-        const data = await response.json()
         console.log("Login successful:", data)
-
-        // Assuming the login function in useAuth handles token storage
-        await login(data.token)
+        await login(data.token, email === "linkup.startups@gmail.com")
 
         toast({
           title: "Login Successful",
           description: "Welcome back!",
         })
 
-        if (email === "linkup.startups@gmail.com") {
-          router.push("/admin/dashboard")
-        } else {
-          router.push("/")
-        }
+        router.push("/dashboard")
       } else {
-        const errorData = await response.json()
-        console.error("Login error:", errorData)
+        console.error("Login error:", data)
         toast({
           title: t.loginFailed,
-          description: errorData.message || "Please check your credentials and try again.",
+          description: data.error || "Please check your credentials and try again.",
           variant: "destructive",
         })
       }
