@@ -6,7 +6,7 @@ export async function POST(req) {
 
     console.log("Admin login attempt:", email)
 
-    const backendUrl = process.env.BACKEND_URL || "https://linkup-backend.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://linkup-back.vercel.app"
     console.log("Backend URL:", backendUrl)
 
     const response = await fetch(`${backendUrl}/api/admin/login`, {
