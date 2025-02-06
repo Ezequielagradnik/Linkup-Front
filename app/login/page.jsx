@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import Link from "next/link"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -17,6 +18,7 @@ export default function Login() {
   const { login } = useAuth()
   const router = useRouter()
   const { language } = useLanguage()
+  const { toast } = useToast()
 
   const content = {
     en: {
@@ -30,6 +32,7 @@ export default function Login() {
       signIn: "Sign in",
       signingIn: "Signing in...",
       loginFailed: "Login failed. Please check your credentials.",
+      loginError: "An error occurred during login. Please try again.",
     },
     es: {
       title: "Bienvenido de nuevo",
@@ -42,6 +45,7 @@ export default function Login() {
       signIn: "Iniciar sesión",
       signingIn: "Iniciando sesión...",
       loginFailed: "Error al iniciar sesión. Por favor verifica tus credenciales.",
+      loginError: "Ocurrió un error durante el inicio de sesión. Por favor, intenta de nuevo.",
     },
   }
 
@@ -50,17 +54,55 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    console.log("Login attempt initiated")
+
+    const apiUrl = process.env.NODE_ENV === "production" ? "https://linkup-back.vercel.app" : "http://localhost:5000"
+
     try {
-      const success = await login(email, password)
-      if (success) {
+      console.log("Attempting to fetch from:", `${apiUrl}/api/login`)
+      const response = await fetch(`${apiUrl}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      console.log("Response received:", response)
+      console.log("Response status:", response.status)
+
+      if (response.ok) {
+        const data = await response.json()
+        console.log("Login successful:", data)
+
+        // Assuming the login function in useAuth handles token storage
+        await login(data.token)
+
+        toast({
+          title: "Login Successful",
+          description: "Welcome back!",
+        })
+
         if (email === "linkup.startups@gmail.com") {
           router.push("/admin/dashboard")
         } else {
           router.push("/")
         }
       } else {
-        alert(t.loginFailed)
+        const errorData = await response.json()
+        console.error("Login error:", errorData)
+        toast({
+          title: t.loginFailed,
+          description: errorData.message || "Please check your credentials and try again.",
+          variant: "destructive",
+        })
       }
+    } catch (error) {
+      console.error("Login error:", error)
+      toast({
+        title: t.loginError,
+        description: error.message || "An unexpected error occurred",
+        variant: "destructive",
+      })
     } finally {
       setLoading(false)
     }
