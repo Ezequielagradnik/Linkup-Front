@@ -316,56 +316,30 @@ const AuthProvider = ({ children })=>{
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const token = localStorage.getItem("token");
-        if (token) {
-            fetchUserProfile(token);
-        } else {
-            setLoading(false);
+        const isAdmin = localStorage.getItem("isAdmin") === "true";
+        if (token || isAdmin) {
+            setUser(isAdmin ? {
+                isAdmin: true
+            } : {
+                token
+            });
         }
+        setLoading(false);
     }, []);
-    const fetchUserProfile = async (token)=>{
+    const login = async (token, isAdmin)=>{
         try {
-            const response = await fetch(`${("TURBOPACK compile-time value", "https://linkup-back.vercel.app")}/api/users/profile`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            if (response.ok) {
-                const userData = await response.json();
-                setUser(userData);
+            if (isAdmin) {
+                localStorage.setItem("isAdmin", "true");
+                setUser({
+                    isAdmin: true
+                });
             } else {
-                localStorage.removeItem("token");
+                localStorage.setItem("token", token);
+                setUser({
+                    token
+                });
             }
-        } catch (error) {
-            console.error("Error fetching user profile:", error);
-        } finally{
-            setLoading(false);
-        }
-    };
-    const login = async (email, password)=>{
-        try {
-            const response = await fetch(`${("TURBOPACK compile-time value", "https://linkup-back.vercel.app")}/api/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                })
-            });
-            if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem("token", data.token);
-                await fetchUserProfile(data.token);
-                if (email === "linkup.startups@gmail.com") {
-                    setUser((prevUser)=>({
-                            ...prevUser,
-                            isAdmin: true
-                        }));
-                }
-                return true;
-            }
-            return false;
+            return true;
         } catch (error) {
             console.error("Error logging in:", error);
             return false;
@@ -373,6 +347,7 @@ const AuthProvider = ({ children })=>{
     };
     const logout = ()=>{
         localStorage.removeItem("token");
+        localStorage.removeItem("isAdmin");
         setUser(null);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AuthContext.Provider, {
@@ -385,7 +360,7 @@ const AuthProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/AuthContext.js",
-        lineNumber: 70,
+        lineNumber: 42,
         columnNumber: 10
     }, this);
 };

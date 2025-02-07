@@ -31,13 +31,7 @@ export default function AdminDashboard() {
       try {
         setLoading(true)
         setError(null)
-        const token = localStorage.getItem("token")
-        console.log("Fetching applications with token:", token)
-        const response = await fetch("/api/admin/applications", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        const response = await fetch("/api/admin/applications")
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
@@ -66,12 +60,10 @@ export default function AdminDashboard() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const token = localStorage.getItem("token")
       const response = await fetch(`/api/admin/applications/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status: newStatus }),
       })

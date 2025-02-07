@@ -10,52 +10,23 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
-    if (token) {
-      fetchUserProfile(token)
-    } else {
-      setLoading(false)
+    const isAdmin = localStorage.getItem("isAdmin") === "true"
+    if (token || isAdmin) {
+      setUser(isAdmin ? { isAdmin: true } : { token })
     }
+    setLoading(false)
   }, [])
 
-  const fetchUserProfile = async (token) => {
+  const login = async (token, isAdmin) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      if (response.ok) {
-        const userData = await response.json()
-        setUser(userData)
+      if (isAdmin) {
+        localStorage.setItem("isAdmin", "true")
+        setUser({ isAdmin: true })
       } else {
-        localStorage.removeItem("token")
+        localStorage.setItem("token", token)
+        setUser({ token })
       }
-    } catch (error) {
-      console.error("Error fetching user profile:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const login = async (email, password) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      })
-      if (response.ok) {
-        const data = await response.json()
-        localStorage.setItem("token", data.token)
-        await fetchUserProfile(data.token)
-        if (email === "linkup.startups@gmail.com") {
-          setUser((prevUser) => ({ ...prevUser, isAdmin: true }))
-        }
-        return true
-      }
-      return false
+      return true
     } catch (error) {
       console.error("Error logging in:", error)
       return false
@@ -64,6 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("isAdmin")
     setUser(null)
   }
 
