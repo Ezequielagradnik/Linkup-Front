@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Bell, Book, MessageCircle, Users, FileText, Award, ExternalLink } from "lucide-react"
+import Link from "next/link"
+import ModuleDetails from "@/components/ModuleDetails"
+import AdminDashboard from "@/components/AdminDashboard"
 
 export default function Dashboard() {
   const { user } = useAuth()
@@ -43,11 +46,15 @@ export default function Dashboard() {
   }
 
   if (loading) {
-    return <div>Cargando...</div>
+    return <div className="flex justify-center items-center h-screen">Cargando...</div>
   }
 
   if (!dashboardData) {
-    return <div>Error al cargar los datos del dashboard</div>
+    return <div className="flex justify-center items-center h-screen">Error al cargar los datos del dashboard</div>
+  }
+
+  if (user.isAdmin) {
+    return <AdminDashboard />
   }
 
   return (
@@ -63,7 +70,9 @@ export default function Dashboard() {
           <p className="text-lg mb-4">Continuar con Módulo {dashboardData.user.currentModule}</p>
           <Progress value={dashboardData.user.progress} className="w-full" />
           <p className="mt-2 text-sm text-gray-600">{dashboardData.user.progress}% completado</p>
-          <Button className="mt-4">Continuar Aprendizaje</Button>
+          <Button className="mt-4" asChild>
+            <Link href={`/modules/${dashboardData.user.currentModule}`}>Continuar Aprendizaje</Link>
+          </Button>
         </CardContent>
       </Card>
 
@@ -77,8 +86,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>Tienes 3 nuevos mensajes del chatbot.</p>
-            <Button variant="outline" className="mt-4">
-              Ver Notificaciones
+            <Button variant="outline" className="mt-4" asChild>
+              <Link href="/notifications">Ver Notificaciones</Link>
             </Button>
           </CardContent>
         </Card>
@@ -91,8 +100,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>¿Necesitas ayuda? Contáctanos.</p>
-            <Button variant="outline" className="mt-4">
-              Contactar
+            <Button variant="outline" className="mt-4" asChild>
+              <Link href="/contact">Contactar</Link>
             </Button>
           </CardContent>
         </Card>
@@ -105,8 +114,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>Únete a nuestra comunidad de emprendedores.</p>
-            <Button variant="outline" className="mt-4">
-              Unirse a la Comunidad
+            <Button variant="outline" className="mt-4" asChild>
+              <Link href="/community">Unirse a la Comunidad</Link>
             </Button>
           </CardContent>
         </Card>
@@ -122,7 +131,9 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>Comienza tu viaje emprendedor con nuestra guía paso a paso.</p>
-            <Button className="mt-4">Iniciar Guía</Button>
+            <Button className="mt-4" asChild>
+              <Link href="/guide">Iniciar Guía</Link>
+            </Button>
           </CardContent>
         </Card>
 
@@ -134,31 +145,15 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>Realiza un análisis de tu idea de startup.</p>
-            <Button className="mt-4">Comenzar Análisis</Button>
+            <Button className="mt-4" asChild>
+              <Link href="/analysis">Comenzar Análisis</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>
 
       {/* Modules Overview */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Módulos del Programa</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {dashboardData.modules.map((module, index) => (
-            <div key={index} className="mb-6">
-              <h3 className="font-semibold text-lg mb-2">{`${module.order}. ${module.title}`}</h3>
-              <ul className="list-disc list-inside ml-4">
-                {module.topics.map((topic, topicIndex) => (
-                  <li key={topicIndex} className="text-sm text-gray-600 mb-1">
-                    {topic}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+      <ModuleDetails modules={dashboardData.modules} currentModule={dashboardData.user.currentModule} />
 
       {/* Graduation and Post-Graduation */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -170,8 +165,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>Completa todos los módulos y obtén tu diploma de LinkUp.</p>
-            <Button className="mt-4" disabled={dashboardData.user.progress < 100}>
-              Formulario de Graduación
+            <Button className="mt-4" disabled={dashboardData.user.progress < 100} asChild>
+              <Link href="/graduation">Formulario de Graduación</Link>
             </Button>
           </CardContent>
         </Card>
@@ -184,8 +179,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <p>Explora las opciones post-graduación y únete a Vefy.</p>
-            <Button className="mt-4" disabled={dashboardData.user.progress < 100}>
-              Opciones Post-Graduación
+            <Button className="mt-4" disabled={dashboardData.user.progress < 100} asChild>
+              <Link href="/post-graduation">Opciones Post-Graduación</Link>
             </Button>
           </CardContent>
         </Card>

@@ -307,7 +307,9 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jwt$2d$decode$2f$build$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/jwt-decode/build/esm/index.js [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 const AuthContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])();
@@ -317,28 +319,24 @@ const AuthProvider = ({ children })=>{
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const token = localStorage.getItem("token");
         const isAdmin = localStorage.getItem("isAdmin") === "true";
-        if (token || isAdmin) {
-            setUser(isAdmin ? {
-                isAdmin: true
-            } : {
-                token
+        if (token) {
+            setUser({
+                token,
+                isAdmin
             });
         }
         setLoading(false);
     }, []);
-    const login = async (token, isAdmin)=>{
+    const login = async (token)=>{
         try {
-            if (isAdmin) {
-                localStorage.setItem("isAdmin", "true");
-                setUser({
-                    isAdmin: true
-                });
-            } else {
-                localStorage.setItem("token", token);
-                setUser({
-                    token
-                });
-            }
+            const decodedToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jwt$2d$decode$2f$build$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"])(token);
+            const isAdmin = decodedToken.isAdmin || false;
+            localStorage.setItem("token", token);
+            localStorage.setItem("isAdmin", isAdmin);
+            setUser({
+                token,
+                isAdmin
+            });
             return true;
         } catch (error) {
             console.error("Error logging in:", error);
@@ -360,7 +358,7 @@ const AuthProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/AuthContext.js",
-        lineNumber: 42,
+        lineNumber: 41,
         columnNumber: 10
     }, this);
 };
