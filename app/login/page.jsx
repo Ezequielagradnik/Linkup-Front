@@ -57,38 +57,44 @@ export default function Login() {
     console.log("Login attempt initiated")
 
     try {
-      let loginEndpoint = "/api/login"
-      if (email === "linkup.startups@gmail.com") {
-        loginEndpoint = "/api/admin/login"
-      }
-
-      const response = await fetch(loginEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        console.log("Login successful:", data)
-        await login(data.token, email === "linkup.startups@gmail.com")
-
+      if (email === "linkup.startups@gmail.com" && password === "cotur2025") {
+        // Admin login
+        await login(null, true)
         toast({
-          title: "Login Successful",
-          description: "Welcome back!",
+          title: "Admin Login Successful",
+          description: "Welcome back, Admin!",
         })
-
-        router.push("/dashboard")
+        router.push("/admin/dashboard")
       } else {
-        console.error("Login error:", data)
-        toast({
-          title: t.loginFailed,
-          description: data.error || "Please check your credentials and try again.",
-          variant: "destructive",
+        // Regular user login
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
         })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          console.log("Login successful:", data)
+          await login(data.token, false)
+
+          toast({
+            title: "Login Successful",
+            description: "Welcome back!",
+          })
+
+          router.push("/dashboard")
+        } else {
+          console.error("Login error:", data)
+          toast({
+            title: t.loginFailed,
+            description: data.error || "Please check your credentials and try again.",
+            variant: "destructive",
+          })
+        }
       }
     } catch (error) {
       console.error("Login error:", error)
