@@ -10,8 +10,9 @@ export async function GET(req) {
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
-      return NextResponse.json({ error: errorData.message }, { status: response.status })
+      const errorText = await response.text()
+      console.error("Server response:", errorText)
+      return NextResponse.json({ error: "Error fetching applications" }, { status: response.status })
     }
 
     const data = await response.json()

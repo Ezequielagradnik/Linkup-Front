@@ -2,5 +2,7 @@
   "/page": "app/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/login/page": "app/login/page.js",
-  "/forgot-password/page": "app/forgot-password/page.js"
+  "/forgot-password/page": "app/forgot-password/page.js",
+  "/api/admin/applications/route": "app/api/admin/applications/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
 }

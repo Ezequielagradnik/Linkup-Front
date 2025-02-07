@@ -57,46 +57,30 @@ __turbopack_esm__({
     "GET": (()=>GET)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/server.js [app-route] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/headers.js [app-route] (ecmascript)");
-;
 ;
 async function GET(req) {
     try {
-        const headersList = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["headers"])();
-        const token = headersList.get("authorization")?.split(" ")[1];
-        if (!token) {
-            console.log("No token provided in the request");
-            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: "Unauthorized"
-            }, {
-                status: 401
-            });
-        }
-        console.log("Attempting to fetch applications from backend");
-        console.log("Backend URL:", ("TURBOPACK compile-time value", "https://linkup-back.vercel.app"));
         const response = await fetch(`${("TURBOPACK compile-time value", "https://linkup-back.vercel.app")}/api/admin/applications`, {
+            method: "GET",
             headers: {
-                Authorization: `Bearer ${token}`
+                "Content-Type": "application/json"
             }
         });
-        console.log("Backend response status:", response.status);
         if (!response.ok) {
-            const errorData = await response.text();
-            console.error("Backend error response:", errorData);
+            const errorText = await response.text();
+            console.error("Server response:", errorText);
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: `Backend error: ${errorData}`
+                error: "Error fetching applications"
             }, {
                 status: response.status
             });
         }
         const data = await response.json();
-        console.log("Successfully fetched applications");
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(data);
     } catch (error) {
-        console.error("Error in /api/admin/applications:", error);
+        console.error("Error fetching applications:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: "An error occurred while fetching applications",
-            details: error.message
+            error: "An error occurred while fetching applications"
         }, {
             status: 500
         });
