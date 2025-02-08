@@ -1,18 +1,30 @@
 import { NextResponse } from "next/server"
+import { headers } from "next/headers"
+import { jwtDecode } from "jwt-decode"
 
 export async function GET(req) {
   try {
+    const headersList = headers()
+    const token = headersList.get("authorization")?.split(" ")[1]
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    const decodedToken = jwtDecode(token)
+    if (!decodedToken.isAdmin) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+    }
+
     const response = await fetch(`${process.env.BACKEND_URL}/api/admin/applications`, {
-      method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     })
 
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error("Server response:", errorText)
-      return NextResponse.json({ error: "Error fetching applications" }, { status: response.status })
+      const errorData = await response.json()
+      return NextResponse.json({ error: errorData.message }, { status: response.status })
     }
 
     const data = await response.json()

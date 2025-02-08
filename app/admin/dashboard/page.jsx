@@ -31,7 +31,11 @@ export default function AdminDashboard() {
       try {
         setLoading(true)
         setError(null)
-        const response = await fetch("/api/admin/applications")
+        const response = await fetch("/api/admin/applications", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }

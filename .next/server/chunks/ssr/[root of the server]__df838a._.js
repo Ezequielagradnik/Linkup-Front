@@ -329,10 +329,13 @@ const AuthProvider = ({ children })=>{
     }, []);
     const login = async (token)=>{
         try {
-            const decodedToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jwt$2d$decode$2f$build$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"])(token);
+            if (typeof token !== "string" || token.trim() === "") {
+                throw new Error("Invalid token: Token must be a non-empty string");
+            }
+            const decodedToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jwt$2d$decode$2f$build$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jwtDecode"])(token);
             const isAdmin = decodedToken.isAdmin || false;
             localStorage.setItem("token", token);
-            localStorage.setItem("isAdmin", isAdmin);
+            localStorage.setItem("isAdmin", isAdmin.toString());
             setUser({
                 token,
                 isAdmin
@@ -340,6 +343,9 @@ const AuthProvider = ({ children })=>{
             return true;
         } catch (error) {
             console.error("Error logging in:", error);
+            localStorage.removeItem("token");
+            localStorage.removeItem("isAdmin");
+            setUser(null);
             return false;
         }
     };
@@ -358,7 +364,7 @@ const AuthProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/AuthContext.js",
-        lineNumber: 41,
+        lineNumber: 47,
         columnNumber: 10
     }, this);
 };

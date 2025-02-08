@@ -58,44 +58,35 @@ export default function Login() {
     console.log("Login attempt initiated")
 
     try {
-      if (email === "linkup.startups@gmail.com" && password === "cotur2025") {
-        // Admin login
-        await login(null, true)
-        toast({
-          title: "Admin Login Successful",
-          description: "Welcome back, Admin!",
-        })
-        router.push("/admin/dashboard")
-      } else {
-        // Regular user login
-        const response = await fetch("/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        })
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-        const data = await response.json()
+      const data = await response.json()
 
-        if (response.ok) {
-          console.log("Login successful:", data)
-          await login(data.token, false)
-
+      if (response.ok) {
+        console.log("Login successful:", data)
+        if (data.token) {
+          await login(data.token)
           toast({
             title: "Login Successful",
             description: "Welcome back!",
           })
-
           router.push("/dashboard")
         } else {
-          console.error("Login error:", data)
-          toast({
-            title: t.loginFailed,
-            description: data.error || "Please check your credentials and try again.",
-            variant: "destructive",
-          })
+          throw new Error("No token received from server")
         }
+      } else {
+        console.error("Login error:", data)
+        toast({
+          title: t.loginFailed,
+          description: data.error || "Please check your credentials and try again.",
+          variant: "destructive",
+        })
       }
     } catch (error) {
       console.error("Login error:", error)
