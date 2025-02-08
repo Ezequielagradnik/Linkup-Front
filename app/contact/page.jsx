@@ -75,7 +75,7 @@ export default function Contact() {
               asChild
               className="bg-secondary-500 hover:bg-secondary-600 transition-all duration-300 transform hover:scale-105"
             >
-              <Link href="mailto:Shafe3d@gmail.com">{t.email.button}</Link>
+              <Link href="mailto:linkup.startups@gmail.com">{t.email.button}</Link>
             </Button>
           </section>
 
@@ -103,7 +103,7 @@ export default function Contact() {
               asChild
               className="bg-secondary-500 hover:bg-secondary-600 transition-all duration-300 transform hover:scale-105"
             >
-              <Link href="https://calendly.com/benjokapu/30min?month=2025-01">{t.meeting.button}</Link>
+              <Link href="https://calendly.com/benjokapu/30min?month=2025-02">{t.meeting.button}</Link>
             </Button>
           </section>
         </div>
