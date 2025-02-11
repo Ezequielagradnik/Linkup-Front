@@ -11,11 +11,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import Link from "next/link"
 import { useToast } from "@/components/ui/use-toast"
 import { motion } from "framer-motion"
+import { Eye, EyeOff } from "lucide-react"
 
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const { login } = useAuth()
   const router = useRouter()
   const { language } = useLanguage()
@@ -34,6 +36,8 @@ export default function Login() {
       signingIn: "Signing in...",
       loginFailed: "Login failed. Please check your credentials.",
       loginError: "An error occurred during login. Please try again.",
+      showPassword: "Show password",
+      hidePassword: "Hide password",
     },
     es: {
       title: "Bienvenido de nuevo",
@@ -47,6 +51,8 @@ export default function Login() {
       signingIn: "Iniciando sesión...",
       loginFailed: "Error al iniciar sesión. Por favor verifica tus credenciales.",
       loginError: "Ocurrió un error durante el inicio de sesión. Por favor, intenta de nuevo.",
+      showPassword: "Mostrar contraseña",
+      hidePassword: "Ocultar contraseña",
     },
   }
 
@@ -98,6 +104,10 @@ export default function Login() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
   }
 
   return (
@@ -175,13 +185,27 @@ export default function Login() {
                 <div className="relative group">
                   <Input
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder={t.passwordPlaceholder}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="h-12 px-4 bg-white/50 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:border-secondary-500 focus:ring-2 focus:ring-secondary-200 transition-all duration-300 hover:border-gray-300"
+                    className="h-12 px-4 bg-white/50 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:border-secondary-500 focus:ring-2 focus:ring-secondary-200 transition-all duration-300 hover:border-gray-300 pr-12"
                   />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-secondary-100"
+                    aria-label={showPassword ? t.hidePassword : t.showPassword}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                  </Button>
                   <div className="absolute inset-0 rounded-xl bg-secondary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
               </div>

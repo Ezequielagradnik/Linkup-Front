@@ -1588,6 +1588,10 @@ img, video {
   padding-top: 1.5rem;
 }
 
+.pr-12 {
+  padding-right: 3rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -2101,6 +2105,11 @@ img, video {
 
 .hover\:bg-secondary\/80:hover {
   background-color: #2563ebcc;
+}
+
+.hover\:bg-secondary-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:from-blue-600:hover {

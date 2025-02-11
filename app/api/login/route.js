@@ -6,6 +6,11 @@ export async function POST(req) {
     const { email, password } = await req.json()
     console.log("Login attempt for email:", email)
 
+    if (!process.env.BACKEND_URL) {
+      console.error("BACKEND_URL is not set")
+      return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    }
+
     console.log("BACKEND_URL:", process.env.BACKEND_URL)
     const url = `${process.env.BACKEND_URL}/api/login`
     console.log("Sending request to:", url)
@@ -20,7 +25,8 @@ export async function POST(req) {
 
     console.log("Response status:", response.status)
     console.log("Response headers:", Object.fromEntries(response.headers))
-
+   
+    
     if (!response.ok) {
       const errorText = await response.text()
       console.log("Error response body:", errorText)
