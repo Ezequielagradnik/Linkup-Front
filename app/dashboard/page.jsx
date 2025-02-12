@@ -16,6 +16,7 @@ export default function Dashboard() {
   const router = useRouter()
   const [dashboardData, setDashboardData] = useState(null)
   const [dataLoading, setDataLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const checkAuthAndFetchData = async () => {
@@ -48,14 +49,32 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json()
         setDashboardData(data)
+        setError(null)
       } else {
-        console.error("Failed to fetch dashboard data")
+        throw new Error("Failed to fetch dashboard data")
       }
     } catch (error) {
       console.error("Error fetching dashboard data:", error)
+      setError("Error al cargar los datos del dashboard. Por favor, intenta de nuevo más tarde.")
     } finally {
       setDataLoading(false)
     }
+  }
+
+  if (loading || dataLoading) {
+    return <div className="flex justify-center items-center h-screen">Cargando...</div>
+  }
+
+  if (error) {
+    return <div className="flex justify-center items-center h-screen">{error}</div>
+  }
+
+  if (!dashboardData) {
+    return <div className="flex justify-center items-center h-screen">No se encontraron datos del dashboard</div>
+  }
+
+  if (user?.isAdmin) {
+    return <AdminDashboard />
   }
 
   return (
@@ -86,7 +105,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Tienes 3 nuevos mensajes del chatbot.</p>
+            <p>Tienes 0 nuevos mensajes del chatbot.</p>
             <Button variant="outline" className="mt-4" asChild>
               <Link href="/notifications">Ver Notificaciones</Link>
             </Button>
