@@ -63,6 +63,9 @@ async function POST(req) {
     try {
         const { email, password } = await req.json();
         console.log("Login attempt for email:", email);
+        if ("TURBOPACK compile-time falsy", 0) {
+            "TURBOPACK unreachable";
+        }
         console.log("BACKEND_URL:", ("TURBOPACK compile-time value", "https://linkup-back.vercel.app"));
         const url = `${("TURBOPACK compile-time value", "https://linkup-back.vercel.app")}/api/login`;
         console.log("Sending request to:", url);

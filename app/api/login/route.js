@@ -25,29 +25,30 @@ export async function POST(req) {
 
     console.log("Response status:", response.status)
     console.log("Response headers:", Object.fromEntries(response.headers))
-   
-    
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.log("Error response body:", errorText)
-      let errorData
-      try {
-        errorData = JSON.parse(errorText)
-      } catch (e) {
-        console.log("Failed to parse error response as JSON")
-      }
-      throw new Error(errorData?.error || errorText || "error puto")
-    }
 
     const responseText = await response.text()
     console.log("Response body:", responseText)
-    
+
+    if (!response.ok) {
+      console.log("Error response body:", responseText)
+      let errorData
+      try {
+        errorData = JSON.parse(responseText)
+      } catch (e) {
+        console.log("Failed to parse error response as JSON")
+      }
+      return NextResponse.json(
+        { error: errorData?.error || responseText || "Unknown error occurred" },
+        { status: response.status },
+      )
+    }
+
     let data
     try {
       data = JSON.parse(responseText)
     } catch (e) {
       console.log("Failed to parse response as JSON")
-      throw new Error("Invalid response from server")
+      return NextResponse.json({ error: "Invalid response from server" }, { status: 500 })
     }
 
     console.log("Parsed response data:", data)
@@ -55,6 +56,7 @@ export async function POST(req) {
   } catch (error) {
     console.error("Login error:", error)
     console.error("Error stack:", error.stack)
-    return NextResponse.json({ error: error.message }, { status: 400 })
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 })
   }
 }
+
