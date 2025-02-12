@@ -68,15 +68,35 @@ export default function AdminDashboard() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ status: newStatus }),
       })
 
       if (response.ok) {
-        setApplications(applications.map((app) => (app.id === id ? { ...app, status: newStatus } : app)))
+        if (newStatus === "rejected") {
+          setApplications(applications.filter((app) => app.id !== id))
+          toast({
+            title: "Application Rejected",
+            description: "The application has been rejected and removed from the list.",
+          })
+        } else {
+          setApplications(applications.map((app) => (app.id === id ? { ...app, status: newStatus } : app)))
+          toast({
+            title: "Status Updated",
+            description: `Application status has been updated to ${newStatus}.`,
+          })
+        }
+      } else {
+        throw new Error("Failed to update application status")
       }
     } catch (error) {
       console.error("Error updating application status:", error)
+      toast({
+        title: "Error",
+        description: "Failed to update application status. Please try again.",
+        variant: "destructive",
+      })
     }
   }
 
