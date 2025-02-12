@@ -81,25 +81,32 @@ async function POST(req) {
         });
         console.log("Response status:", response.status);
         console.log("Response headers:", Object.fromEntries(response.headers));
+        const responseText = await response.text();
+        console.log("Response body:", responseText);
         if (!response.ok) {
-            const errorText = await response.text();
-            console.log("Error response body:", errorText);
+            console.log("Error response body:", responseText);
             let errorData;
             try {
-                errorData = JSON.parse(errorText);
+                errorData = JSON.parse(responseText);
             } catch (e) {
                 console.log("Failed to parse error response as JSON");
             }
-            throw new Error(errorData?.error || errorText || "error puto");
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: errorData?.error || responseText || "Unknown error occurred"
+            }, {
+                status: response.status
+            });
         }
-        const responseText = await response.text();
-        console.log("Response body:", responseText);
         let data;
         try {
             data = JSON.parse(responseText);
         } catch (e) {
             console.log("Failed to parse response as JSON");
-            throw new Error("Invalid response from server");
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: "Invalid response from server"
+            }, {
+                status: 500
+            });
         }
         console.log("Parsed response data:", data);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(data);
@@ -107,9 +114,9 @@ async function POST(req) {
         console.error("Login error:", error);
         console.error("Error stack:", error.stack);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: error.message
+            error: "An unexpected error occurred"
         }, {
-            status: 400
+            status: 500
         });
     }
 }
