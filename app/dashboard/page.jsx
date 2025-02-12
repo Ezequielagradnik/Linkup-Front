@@ -12,18 +12,31 @@ import ModuleDetails from "@/components/ModuleDetails"
 import AdminDashboard from "@/components/AdminDashboard"
 
 export default function Dashboard() {
-  const { user } = useAuth()
+  const { user, loading, refreshToken, isTokenExpired } = useAuth()
   const router = useRouter()
   const [dashboardData, setDashboardData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [dataLoading, setDataLoading] = useState(true)
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login")
-    } else {
-      fetchDashboardData()
+    const checkAuthAndFetchData = async () => {
+      if (!loading) {
+        if (!user) {
+          router.push("/login")
+        } else {
+          if (isTokenExpired()) {
+            const refreshed = await refreshToken()
+            if (!refreshed) {
+              router.push("/login")
+              return
+            }
+          }
+          fetchDashboardData()
+        }
+      }
     }
-  }, [user, router])
+
+    checkAuthAndFetchData()
+  }, [user, loading, router, refreshToken, isTokenExpired])
 
   const fetchDashboardData = async () => {
     try {
@@ -41,20 +54,8 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Error fetching dashboard data:", error)
     } finally {
-      setLoading(false)
+      setDataLoading(false)
     }
-  }
-
-  if (loading) {
-    return <div className="flex justify-center items-center h-screen">Cargando...</div>
-  }
-
-  if (!dashboardData) {
-    return <div className="flex justify-center items-center h-screen">Error al cargar los datos del dashboard</div>
-  }
-
-  if (user.isAdmin) {
-    return <AdminDashboard />
   }
 
   return (

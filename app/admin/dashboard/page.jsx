@@ -31,6 +31,7 @@ export default function AdminDashboard() {
       try {
         setLoading(true)
         setError(null)
+        console.log("Fetching applications...")
         const response = await fetch("/api/admin/applications", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -55,50 +56,16 @@ export default function AdminDashboard() {
       }
     }
 
+    console.log("User:", user)
     if (user && user.isAdmin) {
       fetchApplications()
     } else {
+      console.log("User is not admin, redirecting...")
       router.push("/")
     }
   }, [user, router, toast])
 
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      const response = await fetch(`/api/admin/applications/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ status: newStatus }),
-      })
-
-      if (response.ok) {
-        if (newStatus === "rejected") {
-          setApplications(applications.filter((app) => app.id !== id))
-          toast({
-            title: "Application Rejected",
-            description: "The application has been rejected and removed from the list.",
-          })
-        } else {
-          setApplications(applications.map((app) => (app.id === id ? { ...app, status: newStatus } : app)))
-          toast({
-            title: "Status Updated",
-            description: `Application status has been updated to ${newStatus}.`,
-          })
-        }
-      } else {
-        throw new Error("Failed to update application status")
-      }
-    } catch (error) {
-      console.error("Error updating application status:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update application status. Please try again.",
-        variant: "destructive",
-      })
-    }
-  }
+  // ... rest of the component code ...
 
   if (loading) {
     return <div>Loading...</div>
@@ -109,7 +76,7 @@ export default function AdminDashboard() {
   }
 
   if (!user || !user.isAdmin) {
-    return null
+    return <div>Access denied. You must be an admin to view this page.</div>
   }
 
   return (

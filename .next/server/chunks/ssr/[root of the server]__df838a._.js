@@ -317,15 +317,30 @@ const AuthProvider = ({ children })=>{
     const [user, setUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const token = localStorage.getItem("token");
-        const isAdmin = localStorage.getItem("isAdmin") === "true";
-        if (token) {
-            setUser({
-                token,
-                isAdmin
-            });
-        }
-        setLoading(false);
+        const initializeAuth = async ()=>{
+            const token = localStorage.getItem("token");
+            if (token) {
+                try {
+                    const decodedToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jwt$2d$decode$2f$build$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jwtDecode"])(token);
+                    const currentTime = Date.now() / 1000;
+                    if (decodedToken.exp && decodedToken.exp > currentTime) {
+                        const isAdmin = localStorage.getItem("isAdmin") === "true";
+                        setUser({
+                            token,
+                            isAdmin
+                        });
+                    } else {
+                        // Token has expired
+                        await logout();
+                    }
+                } catch (error) {
+                    console.error("Error decoding token:", error);
+                    await logout();
+                }
+            }
+            setLoading(false);
+        };
+        initializeAuth();
     }, []);
     const login = async (token)=>{
         try {
@@ -343,29 +358,63 @@ const AuthProvider = ({ children })=>{
             return true;
         } catch (error) {
             console.error("Error logging in:", error);
-            localStorage.removeItem("token");
-            localStorage.removeItem("isAdmin");
-            setUser(null);
+            await logout();
             return false;
         }
     };
-    const logout = ()=>{
+    const logout = async ()=>{
         localStorage.removeItem("token");
         localStorage.removeItem("isAdmin");
         setUser(null);
+    };
+    const refreshToken = async ()=>{
+        try {
+            const response = await fetch("/api/refresh-token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (response.ok) {
+                const { token } = await response.json();
+                await login(token);
+                return true;
+            } else {
+                throw new Error("Failed to refresh token");
+            }
+        } catch (error) {
+            console.error("Error refreshing token:", error);
+            await logout();
+            return false;
+        }
+    };
+    const isTokenExpired = ()=>{
+        const token = localStorage.getItem("token");
+        if (!token) return true;
+        try {
+            const decodedToken = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$jwt$2d$decode$2f$build$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jwtDecode"])(token);
+            const currentTime = Date.now() / 1000;
+            return decodedToken.exp < currentTime;
+        } catch (error) {
+            console.error("Error checking token expiration:", error);
+            return true;
+        }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AuthContext.Provider, {
         value: {
             user,
             loading,
             login,
-            logout
+            logout,
+            refreshToken,
+            isTokenExpired
         },
         children: children
     }, void 0, false, {
         fileName: "[project]/contexts/AuthContext.js",
-        lineNumber: 47,
-        columnNumber: 10
+        lineNumber: 101,
+        columnNumber: 5
     }, this);
 };
 const useAuth = ()=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(AuthContext);

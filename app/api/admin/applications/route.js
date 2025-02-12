@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode"
 
 export async function GET(req) {
   try {
-    const headersList = headers()
+    const headersList = await headers()
     const token = headersList.get("authorization")?.split(" ")[1]
 
     if (!token) {
