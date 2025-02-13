@@ -5,5 +5,9 @@
   "/api/dashboard/route": "app/api/dashboard/route.js",
   "/page": "app/page.js",
   "/apply/page": "app/apply/page.js",
-  "/blog-podcast/page": "app/blog-podcast/page.js"
+  "/blog-podcast/page": "app/blog-podcast/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/api/admin/applications/route": "app/api/admin/applications/route.js",
+  "/pricing/page": "app/pricing/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }
