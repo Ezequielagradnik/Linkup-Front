@@ -2,12 +2,15 @@
 
 import { useState } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button"
+import { ChevronRight, Headphones, BookOpen } from "lucide-react"
 
 export default function BlogAndPodcast() {
   const { language } = useLanguage()
   const [activeTab, setActiveTab] = useState("blog")
+  const [expandedPost, setExpandedPost] = useState(null)
 
   const content = {
     en: {
@@ -15,12 +18,17 @@ export default function BlogAndPodcast() {
       description: "Discover insights and stories from successful founders and industry experts",
       blogTab: "Blog",
       podcastTab: "Podcast",
-      podcastComingSoon: "Coming soon! Find more of our posts on our website's blog and in our growing community.",
-      joinCommunity: "Want to be part of our community? Leave us a comment.",
+      podcastComingSoon: "Exciting content coming soon!",
+      podcastDescription:
+        "Stay tuned for our upcoming podcast series featuring interviews with industry leaders and startup founders.",
+      readMore: "Read More",
+      readLess: "Read Less",
       blogs: [
         {
           title: "Why Your MVP Should Never Be Free",
           date: "February 1, 2024",
+          excerpt:
+            "If you think launching your MVP for free will help validate your idea, we have news for you: it could be the worst mistake for your startup. Here's why.",
           content: `❌ Why should your MVP never be free? ❌
 If you think launching your MVP for free will help validate your idea, we have news for you: it could be the worst mistake for your startup. Here's why. 👇
 
@@ -46,11 +54,12 @@ If you don't charge, you can't reinvest in improvements, marketing, or scaling. 
 📌 Follow LinkUp for more content on startups, investment, and growth! 🚀
 
 #Entrepreneurship #Startups #MVP #Business #Validation #LinkUp`,
-          readMore: "Read more",
         },
         {
           title: "How to Build a Product People Want (Real Example)",
           date: "January 29, 2024",
+          excerpt:
+            "Discover how Dropbox validated their idea with a simple video before writing a single line of code, and learn key strategies for product validation.",
           content: `💡 Did you know that Dropbox validated their idea with a simple video before writing a single line of code?
 
 Most startups fail because they create products nobody wants. The secret is to validate before building.
@@ -64,11 +73,12 @@ Before developing their software, Drew Houston created a simple video showing ho
 ⿣ An MVP can be just a video, a landing page, or a presentation.
 
 🔥 How could you apply this to your startup? Share your idea in the LinkUp community and get real feedback.`,
-          readMore: "Read more",
         },
         {
           title: "The Secret to Startup Success Isn't in the Product",
           date: "January 27, 2024",
+          excerpt:
+            "Learn why execution, not just the product, is the key differentiator between successful startups and those that fail. Explore real-world examples of pivots that led to success.",
           content: `🚀 The biggest differentiator between a successful startup and one that fails isn't the product, it's the execution.
 
 Many people believe that great startups were born with an incredible idea. But the truth is that most started with something completely different and pivoted along the way.
@@ -83,7 +93,6 @@ Founders who listen to the market, iterate quickly, and constantly test are the 
 Is your startup executing quickly or just building without feedback?
 
 🔁 Leave us a comment if you want to be part of our community and Share your experience.`,
-          readMore: "Read more",
         },
       ],
     },
@@ -92,13 +101,17 @@ Is your startup executing quickly or just building without feedback?
       description: "Descubre ideas e historias de fundadores exitosos y expertos de la industria",
       blogTab: "Blog",
       podcastTab: "Podcast",
-      podcastComingSoon:
-        "¡Próximamente encuentra más de nuestros posts en nuestro blog en nuestra página web y en nuestra comunidad que va creciendo poco a poco!",
-      joinCommunity: "¿Quieres ser parte de nuestra comunidad? Déjanos un comentario.",
+      podcastComingSoon: "¡Contenido emocionante próximamente!",
+      podcastDescription:
+        "Mantente atento a nuestra próxima serie de podcasts con entrevistas a líderes de la industria y fundadores de startups.",
+      readMore: "Leer Más",
+      readLess: "Leer Menos",
       blogs: [
         {
           title: "¿Por qué tu MVP nunca debe ser gratis?",
           date: "1 de Febrero, 2024",
+          excerpt:
+            "Si crees que lanzar tu MVP gratis te ayudará a validar tu idea, tenemos noticias para ti: puede ser el peor error para tu startup. Aquí te explicamos por qué.",
           content: `❌ ¿Por qué tu MVP nunca debe ser gratis? ❌
 Si crees que lanzar tu MVP gratis te ayudará a validar tu idea, tenemos noticias para ti: puede ser el peor error para tu startup. Aquí te explicamos por qué. 👇
 
@@ -124,11 +137,12 @@ Si no cobras, no puedes reinvertir en mejoras, marketing ni escalar. Tu startup 
 📌 Sigue a LinkUp para más contenido sobre startups, inversión y crecimiento! 🚀
 
 #Emprendimiento #Startups #MVP #Negocios #Validación #LinkUp`,
-          readMore: "Leer más",
         },
         {
           title: "Cómo Construir un Producto que la Gente Quiera (Ejemplo Real)",
           date: "29 de Enero, 2024",
+          excerpt:
+            "Descubre cómo Dropbox validó su idea con un simple video antes de escribir una línea de código, y aprende estrategias clave para la validación de productos.",
           content: `💡 ¿Sabías que Dropbox validó su idea con un simple video antes de escribir una línea de código?
 
 La mayoría de startups fallan porque crean productos que nadie quiere. El secreto es validar antes de construir.
@@ -142,11 +156,12 @@ Antes de desarrollar su software, Drew Houston creó un simple video mostrando c
 ⿣ Un MVP puede ser solo un video, una landing page o una presentación.
 
 🔥 ¿Cómo podrías aplicar esto en tu startup? Publica tu idea en la comunidad LinkUp y recibe feedback real.`,
-          readMore: "Leer más",
         },
         {
           title: "El Secreto del Éxito de las Startups No Está en el Producto",
           date: "27 de Enero, 2024",
+          excerpt:
+            "Aprende por qué la ejecución, no solo el producto, es el factor diferenciador clave entre las startups exitosas y las que fracasan. Explora ejemplos reales de pivotes que llevaron al éxito.",
           content: `🚀 El mayor diferenciador entre una startup exitosa y una que fracasa no es el producto, es la ejecución.
 
 Mucha gente cree que las grandes startups nacieron con una idea increíble. Pero la verdad es que la mayoría empezó con algo completamente diferente y pivotó en el camino.
@@ -161,7 +176,6 @@ Los founders que escuchan el mercado, iteran rápido y prueban constantemente so
 ¿Tu startup está ejecutando rápido o solo construyendo sin feedback?
 
 🔁 Déjanos un comentario si quieres ser parte de nuestra comunidad y Comparte tu experiencia.`,
-          readMore: "Leer más",
         },
       ],
     },
@@ -169,24 +183,34 @@ Los founders que escuchan el mercado, iteran rápido y prueban constantemente so
 
   const t = content[language]
 
+  const toggleExpand = (index) => {
+    if (expandedPost === index) {
+      setExpandedPost(null)
+    } else {
+      setExpandedPost(index)
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-primary-900 mb-4 text-center">{t.title}</h1>
-        <p className="text-center text-gray-600 mb-8">{t.description}</p>
+        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">{t.description}</p>
 
         <Tabs defaultValue="blog" className="max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
+          <TabsList className="w-full mb-8 bg-transparent border-b border-gray-200">
             <TabsTrigger
               value="blog"
-              className="rounded-full data-[state=active]:bg-secondary-500 data-[state=active]:text-white"
+              className="px-8 py-2 -mb-px text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 border-b-2 border-transparent data-[state=active]:border-secondary-500 data-[state=active]:text-secondary-600"
             >
+              <BookOpen className="w-4 h-4 mr-2 inline-block" />
               {t.blogTab}
             </TabsTrigger>
             <TabsTrigger
               value="podcast"
-              className="rounded-full data-[state=active]:bg-secondary-500 data-[state=active]:text-white"
+              className="px-8 py-2 -mb-px text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 border-b-2 border-transparent data-[state=active]:border-secondary-500 data-[state=active]:text-secondary-600"
             >
+              <Headphones className="w-4 h-4 mr-2 inline-block" />
               {t.podcastTab}
             </TabsTrigger>
           </TabsList>
@@ -194,17 +218,33 @@ Los founders que escuchan el mercado, iteran rápido y prueban constantemente so
           <TabsContent value="blog">
             <div className="grid gap-8">
               {t.blogs.map((blog, index) => (
-                <Card key={index} className="bg-white hover:shadow-lg transition-shadow duration-300">
-                  <CardHeader>
+                <Card
+                  key={index}
+                  className="bg-white hover:shadow-lg transition-shadow duration-300 overflow-hidden border-2 border-gray-200"
+                >
+                  <CardHeader className="p-6">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-gray-500">{blog.date}</span>
+                      <span className="text-sm text-secondary-600 font-medium">{blog.date}</span>
                     </div>
-                    <CardTitle className="text-xl font-bold text-primary-900 mb-2">{blog.title}</CardTitle>
+                    <CardTitle className="text-2xl font-bold text-primary-900 mb-2">{blog.title}</CardTitle>
+                    <CardDescription className="text-gray-600">{blog.excerpt}</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="prose max-w-none">
-                      <p className="whitespace-pre-line text-gray-600">{blog.content}</p>
+                  <CardContent className="p-6">
+                    <div className="prose max-w-none mb-4">
+                      <p className="text-gray-600">
+                        {expandedPost === index
+                          ? blog.content
+                          : `${blog.content.split("\n").slice(0, 3).join("\n")}...`}
+                      </p>
                     </div>
+                    <Button
+                      variant="outline"
+                      className="mt-4 border-2 border-secondary-500 text-secondary-600 hover:bg-secondary-50"
+                      onClick={() => toggleExpand(index)}
+                    >
+                      {expandedPost === index ? t.readLess : t.readMore}
+                      <ChevronRight className="w-4 h-4 ml-2" />
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -212,10 +252,15 @@ Los founders que escuchan el mercado, iteran rápido y prueban constantemente so
           </TabsContent>
 
           <TabsContent value="podcast">
-            <Card className="bg-white">
-              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-                <p className="text-lg text-gray-600 max-w-2xl mb-4">{t.podcastComingSoon}</p>
-                <p className="text-sm text-gray-500">{t.joinCommunity}</p>
+            <Card className="bg-white overflow-hidden border-2 border-gray-200">
+              <CardContent className="flex flex-col md:flex-row items-center justify-between p-8">
+                <div className="mb-6 md:mb-0 md:mr-6">
+                  <h3 className="text-2xl font-bold text-primary-900 mb-2">{t.podcastComingSoon}</h3>
+                  <p className="text-gray-600 max-w-md mb-4">{t.podcastDescription}</p>
+                </div>
+                <div className="w-48 h-48 bg-secondary-200 rounded-full flex items-center justify-center">
+                  <Headphones className="w-24 h-24 text-secondary-500" />
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
