@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText, Award, ExternalLink } from "lucide-react"
+import { Bell, Book, MessageCircle, Users, FileText, Award, ExternalLink } from 'lucide-react'
 import Link from "next/link"
 import ModuleDetails from "@/components/ModuleDetails"
 import AdminDashboard from "@/components/AdminDashboard"
@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null)
   const [dataLoading, setDataLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [showInitialForm, setShowInitialForm] = useState(true)
 
   useEffect(() => {
     const checkAuthAndFetchData = async () => {
@@ -31,35 +32,26 @@ export default function Dashboard() {
               return
             }
           }
-          fetchDashboardData()
+          // Simulating data fetch without actually making the request
+          setDashboardData({
+            user: {
+              name: "Usuario",
+              currentModule: 1,
+              progress: 0
+            },
+            modules: [
+              { id: 1, title: "Introducción", completed: false },
+              { id: 2, title: "Ideación", completed: false },
+              { id: 3, title: "Validación", completed: false },
+            ]
+          })
+          setDataLoading(false)
         }
       }
     }
 
     checkAuthAndFetchData()
   }, [user, loading, router, refreshToken, isTokenExpired])
-
-  const fetchDashboardData = async () => {
-    try {
-      const response = await fetch("/api/dashboard", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      if (response.ok) {
-        const data = await response.json()
-        setDashboardData(data)
-        setError(null)
-      } else {
-        throw new Error("Failed to fetch dashboard data")
-      }
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error)
-      setError("Error al cargar los datos del dashboard. Por favor, intenta de nuevo más tarde.")
-    } finally {
-      setDataLoading(false)
-    }
-  }
 
   if (loading || dataLoading) {
     return <div className="flex justify-center items-center h-screen">Cargando...</div>
@@ -79,6 +71,29 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {showInitialForm && (
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Bienvenido a LinkUp</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">Para comenzar con los módulos, primero necesitamos conocerte mejor. Por favor, completa nuestro formulario de análisis inicial:</p>
+            <Button asChild size="lg">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+                onClick={() => setShowInitialForm(false)}
+              >
+                <FileText className="w-5 h-5" />
+                Completar Formulario de Análisis
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
       <h1 className="text-3xl font-bold mb-8">Bienvenido de vuelta, {dashboardData.user.name}</h1>
 
       {/* Module Progress */}
@@ -208,4 +223,3 @@ export default function Dashboard() {
     </div>
   )
 }
-

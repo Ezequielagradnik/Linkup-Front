@@ -9,5 +9,6 @@
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/api/admin/applications/route": "app/api/admin/applications/route.js",
   "/pricing/page": "app/pricing/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/contact/page": "app/contact/page.js"
 }
