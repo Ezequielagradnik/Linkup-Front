@@ -7,10 +7,10 @@ import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText } from "lucide-react"
+import { Bell, Book, MessageCircle, Users, FileText } from 'lucide-react'
 import Link from "next/link"
 import ModuleDetails from "@/components/ModuleDetails"
-import { Award, ExternalLink } from "lucide-react"
+import { Award, ExternalLink } from 'lucide-react'
 
 export default function Dashboard() {
   const { user, loading, refreshToken, isTokenExpired } = useAuth()
@@ -68,7 +68,7 @@ export default function Dashboard() {
       },
       postGraduation: {
         title: "Post-Graduation",
-        description: "Explore post-graduation options.",
+        description: "Explore post-graduation options and join Vefy.",
         button: "Post-Graduation Options",
       },
     },
@@ -118,7 +118,7 @@ export default function Dashboard() {
       },
       postGraduation: {
         title: "Post-Graduación",
-        description: "Explora las opciones post-graduación.",
+        description: "Explora las opciones post-graduación y únete a Vefy.",
         button: "Opciones Post-Graduación",
       },
     },
@@ -168,7 +168,7 @@ export default function Dashboard() {
     }
 
     checkAuthAndFetchData()
-  }, [user, loading, router, refreshToken, isTokenExpired, fetchDashboardData]) // Added fetchDashboardData to dependencies
+  }, [user, loading, router, refreshToken, isTokenExpired, fetchDashboardData]) 
 
   if (loading || dataLoading) {
     return <div className="flex justify-center items-center min-h-screen">{t.loading}</div>
@@ -347,7 +347,23 @@ export default function Dashboard() {
 
         {/* Graduation and Post-Graduation */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-  
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center text-lg">
+                <Award className="mr-2 h-5 w-5" /> {t.graduation.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm md:text-base mb-4">{t.graduation.description}</p>
+              <Button
+                className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50"
+                disabled={dashboardData.user.progress < 100}
+                asChild
+              >
+                <Link href="/graduation">{t.graduation.button}</Link>
+              </Button>
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>
@@ -371,4 +387,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
