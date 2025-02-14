@@ -1,6 +1,6 @@
 {
   "app": {
-    "[project]/app/dashboard/page": [
+    "[project]/app/mentor-ia/page": [
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ],
@@ -8,23 +8,11 @@
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ],
-    "[project]/app/page": [
+    "[project]/app/dashboard/page": [
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ],
-    "[project]/app/apply/page": [
-      "static/media/Geist_Variable-s.p.781b491f.woff2",
-      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
-    ],
-    "[project]/app/blog-podcast/page": [
-      "static/media/Geist_Variable-s.p.781b491f.woff2",
-      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
-    ],
-    "[project]/app/admin/dashboard/page": [
-      "static/media/Geist_Variable-s.p.781b491f.woff2",
-      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
-    ],
-    "[project]/app/pricing/page": [
+    "[project]/app/contact/page": [
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ],
@@ -32,7 +20,23 @@
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ],
-    "[project]/app/contact/page": [
+    "[project]/app/community/page": [
+      "static/media/Geist_Variable-s.p.781b491f.woff2",
+      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
+    ],
+    "[project]/app/about/page": [
+      "static/media/Geist_Variable-s.p.781b491f.woff2",
+      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
+    ],
+    "[project]/app/post-graduation/page": [
+      "static/media/Geist_Variable-s.p.781b491f.woff2",
+      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
+    ],
+    "[project]/app/guide/page": [
+      "static/media/Geist_Variable-s.p.781b491f.woff2",
+      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
+    ],
+    "[project]/app/page": [
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ]

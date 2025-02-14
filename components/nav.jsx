@@ -14,7 +14,7 @@ export function Nav() {
   const { language } = useLanguage()
   const { user, logout } = useAuth()
 
-  const menuItems = [
+  const nonLoggedInMenuItems = [
     { name: language === "en" ? "Home" : "Inicio", path: "/" },
     { name: language === "en" ? "Blog & Podcast" : "Blog y Podcast", path: "/blog-podcast" },
     { name: language === "en" ? "About" : "Acerca de", path: "/about" },
@@ -22,6 +22,18 @@ export function Nav() {
     { name: language === "en" ? "Contact" : "Contacto", path: "/contact" },
     ...(user?.isAdmin ? [{ name: language === "en" ? "Admin" : "Administrador", path: "/admin/dashboard" }] : []),
   ]
+
+  const loggedInMenuItems = [
+    { name: language === "en" ? "Dashboard" : "Panel", path: "/dashboard" },
+    { name: language === "en" ? "Blog & Podcast" : "Blog y Podcast", path: "/blog-podcast" },
+    { name: language === "en" ? "About" : "Acerca de", path: "/about" },
+    { name: language === "en" ? "Community" : "Comunidad", path: "/community" },
+    { name: language === "en" ? "Contact" : "Contacto", path: "/contact" },
+    { name: language === "en" ? "Mentor-IA" : "Mentor-IA", path: "/mentor-ia" },
+    ...(user?.isAdmin ? [{ name: language === "en" ? "Admin" : "Administrador", path: "/admin/dashboard" }] : []),
+  ]
+  
+  const menuItems = user ? loggedInMenuItems : nonLoggedInMenuItems
 
   const MobileMenuItem = ({ href, children }) => (
     <Link

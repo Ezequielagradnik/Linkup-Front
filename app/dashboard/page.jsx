@@ -7,9 +7,10 @@ import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText, Award, ExternalLink } from "lucide-react"
+import { Bell, Book, MessageCircle, Users, FileText } from "lucide-react"
 import Link from "next/link"
 import ModuleDetails from "@/components/ModuleDetails"
+import { Award, ExternalLink } from "lucide-react"
 
 export default function Dashboard() {
   const { user, loading, refreshToken, isTokenExpired } = useAuth()
@@ -67,7 +68,7 @@ export default function Dashboard() {
       },
       postGraduation: {
         title: "Post-Graduation",
-        description: "Explore post-graduation options and join Vefy.",
+        description: "Explore post-graduation options.",
         button: "Post-Graduation Options",
       },
     },
@@ -117,7 +118,7 @@ export default function Dashboard() {
       },
       postGraduation: {
         title: "Post-Graduación",
-        description: "Explora las opciones post-graduación y únete a Vefy.",
+        description: "Explora las opciones post-graduación.",
         button: "Opciones Post-Graduación",
       },
     },
@@ -183,84 +184,115 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-16 pb-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 pt-16 pb-8 px-4">
       <div className="container mx-auto max-w-7xl">
-        {showInitialForm && (
-          <Card className="mb-8 max-w-2xl mx-auto">
-            <CardHeader className="text-center space-y-2">
-              <div className="flex justify-center">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
-                  alt="LinkUp Logo"
-                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
-                />
+        {showInitialForm ? (
+          <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg mb-8">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white opacity-50" />
+            <div className="relative p-8 md:p-12">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <img
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
+                    alt="LinkUp Logo"
+                    className="w-32 h-32 md:w-40 md:h-40 object-contain"
+                  />
+                </div>
+                <div className="flex-grow text-center md:text-left">
+                  <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
+                    {language === "en" ? "Welcome to LinkUp" : "Bienvenido a LinkUp"}
+                  </h1>
+                  <p className="text-lg text-gray-600 mb-6">
+                    {language === "en"
+                      ? "To begin your entrepreneurial journey, please complete our initial analysis form. This will help us personalize your experience."
+                      : "Para comenzar tu viaje emprendedor, completa nuestro formulario de análisis inicial. Esto nos ayudará a personalizar tu experiencia."}
+                  </p>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
+                  >
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                      onClick={() => setShowInitialForm(false)}
+                    >
+                      <FileText className="w-5 h-5" />
+                      {language === "en" ? "Complete Analysis Form" : "Completar Formulario de Análisis"}
+                    </a>
+                  </Button>
+                </div>
               </div>
-              <CardTitle className="text-2xl md:text-3xl">{t.welcome}</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center">
-              <p className="mb-6 text-sm md:text-base">{t.formDescription}</p>
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all w-full md:w-auto"
-              >
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
-                  onClick={() => setShowInitialForm(false)}
-                >
-                  <FileText className="w-5 h-5" />
-                  {t.formButton}
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        ) : (
+          <h1 className="text-2xl md:text-3xl font-bold mb-8 text-center">
+            {language === "en" ? "Welcome back" : "Bienvenido de vuelta"}, {dashboardData.user.name}
+          </h1>
         )}
 
-        <h1 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-          {t.welcomeBack}, {dashboardData.user.name}
-        </h1>
+        {/* Start Guide Section */}
+        <Card className="mb-8 bg-gradient-to-br from-blue-50 to-white border-2 border-blue-100">
+          <CardHeader>
+            <CardTitle className="flex items-center text-lg">
+              <Book className="mr-2 h-5 w-5 text-blue-600" />
+              {language === "en" ? "Start Your Journey" : "Comienza tu Viaje"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600 mb-4">
+              {language === "en"
+                ? "Begin your entrepreneurial journey with our comprehensive step-by-step guide."
+                : "Comienza tu viaje emprendedor con nuestra guía paso a paso."}
+            </p>
+            <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all" asChild>
+              <Link href="/guide">{language === "en" ? "Start Guide" : "Iniciar Guía"}</Link>
+            </Button>
+          </CardContent>
+        </Card>
 
         {/* Module Progress */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>{t.progress.title}</CardTitle>
+            <CardTitle>{language === "en" ? "Your Progress" : "Tu Progreso"}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-base md:text-lg mb-4">
-              {t.progress.continue} {dashboardData.user.currentModule}
+              {language === "en" ? "Continue with Module" : "Continuar con Módulo"} {dashboardData.user.currentModule}
             </p>
             <Progress value={dashboardData.user.progress} className="w-full" />
             <p className="mt-2 text-sm text-gray-600">
-              {dashboardData.user.progress}% {t.progress.completed}
+              {dashboardData.user.progress}% {language === "en" ? "completed" : "completado"}
             </p>
-            <Button
-              className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all w-full md:w-auto"
-              asChild
-            >
-              <Link href={`/modules/${dashboardData.user.currentModule}`}>{t.progress.button}</Link>
+            <Button className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all" asChild>
+              <Link href="/guide">{language === "en" ? "Continue Learning" : "Continuar Aprendizaje"}</Link>
             </Button>
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <Bell className="mr-2 h-5 w-5" /> {t.quickActions.notifications.title}
+                <Bell className="mr-2 h-5 w-5" />
+                {language === "en" ? "Notifications" : "Notificaciones"}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.quickActions.notifications.description}</p>
+              <p className="text-sm md:text-base mb-4">
+                {language === "en"
+                  ? "You have 0 new messages from the chatbot."
+                  : "Tienes 0 nuevos mensajes del chatbot."}
+              </p>
               <Button
                 variant="outline"
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
                 asChild
               >
-                <Link href="/notifications">{t.quickActions.notifications.button}</Link>
+                <Link href="/notifications">{language === "en" ? "View Notifications" : "Ver Notificaciones"}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -268,17 +300,20 @@ export default function Dashboard() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <MessageCircle className="mr-2 h-5 w-5" /> {t.quickActions.contact.title}
+                <MessageCircle className="mr-2 h-5 w-5" />
+                {language === "en" ? "Contact" : "Contacto"}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.quickActions.contact.description}</p>
+              <p className="text-sm md:text-base mb-4">
+                {language === "en" ? "Need help? Contact us." : "¿Necesitas ayuda? Contáctanos."}
+              </p>
               <Button
                 variant="outline"
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
                 asChild
               >
-                <Link href="/contact">{t.quickActions.contact.button}</Link>
+                <Link href="/contact">{language === "en" ? "Contact Us" : "Contactar"}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -286,37 +321,22 @@ export default function Dashboard() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <Users className="mr-2 h-5 w-5" /> {t.quickActions.community.title}
+                <Users className="mr-2 h-5 w-5" />
+                {language === "en" ? "Community" : "Comunidad"}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.quickActions.community.description}</p>
+              <p className="text-sm md:text-base mb-4">
+                {language === "en"
+                  ? "Join our community of entrepreneurs."
+                  : "Únete a nuestra comunidad de emprendedores."}
+              </p>
               <Button
                 variant="outline"
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
                 asChild
               >
-                <Link href="/community">{t.quickActions.community.button}</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <Book className="mr-2 h-5 w-5" /> {t.mainActions.guide.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.mainActions.guide.description}</p>
-              <Button
-                className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
-                asChild
-              >
-                <Link href="/guide">{t.mainActions.guide.button}</Link>
+                <Link href="/community">{language === "en" ? "Join Community" : "Unirse a la Comunidad"}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -327,23 +347,7 @@ export default function Dashboard() {
 
         {/* Graduation and Post-Graduation */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <Award className="mr-2 h-5 w-5" /> {t.graduation.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.graduation.description}</p>
-              <Button
-                className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50"
-                disabled={dashboardData.user.progress < 100}
-                asChild
-              >
-                <Link href="/graduation">{t.graduation.button}</Link>
-              </Button>
-            </CardContent>
-          </Card>
+  
 
           <Card>
             <CardHeader>
