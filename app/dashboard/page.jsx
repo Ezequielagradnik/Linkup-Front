@@ -292,7 +292,7 @@ export default function Dashboard() {
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
                 asChild
               >
-                <Link href="/notifications">{language === "en" ? "View Notifications" : "Ver Notificaciones"}</Link>
+                <Link href="/mentor-ia">{language === "en" ? "View Notifications" : "Ver Notificaciones"}</Link>
               </Button>
             </CardContent>
           </Card>

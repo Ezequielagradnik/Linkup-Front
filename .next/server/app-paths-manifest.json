@@ -10,5 +10,6 @@
   "/post-graduation/page": "app/post-graduation/page.js",
   "/guide/page": "app/guide/page.js",
   "/page": "app/page.js",
-  "/blog-podcast/page": "app/blog-podcast/page.js"
+  "/blog-podcast/page": "app/blog-podcast/page.js",
+  "/apply/page": "app/apply/page.js"
 }
