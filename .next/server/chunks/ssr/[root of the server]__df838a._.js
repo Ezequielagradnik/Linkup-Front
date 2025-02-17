@@ -480,7 +480,7 @@ function Nav() {
     ];
     const loggedInMenuItems = [
         {
-            name: language === "en" ? "Dashboard" : "Panel",
+            name: language === "en" ? "Home" : "Inicio",
             path: "/dashboard"
         },
         {

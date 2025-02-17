@@ -24,7 +24,7 @@ export function Nav() {
   ]
 
   const loggedInMenuItems = [
-    { name: language === "en" ? "Dashboard" : "Panel", path: "/dashboard" },
+    { name: language === "en" ? "Home" : "Inicio", path: "/dashboard" },
     { name: language === "en" ? "Guide" : "Guía", path: "/guide" },
     { name: language === "en" ? "Blog & Podcast" : "Blog y Podcast", path: "/blog-podcast" },
     { name: language === "en" ? "About" : "Acerca de", path: "/about" },
