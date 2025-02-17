@@ -12,5 +12,6 @@
   "/page": "app/page.js",
   "/blog-podcast/page": "app/blog-podcast/page.js",
   "/apply/page": "app/apply/page.js",
-  "/pricing/page": "app/pricing/page.js"
+  "/pricing/page": "app/pricing/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js"
 }

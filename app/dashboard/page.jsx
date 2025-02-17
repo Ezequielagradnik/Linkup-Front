@@ -1,16 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/AuthContext"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText } from "lucide-react"
-import Link from "next/link"
+import { Bell, Book, MessageCircle, Users, FileText, Award, ExternalLink } from "lucide-react"
 import ModuleDetails from "@/components/ModuleDetails"
-import { Award, ExternalLink } from "lucide-react"
 
 export default function Dashboard() {
   const { user, loading, refreshToken, isTokenExpired } = useAuth()
@@ -126,7 +124,7 @@ export default function Dashboard() {
 
   const t = content[language]
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       // Mock data - replace with actual API call in production
       const mockData = {
@@ -147,7 +145,7 @@ export default function Dashboard() {
     } finally {
       setDataLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     const checkAuthAndFetchData = async () => {
@@ -168,7 +166,12 @@ export default function Dashboard() {
     }
 
     checkAuthAndFetchData()
-  }, [user, loading, router, refreshToken, isTokenExpired, fetchDashboardData]) // Added fetchDashboardData to dependencies
+  }, [user, loading, router, refreshToken, isTokenExpired, fetchDashboardData])
+
+  const handleNavigation = (e, path) => {
+    e.preventDefault()
+    router.push(path)
+  }
 
   if (loading || dataLoading) {
     return <div className="flex justify-center items-center min-h-screen">{t.loading}</div>
@@ -247,8 +250,11 @@ export default function Dashboard() {
                 ? "Begin your entrepreneurial journey with our comprehensive step-by-step guide."
                 : "Comienza tu viaje emprendedor con nuestra guía paso a paso."}
             </p>
-            <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all" asChild>
-              <Link href="/guide">{language === "en" ? "Start Guide" : "Iniciar Guía"}</Link>
+            <Button
+              className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
+              onClick={(e) => handleNavigation(e, "/guide")}
+            >
+              {language === "en" ? "Start Guide" : "Iniciar Guía"}
             </Button>
           </CardContent>
         </Card>
@@ -266,8 +272,11 @@ export default function Dashboard() {
             <p className="mt-2 text-sm text-gray-600">
               {dashboardData.user.progress}% {language === "en" ? "completed" : "completado"}
             </p>
-            <Button className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all" asChild>
-              <Link href="/guide">{language === "en" ? "Continue Learning" : "Continuar Aprendizaje"}</Link>
+            <Button
+              className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
+              onClick={(e) => handleNavigation(e, "/guide")}
+            >
+              {language === "en" ? "Continue Learning" : "Continuar Aprendizaje"}
             </Button>
           </CardContent>
         </Card>
@@ -290,9 +299,9 @@ export default function Dashboard() {
               <Button
                 variant="outline"
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
-                asChild
+                onClick={(e) => handleNavigation(e, "/mentor-ia")}
               >
-                <Link href="/mentor-ia">{language === "en" ? "View Notifications" : "Ver Notificaciones"}</Link>
+                {language === "en" ? "View Notifications" : "Ver Notificaciones"}
               </Button>
             </CardContent>
           </Card>
@@ -311,9 +320,9 @@ export default function Dashboard() {
               <Button
                 variant="outline"
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
-                asChild
+                onClick={(e) => handleNavigation(e, "/contact")}
               >
-                <Link href="/contact">{language === "en" ? "Contact Us" : "Contactar"}</Link>
+                {language === "en" ? "Contact Us" : "Contactar"}
               </Button>
             </CardContent>
           </Card>
@@ -334,9 +343,9 @@ export default function Dashboard() {
               <Button
                 variant="outline"
                 className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
-                asChild
+                onClick={(e) => handleNavigation(e, "/community")}
               >
-                <Link href="/community">{language === "en" ? "Join Community" : "Unirse a la Comunidad"}</Link>
+                {language === "en" ? "Join Community" : "Unirse a la Comunidad"}
               </Button>
             </CardContent>
           </Card>
@@ -347,7 +356,23 @@ export default function Dashboard() {
 
         {/* Graduation and Post-Graduation */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-  
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center text-lg">
+                <Award className="mr-2 h-5 w-5" /> {t.graduation.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm md:text-base mb-4">{t.graduation.description}</p>
+              <Button
+                className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50"
+                disabled={dashboardData.user.progress < 100}
+                onClick={(e) => handleNavigation(e, "/graduation")}
+              >
+                {t.graduation.button}
+              </Button>
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>
@@ -360,9 +385,9 @@ export default function Dashboard() {
               <Button
                 className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50"
                 disabled={dashboardData.user.progress < 100}
-                asChild
+                onClick={(e) => handleNavigation(e, "/post-graduation")}
               >
-                <Link href="/post-graduation">{t.postGraduation.button}</Link>
+                {t.postGraduation.button}
               </Button>
             </CardContent>
           </Card>

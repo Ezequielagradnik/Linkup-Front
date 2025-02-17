@@ -309,7 +309,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/button.jsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/card.jsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$progress$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/progress.jsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ModuleDetails$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ModuleDetails.jsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/file-text.js [app-client] (ecmascript) <export default as FileText>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$book$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Book$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/book.js [app-client] (ecmascript) <export default as Book>");
@@ -321,8 +320,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 ;
 var _s = __turbopack_refresh__.signature();
 "use client";
-;
-;
 ;
 ;
 ;
@@ -387,7 +384,7 @@ function Dashboard() {
             },
             postGraduation: {
                 title: "Post-Graduation",
-                description: "Explore post-graduation options and join Vefy.",
+                description: "Explore post-graduation options.",
                 button: "Post-Graduation Options"
             }
         },
@@ -436,46 +433,48 @@ function Dashboard() {
             },
             postGraduation: {
                 title: "Post-Graduación",
-                description: "Explora las opciones post-graduación y únete a Vefy.",
+                description: "Explora las opciones post-graduación.",
                 button: "Opciones Post-Graduación"
             }
         }
     };
     const t = content[language];
-    const fetchDashboardData = async ()=>{
-        try {
-            // Mock data - replace with actual API call in production
-            const mockData = {
-                user: {
-                    name: "Ezequiel",
-                    currentModule: 1,
-                    progress: 10
-                },
-                modules: [
-                    {
-                        id: 1,
-                        title: "Introduction",
-                        completed: true
+    const fetchDashboardData = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "Dashboard.useCallback[fetchDashboardData]": async ()=>{
+            try {
+                // Mock data - replace with actual API call in production
+                const mockData = {
+                    user: {
+                        name: "Ezequiel",
+                        currentModule: 1,
+                        progress: 10
                     },
-                    {
-                        id: 2,
-                        title: "Ideation",
-                        completed: false
-                    },
-                    {
-                        id: 3,
-                        title: "Validation",
-                        completed: false
-                    }
-                ]
-            };
-            setDashboardData(mockData);
-        } catch (err) {
-            setError(err);
-        } finally{
-            setDataLoading(false);
+                    modules: [
+                        {
+                            id: 1,
+                            title: "Introduction",
+                            completed: true
+                        },
+                        {
+                            id: 2,
+                            title: "Ideation",
+                            completed: false
+                        },
+                        {
+                            id: 3,
+                            title: "Validation",
+                            completed: false
+                        }
+                    ]
+                };
+                setDashboardData(mockData);
+            } catch (err) {
+                setError(err);
+            } finally{
+                setDataLoading(false);
+            }
         }
-    };
+    }["Dashboard.useCallback[fetchDashboardData]"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Dashboard.useEffect": ()=>{
             const checkAuthAndFetchData = {
@@ -506,13 +505,17 @@ function Dashboard() {
         isTokenExpired,
         fetchDashboardData
     ]);
+    const handleNavigation = (e, path)=>{
+        e.preventDefault();
+        router.push(path);
+    };
     if (loading || dataLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex justify-center items-center min-h-screen",
             children: t.loading
         }, void 0, false, {
             fileName: "[project]/app/dashboard/page.jsx",
-            lineNumber: 174,
+            lineNumber: 177,
             columnNumber: 12
         }, this);
     }
@@ -523,7 +526,7 @@ function Dashboard() {
             children: t.error
         }, void 0, false, {
             fileName: "[project]/app/dashboard/page.jsx",
-            lineNumber: 179,
+            lineNumber: 182,
             columnNumber: 12
         }, this);
     }
@@ -533,7 +536,7 @@ function Dashboard() {
             children: t.noData
         }, void 0, false, {
             fileName: "[project]/app/dashboard/page.jsx",
-            lineNumber: 183,
+            lineNumber: 186,
             columnNumber: 12
         }, this);
     }
@@ -549,7 +552,7 @@ function Dashboard() {
                             className: "absolute inset-0 bg-gradient-to-br from-blue-50 to-white opacity-50"
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 191,
+                            lineNumber: 194,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -565,12 +568,12 @@ function Dashboard() {
                                             className: "w-32 h-32 md:w-40 md:h-40 object-contain"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 195,
+                                            lineNumber: 198,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 194,
+                                        lineNumber: 197,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -581,7 +584,7 @@ function Dashboard() {
                                                 children: language === "en" ? "Welcome to LinkUp" : "Bienvenido a LinkUp"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 202,
+                                                lineNumber: 205,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -589,7 +592,7 @@ function Dashboard() {
                                                 children: language === "en" ? "To begin your entrepreneurial journey, please complete our initial analysis form. This will help us personalize your experience." : "Para comenzar tu viaje emprendedor, completa nuestro formulario de análisis inicial. Esto nos ayudará a personalizar tu experiencia."
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 205,
+                                                lineNumber: 208,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -607,42 +610,42 @@ function Dashboard() {
                                                             className: "w-5 h-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/dashboard/page.jsx",
-                                                            lineNumber: 222,
+                                                            lineNumber: 225,
                                                             columnNumber: 23
                                                         }, this),
                                                         language === "en" ? "Complete Analysis Form" : "Completar Formulario de Análisis"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/dashboard/page.jsx",
-                                                    lineNumber: 215,
+                                                    lineNumber: 218,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 210,
+                                                lineNumber: 213,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 201,
+                                        lineNumber: 204,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/dashboard/page.jsx",
-                                lineNumber: 193,
+                                lineNumber: 196,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 192,
+                            lineNumber: 195,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 190,
+                    lineNumber: 193,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                     className: "text-2xl md:text-3xl font-bold mb-8 text-center",
@@ -653,7 +656,7 @@ function Dashboard() {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 231,
+                    lineNumber: 234,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -667,19 +670,19 @@ function Dashboard() {
                                         className: "mr-2 h-5 w-5 text-blue-600"
                                     }, void 0, false, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 240,
+                                        lineNumber: 243,
                                         columnNumber: 15
                                     }, this),
                                     language === "en" ? "Start Your Journey" : "Comienza tu Viaje"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/dashboard/page.jsx",
-                                lineNumber: 239,
+                                lineNumber: 242,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 238,
+                            lineNumber: 241,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -689,35 +692,28 @@ function Dashboard() {
                                     children: language === "en" ? "Begin your entrepreneurial journey with our comprehensive step-by-step guide." : "Comienza tu viaje emprendedor con nuestra guía paso a paso."
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 245,
+                                    lineNumber: 248,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                     className: "rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all",
-                                    asChild: true,
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/guide",
-                                        children: language === "en" ? "Start Guide" : "Iniciar Guía"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 251,
-                                        columnNumber: 15
-                                    }, this)
+                                    onClick: (e)=>handleNavigation(e, "/guide"),
+                                    children: language === "en" ? "Start Guide" : "Iniciar Guía"
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 250,
+                                    lineNumber: 253,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 244,
+                            lineNumber: 247,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 237,
+                    lineNumber: 240,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -728,12 +724,12 @@ function Dashboard() {
                                 children: language === "en" ? "Your Progress" : "Tu Progreso"
                             }, void 0, false, {
                                 fileName: "[project]/app/dashboard/page.jsx",
-                                lineNumber: 259,
+                                lineNumber: 265,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 258,
+                            lineNumber: 264,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -747,7 +743,7 @@ function Dashboard() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 262,
+                                    lineNumber: 268,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$progress$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Progress"], {
@@ -755,7 +751,7 @@ function Dashboard() {
                                     className: "w-full"
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 265,
+                                    lineNumber: 271,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -767,35 +763,28 @@ function Dashboard() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 266,
+                                    lineNumber: 272,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                     className: "mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all",
-                                    asChild: true,
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/guide",
-                                        children: language === "en" ? "Continue Learning" : "Continuar Aprendizaje"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 270,
-                                        columnNumber: 15
-                                    }, this)
+                                    onClick: (e)=>handleNavigation(e, "/guide"),
+                                    children: language === "en" ? "Continue Learning" : "Continuar Aprendizaje"
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 269,
+                                    lineNumber: 275,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 261,
+                            lineNumber: 267,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 257,
+                    lineNumber: 263,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -811,19 +800,19 @@ function Dashboard() {
                                                 className: "mr-2 h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 280,
+                                                lineNumber: 289,
                                                 columnNumber: 17
                                             }, this),
                                             language === "en" ? "Notifications" : "Notificaciones"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 279,
+                                        lineNumber: 288,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 278,
+                                    lineNumber: 287,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -833,36 +822,29 @@ function Dashboard() {
                                             children: language === "en" ? "You have 0 new messages from the chatbot." : "Tienes 0 nuevos mensajes del chatbot."
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 285,
+                                            lineNumber: 294,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "outline",
                                             className: "w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all",
-                                            asChild: true,
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: "/notifications",
-                                                children: language === "en" ? "View Notifications" : "Ver Notificaciones"
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 295,
-                                                columnNumber: 17
-                                            }, this)
+                                            onClick: (e)=>handleNavigation(e, "/mentor-ia"),
+                                            children: language === "en" ? "View Notifications" : "Ver Notificaciones"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 290,
+                                            lineNumber: 299,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 284,
+                                    lineNumber: 293,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 277,
+                            lineNumber: 286,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -875,19 +857,19 @@ function Dashboard() {
                                                 className: "mr-2 h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 303,
+                                                lineNumber: 312,
                                                 columnNumber: 17
                                             }, this),
                                             language === "en" ? "Contact" : "Contacto"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 302,
+                                        lineNumber: 311,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 301,
+                                    lineNumber: 310,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -897,36 +879,29 @@ function Dashboard() {
                                             children: language === "en" ? "Need help? Contact us." : "¿Necesitas ayuda? Contáctanos."
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 308,
+                                            lineNumber: 317,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "outline",
                                             className: "w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all",
-                                            asChild: true,
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: "/contact",
-                                                children: language === "en" ? "Contact Us" : "Contactar"
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 316,
-                                                columnNumber: 17
-                                            }, this)
+                                            onClick: (e)=>handleNavigation(e, "/contact"),
+                                            children: language === "en" ? "Contact Us" : "Contactar"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 311,
+                                            lineNumber: 320,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 307,
+                                    lineNumber: 316,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 300,
+                            lineNumber: 309,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -939,19 +914,19 @@ function Dashboard() {
                                                 className: "mr-2 h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 324,
+                                                lineNumber: 333,
                                                 columnNumber: 17
                                             }, this),
                                             language === "en" ? "Community" : "Comunidad"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 323,
+                                        lineNumber: 332,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 322,
+                                    lineNumber: 331,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -961,42 +936,35 @@ function Dashboard() {
                                             children: language === "en" ? "Join our community of entrepreneurs." : "Únete a nuestra comunidad de emprendedores."
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 329,
+                                            lineNumber: 338,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "outline",
                                             className: "w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all",
-                                            asChild: true,
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: "/community",
-                                                children: language === "en" ? "Join Community" : "Unirse a la Comunidad"
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 339,
-                                                columnNumber: 17
-                                            }, this)
+                                            onClick: (e)=>handleNavigation(e, "/community"),
+                                            children: language === "en" ? "Join Community" : "Unirse a la Comunidad"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 334,
+                                            lineNumber: 343,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 328,
+                                    lineNumber: 337,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 321,
+                            lineNumber: 330,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 276,
+                    lineNumber: 285,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ModuleDetails$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1004,7 +972,7 @@ function Dashboard() {
                     currentModule: dashboardData.user.currentModule
                 }, void 0, false, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 346,
+                    lineNumber: 355,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1020,7 +988,7 @@ function Dashboard() {
                                                 className: "mr-2 h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 353,
+                                                lineNumber: 362,
                                                 columnNumber: 17
                                             }, this),
                                             " ",
@@ -1028,12 +996,12 @@ function Dashboard() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 352,
+                                        lineNumber: 361,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 351,
+                                    lineNumber: 360,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1043,36 +1011,29 @@ function Dashboard() {
                                             children: t.graduation.description
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 357,
+                                            lineNumber: 366,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             className: "w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50",
                                             disabled: dashboardData.user.progress < 100,
-                                            asChild: true,
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: "/graduation",
-                                                children: t.graduation.button
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 363,
-                                                columnNumber: 17
-                                            }, this)
+                                            onClick: (e)=>handleNavigation(e, "/graduation"),
+                                            children: t.graduation.button
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 358,
+                                            lineNumber: 367,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 356,
+                                    lineNumber: 365,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 350,
+                            lineNumber: 359,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1085,7 +1046,7 @@ function Dashboard() {
                                                 className: "mr-2 h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 371,
+                                                lineNumber: 380,
                                                 columnNumber: 17
                                             }, this),
                                             " ",
@@ -1093,12 +1054,12 @@ function Dashboard() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/page.jsx",
-                                        lineNumber: 370,
+                                        lineNumber: 379,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 369,
+                                    lineNumber: 378,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1108,57 +1069,50 @@ function Dashboard() {
                                             children: t.postGraduation.description
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 375,
+                                            lineNumber: 384,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             className: "w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50",
                                             disabled: dashboardData.user.progress < 100,
-                                            asChild: true,
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                href: "/post-graduation",
-                                                children: t.postGraduation.button
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/dashboard/page.jsx",
-                                                lineNumber: 381,
-                                                columnNumber: 17
-                                            }, this)
+                                            onClick: (e)=>handleNavigation(e, "/post-graduation"),
+                                            children: t.postGraduation.button
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/page.jsx",
-                                            lineNumber: 376,
+                                            lineNumber: 385,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/page.jsx",
-                                    lineNumber: 374,
+                                    lineNumber: 383,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/page.jsx",
-                            lineNumber: 368,
+                            lineNumber: 377,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/page.jsx",
-                    lineNumber: 349,
+                    lineNumber: 358,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/dashboard/page.jsx",
-            lineNumber: 188,
+            lineNumber: 191,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/dashboard/page.jsx",
-        lineNumber: 187,
+        lineNumber: 190,
         columnNumber: 5
     }, this);
 }
-_s(Dashboard, "kE7zR1E5rXvD5mcISpdvqo54AzI=", false, function() {
+_s(Dashboard, "zpTgS7CwbR5DRc2LxtVWXQ+TuuU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$AuthContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"],
         __TURBOPACK__imported__module__$5b$project$5d2f$contexts$2f$LanguageContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLanguage"],

@@ -51,6 +51,10 @@
     "[project]/app/pricing/page": [
       "static/media/Geist_Variable-s.p.781b491f.woff2",
       "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
+    ],
+    "[project]/app/admin/dashboard/page": [
+      "static/media/Geist_Variable-s.p.781b491f.woff2",
+      "static/media/GeistMono_Variable.p.0ce97b8a.woff2"
     ]
   },
   "appUsingSizeAdjust": true,
