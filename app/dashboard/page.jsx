@@ -134,7 +134,7 @@ export default function Dashboard() {
           progress: 10,
         },
         modules: [
-          { id: 1, title: "Introduction", completed: true },
+          { id: 1, title: "INTRODUCCIÓN AL MUNDO DE LAS STARTUPS", completed: true },
           { id: 2, title: "Ideation", completed: false },
           { id: 3, title: "Validation", completed: false },
         ],
@@ -356,23 +356,6 @@ export default function Dashboard() {
 
         {/* Graduation and Post-Graduation */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <Award className="mr-2 h-5 w-5" /> {t.graduation.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.graduation.description}</p>
-              <Button
-                className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50"
-                disabled={dashboardData.user.progress < 100}
-                onClick={(e) => handleNavigation(e, "/graduation")}
-              >
-                {t.graduation.button}
-              </Button>
-            </CardContent>
-          </Card>
 
           <Card>
             <CardHeader>
