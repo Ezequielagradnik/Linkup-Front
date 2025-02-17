@@ -335,7 +335,7 @@ function Community() {
                                             asChild: true,
                                             className: "w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all text-lg py-6",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "#",
+                                                href: "https://chat.whatsapp.com/EnCAyI9GmzH0veB89u66PO ",
                                                 target: "_blank",
                                                 rel: "noopener noreferrer",
                                                 children: language === "en" ? "Join Now" : "Unirse Ahora"

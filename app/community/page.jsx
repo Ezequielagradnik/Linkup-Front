@@ -106,7 +106,7 @@ export default function Community() {
                 asChild
                 className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all text-lg py-6"
               >
-                <a href="#" target="_blank" rel="noopener noreferrer">
+                <a href="https://chat.whatsapp.com/EnCAyI9GmzH0veB89u66PO " target="_blank" rel="noopener noreferrer">
                   {language === "en" ? "Join Now" : "Unirse Ahora"}
                 </a>
               </Button>
