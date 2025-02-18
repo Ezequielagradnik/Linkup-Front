@@ -9,7 +9,8 @@ export default function ModuleDetails({ modules, currentModule }) {
   const { language } = useLanguage()
 
   const handleModuleClick = (moduleId) => {
-    router.push(`/module${moduleId}`)
+    // Actualizado para usar la nueva estructura de rutas
+    router.push(`/modules/${moduleId}`)
   }
 
   return (
