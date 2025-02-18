@@ -1,55 +1,52 @@
-"use client"
-
-import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from "next/navigation"
+import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp } from "lucide-react"
-import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 export default function ModuleDetails({ modules, currentModule }) {
-  const [expandedModule, setExpandedModule] = useState(currentModule)
+  const router = useRouter()
+  const { language } = useLanguage()
 
-  const toggleModule = (moduleOrder) => {
-    setExpandedModule(expandedModule === moduleOrder ? null : moduleOrder)
+  const handleModuleClick = (moduleId) => {
+    router.push(`/module${moduleId}`)
   }
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Módulos del Programa</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-center mb-8">
+        {language === "en" ? "Program Modules" : "Módulos del Programa"}
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {modules.map((module) => (
-          <div key={module.order} className="mb-6">
-            <div
-              className="flex justify-between items-center cursor-pointer"
-              onClick={() => toggleModule(module.order)}
-            >
-              <h3 className="font-semibold text-lg mb-2">{`${module.order}. ${module.title}`}</h3>
-              {expandedModule === module.order ? (
-                <ChevronUp className="h-5 w-5" />
-              ) : (
-                <ChevronDown className="h-5 w-5" />
-              )}
-            </div>
-            {expandedModule === module.order && (
-              <div className="mt-2">
-                <ul className="list-disc list-inside ml-4">
-                  {module.topics.map((topic, topicIndex) => (
-                    <li key={topicIndex} className="text-sm text-gray-600 mb-1">
-                      {topic}
-                    </li>
-                  ))}
-                </ul>
-                <Button className="mt-4" asChild>
-                  <Link href={`/modules/${module.order}`}>Ir al Módulo</Link>
+          <Card
+            key={module.id}
+            className={`transform transition-all duration-300 hover:scale-105 cursor-pointer ${
+              module.completed ? "border-green-500" : ""
+            }`}
+            onClick={() => handleModuleClick(module.id)}
+          >
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg font-semibold">
+                {language === "en" ? "Module" : "Módulo"} {module.id}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-600 mb-4">{module.title}</p>
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" className="text-blue-600 hover:text-blue-700 p-0 flex items-center gap-2">
+                  {language === "en" ? "Start Module" : "Comenzar Módulo"}
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
+                {module.completed && (
+                  <span className="text-green-500 text-sm">✓ {language === "en" ? "Completed" : "Completado"}</span>
+                )}
               </div>
-            )}
-          </div>
+            </CardContent>
+          </Card>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 

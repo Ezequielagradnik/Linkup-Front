@@ -1,3 +1,11 @@
 {
-  "/module1/page": "app/module1/page.js"
+  "/module1/page": "app/module1/page.js",
+  "/login/page": "app/login/page.js",
+  "/api/login/route": "app/api/login/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/guide/page": "app/guide/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/mentor-ia/page": "app/mentor-ia/page.js",
+  "/community/page": "app/community/page.js"
 }

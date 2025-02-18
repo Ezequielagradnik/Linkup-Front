@@ -7,8 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText, Award, ExternalLink } from "lucide-react"
-import ModuleDetails from "@/components/ModuleDetails"
+import { Bell, Book, MessageCircle, Users, FileText, ArrowRight } from "lucide-react"
 
 export default function Dashboard() {
   const { user, loading, refreshToken, isTokenExpired } = useAuth()
@@ -59,15 +58,10 @@ export default function Dashboard() {
           button: "Start Guide",
         },
       },
-      graduation: {
-        title: "Graduation",
-        description: "Complete all modules and get your LinkUp diploma.",
-        button: "Graduation Form",
-      },
-      postGraduation: {
-        title: "Post-Graduation",
-        description: "Explore post-graduation options.",
-        button: "Post-Graduation Options",
+      modules: {
+        title: "Program Modules",
+        startModule: "Start Module",
+        completed: "Completed",
       },
     },
     es: {
@@ -109,15 +103,10 @@ export default function Dashboard() {
           button: "Iniciar Guía",
         },
       },
-      graduation: {
-        title: "Graduación",
-        description: "Completa todos los módulos y obtén tu diploma de LinkUp.",
-        button: "Formulario de Graduación",
-      },
-      postGraduation: {
-        title: "Post-Graduación",
-        description: "Explora las opciones post-graduación.",
-        button: "Opciones Post-Graduación",
+      modules: {
+        title: "Módulos del Programa",
+        startModule: "Comenzar Módulo",
+        completed: "Completado",
       },
     },
   }
@@ -134,7 +123,7 @@ export default function Dashboard() {
           progress: 10,
         },
         modules: [
-          { id: 1, title: "INTRODUCCIÓN AL MUNDO DE LAS STARTUPS", completed: true },
+          { id: 1, title: "INTRODUCCIÓN AL MUNDO DE LAS STARTUPS", completed: false },
           { id: 2, title: "Ideation", completed: false },
           { id: 3, title: "Validation", completed: false },
         ],
@@ -168,8 +157,7 @@ export default function Dashboard() {
     checkAuthAndFetchData()
   }, [user, loading, router, refreshToken, isTokenExpired, fetchDashboardData])
 
-  const handleNavigation = (e, path) => {
-    e.preventDefault()
+  const handleNavigation = (path) => {
     router.push(path)
   }
 
@@ -192,24 +180,20 @@ export default function Dashboard() {
         {showInitialForm ? (
           <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg mb-8">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white opacity-50" />
-            <div className="relative p-8 md:p-12">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="relative p-6 md:p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-shrink-0">
                   <img
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
                     alt="LinkUp Logo"
-                    className="w-32 h-32 md:w-40 md:h-40 object-contain"
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
                   />
                 </div>
                 <div className="flex-grow text-center md:text-left">
-                  <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-                    {language === "en" ? "Welcome to LinkUp" : "Bienvenido a LinkUp"}
+                  <h1 className="text-2xl md:text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
+                    {t.welcome}
                   </h1>
-                  <p className="text-lg text-gray-600 mb-6">
-                    {language === "en"
-                      ? "To begin your entrepreneurial journey, please complete our initial analysis form. This will help us personalize your experience."
-                      : "Para comenzar tu viaje emprendedor, completa nuestro formulario de análisis inicial. Esto nos ayudará a personalizar tu experiencia."}
-                  </p>
+                  <p className="text-base md:text-lg text-gray-600 mb-6">{t.formDescription}</p>
                   <Button
                     asChild
                     size="lg"
@@ -223,7 +207,7 @@ export default function Dashboard() {
                       onClick={() => setShowInitialForm(false)}
                     >
                       <FileText className="w-5 h-5" />
-                      {language === "en" ? "Complete Analysis Form" : "Completar Formulario de Análisis"}
+                      {t.formButton}
                     </a>
                   </Button>
                 </div>
@@ -232,7 +216,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <h1 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-            {language === "en" ? "Welcome back" : "Bienvenido de vuelta"}, {dashboardData.user.name}
+            {t.welcomeBack}, {dashboardData.user.name}
           </h1>
         )}
 
@@ -241,20 +225,16 @@ export default function Dashboard() {
           <CardHeader>
             <CardTitle className="flex items-center text-lg">
               <Book className="mr-2 h-5 w-5 text-blue-600" />
-              {language === "en" ? "Start Your Journey" : "Comienza tu Viaje"}
+              {t.mainActions.guide.title}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-600 mb-4">
-              {language === "en"
-                ? "Begin your entrepreneurial journey with our comprehensive step-by-step guide."
-                : "Comienza tu viaje emprendedor con nuestra guía paso a paso."}
-            </p>
+            <p className="text-gray-600 mb-4">{t.mainActions.guide.description}</p>
             <Button
               className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
-              onClick={(e) => handleNavigation(e, "/guide")}
+              onClick={() => handleNavigation("/guide")}
             >
-              {language === "en" ? "Start Guide" : "Iniciar Guía"}
+              {t.mainActions.guide.button}
             </Button>
           </CardContent>
         </Card>
@@ -262,46 +242,42 @@ export default function Dashboard() {
         {/* Module Progress */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>{language === "en" ? "Your Progress" : "Tu Progreso"}</CardTitle>
+            <CardTitle>{t.progress.title}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-base md:text-lg mb-4">
-              {language === "en" ? "Continue with Module" : "Continuar con Módulo"} {dashboardData.user.currentModule}
+              {t.progress.continue} {dashboardData.user.currentModule}
             </p>
             <Progress value={dashboardData.user.progress} className="w-full" />
             <p className="mt-2 text-sm text-gray-600">
-              {dashboardData.user.progress}% {language === "en" ? "completed" : "completado"}
+              {dashboardData.user.progress}% {t.progress.completed}
             </p>
             <Button
               className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
-              onClick={(e) => handleNavigation(e, "/guide")}
+              onClick={() => handleNavigation(`/module${dashboardData.user.currentModule}`)}
             >
-              {language === "en" ? "Continue Learning" : "Continuar Aprendizaje"}
+              {t.progress.button}
             </Button>
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
                 <Bell className="mr-2 h-5 w-5" />
-                {language === "en" ? "Notifications" : "Notificaciones"}
+                {t.quickActions.notifications.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm md:text-base mb-4">
-                {language === "en"
-                  ? "You have 0 new messages from the chatbot."
-                  : "Tienes 0 nuevos mensajes del chatbot."}
-              </p>
+              <p className="text-sm mb-4">{t.quickActions.notifications.description}</p>
               <Button
                 variant="outline"
-                className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
-                onClick={(e) => handleNavigation(e, "/mentor-ia")}
+                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                onClick={() => handleNavigation("/mentor-ia")}
               >
-                {language === "en" ? "View Notifications" : "Ver Notificaciones"}
+                {t.quickActions.notifications.button}
               </Button>
             </CardContent>
           </Card>
@@ -310,19 +286,17 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
                 <MessageCircle className="mr-2 h-5 w-5" />
-                {language === "en" ? "Contact" : "Contacto"}
+                {t.quickActions.contact.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm md:text-base mb-4">
-                {language === "en" ? "Need help? Contact us." : "¿Necesitas ayuda? Contáctanos."}
-              </p>
+              <p className="text-sm mb-4">{t.quickActions.contact.description}</p>
               <Button
                 variant="outline"
-                className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
-                onClick={(e) => handleNavigation(e, "/contact")}
+                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                onClick={() => handleNavigation("/contact")}
               >
-                {language === "en" ? "Contact Us" : "Contactar"}
+                {t.quickActions.contact.button}
               </Button>
             </CardContent>
           </Card>
@@ -331,49 +305,52 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
                 <Users className="mr-2 h-5 w-5" />
-                {language === "en" ? "Community" : "Comunidad"}
+                {t.quickActions.community.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm md:text-base mb-4">
-                {language === "en"
-                  ? "Join our community of entrepreneurs."
-                  : "Únete a nuestra comunidad de emprendedores."}
-              </p>
+              <p className="text-sm mb-4">{t.quickActions.community.description}</p>
               <Button
                 variant="outline"
-                className="w-full md:w-auto rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
-                onClick={(e) => handleNavigation(e, "/community")}
+                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                onClick={() => handleNavigation("/community")}
               >
-                {language === "en" ? "Join Community" : "Unirse a la Comunidad"}
+                {t.quickActions.community.button}
               </Button>
             </CardContent>
           </Card>
         </div>
 
         {/* Modules Overview */}
-        <ModuleDetails modules={dashboardData.modules} currentModule={dashboardData.user.currentModule} />
-
-        {/* Graduation and Post-Graduation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <ExternalLink className="mr-2 h-5 w-5" /> {t.postGraduation.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm md:text-base mb-4">{t.postGraduation.description}</p>
-              <Button
-                className="w-full md:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-50"
-                disabled={dashboardData.user.progress < 100}
-                onClick={(e) => handleNavigation(e, "/post-graduation")}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-center mb-8">{t.modules.title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {dashboardData.modules.map((module) => (
+              <Card
+                key={module.id}
+                className={`transform transition-all duration-300 hover:scale-105 cursor-pointer ${
+                  module.completed ? "border-green-500" : ""
+                }`}
+                onClick={() => handleNavigation(`/module${module.id}`)}
               >
-                {t.postGraduation.button}
-              </Button>
-            </CardContent>
-          </Card>
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-semibold">
+                    {language === "en" ? "Module" : "Módulo"} {module.id}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 mb-4">{module.title}</p>
+                  <div className="flex items-center justify-between">
+                    <Button variant="ghost" className="text-blue-600 hover:text-blue-700 p-0 flex items-center gap-2">
+                      {t.modules.startModule}
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                    {module.completed && <span className="text-green-500 text-sm">✓ {t.modules.completed}</span>}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
