@@ -62,10 +62,10 @@ export function Hero({ language }) {
               variant="outline"
               className="group relative w-full sm:w-auto overflow-hidden rounded-xl border-2 border-secondary-500 px-8 py-3 text-secondary-600 transition-all duration-300 hover:text-white"
             >
-              <Link href="/pricing">
+              <a href="#pricing">
                 <span className="relative z-10">{t.cta2}</span>
                 <div className="absolute inset-0 z-0 bg-secondary-500 opacity-0 transition-all duration-300 group-hover:opacity-100"></div>
-              </Link>
+              </a>
             </Button>
           </div>
         </div>

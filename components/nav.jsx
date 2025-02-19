@@ -18,7 +18,6 @@ export function Nav() {
     { name: language === "en" ? "Home" : "Inicio", path: "/" },
     { name: language === "en" ? "Blog & Podcast" : "Blog y Podcast", path: "/blog-podcast" },
     { name: language === "en" ? "About" : "Acerca de", path: "/about" },
-    { name: language === "en" ? "Pricing" : "Precios", path: "/pricing" },
     { name: language === "en" ? "Contact" : "Contacto", path: "/contact" },
     ...(user?.isAdmin ? [{ name: language === "en" ? "Admin" : "Administrador", path: "/admin/dashboard" }] : []),
   ]

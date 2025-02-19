@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import ModuleOverview from "@/components/modules/ModuleOverview"
@@ -22,11 +22,22 @@ export default function ModulePage({ params }) {
   })
   const [currentSectionIndex, setCurrentSectionIndex] = useState(-1)
   const [isLoading, setIsLoading] = useState(true)
+  const [moduleId, setModuleId] = useState(null)
+
+  useEffect(() => {
+    const fetchModuleId = async () => {
+      const id = await params.moduleId
+      setModuleId(id)
+    }
+    fetchModuleId()
+  }, [params])
 
   useEffect(() => {
     const fetchProgress = async () => {
+      if (!user || !moduleId) return
+
       try {
-        const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`)
+        const res = await fetch(`/api/progress/${user.id}/${moduleId}`)
         if (res.ok) {
           const data = await res.json()
           setUserProgress({
@@ -47,19 +58,19 @@ export default function ModulePage({ params }) {
       }
     }
 
-    if (user) {
-      fetchProgress()
-    }
-  }, [user, params.moduleId, toast])
+    fetchProgress()
+  }, [user, moduleId, toast])
 
   const handleSectionComplete = async (sectionId, responses) => {
+    if (!moduleId) return
+
     try {
       // Calculamos el nuevo progreso
       const totalSections = moduleData.sections.length
       const completedCount = userProgress.completedSections.length + 1
       const newProgress = (completedCount / totalSections) * 100
 
-      const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`, {
+      const res = await fetch(`/api/progress/${user.id}/${moduleId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
