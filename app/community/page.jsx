@@ -121,7 +121,7 @@ export default function Community() {
               ? '"LinkUp Community has been instrumental in helping me grow my startup. The support and resources are invaluable."'
               : '"La Comunidad LinkUp ha sido fundamental para ayudarme a hacer crecer mi startup. El apoyo y los recursos son invaluables."'}
           </blockquote>
-          <p className="font-semibold">{language === "en" ? "- Successful Founder" : "- Fundador Exitoso"}</p>
+          <p className="font-semibold">{language === "en" ? "- Nicolas Said" : "- Nicolas Said"}</p>
         </div>
       </div>
     </div>

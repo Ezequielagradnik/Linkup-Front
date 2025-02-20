@@ -7,7 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText, ArrowRight } from "lucide-react"
+import { Bell, Book, MessageCircle, Users, FileText, ArrowRight, Rocket, Target, Award } from 'lucide-react'
 
 export default function Dashboard() {
   const { user, loading, refreshToken, isTokenExpired } = useAuth()
@@ -172,101 +172,103 @@ export default function Dashboard() {
 
   if (!dashboardData) {
     return <div className="text-center">{t.noData}</div>
-  }
+  } 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 pt-16 pb-8 px-4">
-      <div className="container mx-auto max-w-7xl">
+    <div className="min-h-screen bg-[#f8fafc] pt-16 pb-8">
+      <div className="container mx-auto max-w-7xl px-4">
         {showInitialForm ? (
-          <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg mb-8">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white opacity-50" />
-            <div className="relative p-6 md:p-8">
-              <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="flex-shrink-0">
-                  <img
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
-                    alt="LinkUp Logo"
-                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                  />
-                </div>
-                <div className="flex-grow text-center md:text-left">
-                  <h1 className="text-2xl md:text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-                    {t.welcome}
-                  </h1>
-                  <p className="text-base md:text-lg text-gray-600 mb-6">{t.formDescription}</p>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
-                  >
-                    <a
-                      href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2"
-                      onClick={() => setShowInitialForm(false)}
+          <div className="max-w-2xl mx-auto mb-12">
+            <Card className="overflow-hidden rounded-[2rem] border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-500">
+              <CardContent className="p-0">
+                <div className="relative overflow-hidden">
+                  {/* Subtle animated gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-white animate-gradient" />
+                  
+                  <div className="relative p-8 md:p-10 flex flex-col items-center text-center">
+                    {/* Logo with subtle floating animation */}
+                    <div className="mb-8 relative group">
+                      <div className="absolute inset-0 bg-blue-100/50 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700" />
+                      <img
+                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
+                        alt="LinkUp Logo"
+                        className="w-28 h-28 object-contain relative animate-float"
+                      />
+                    </div>
+                    
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
+                      {t.welcome}
+                    </h1>
+                    <p className="text-lg text-gray-600 mb-8 max-w-xl">
+                      {t.formDescription}
+                    </p>
+                    <Button
+                      asChild
+                      size="lg"
+                      className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 
+                               hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transform hover:scale-105"
                     >
-                      <FileText className="w-5 h-5" />
-                      {t.formButton}
-                    </a>
-                  </Button>
+                      <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-8 py-3"
+                        onClick={() => setShowInitialForm(false)}
+                      >
+                        <FileText className="w-5 h-5" />
+                        <span className="text-lg">{t.formButton}</span>
+                      </a>
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         ) : (
-          <h1 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-            {t.welcomeBack}, {dashboardData.user.name}
-          </h1>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+              {t.welcomeBack}, {dashboardData.user.name}
+            </h1>
+            <p className="text-xl text-gray-600">Continúa tu viaje emprendedor</p>
+          </div>
         )}
 
-        {/* Start Guide Section */}
-        <Card className="mb-8 bg-gradient-to-br from-blue-50 to-white border-2 border-blue-100">
-          <CardHeader>
-            <CardTitle className="flex items-center text-lg">
-              <Book className="mr-2 h-5 w-5 text-blue-600" />
-              {t.mainActions.guide.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600 mb-4">{t.mainActions.guide.description}</p>
-            <Button
-              className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
-              onClick={() => handleNavigation("/guide")}
-            >
-              {t.mainActions.guide.button}
-            </Button>
-          </CardContent>
-        </Card>
+     {/* Progress Overview - Now more prominent */}
+     <div className="max-w-3xl mx-auto mb-16">
+          <Card className="rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-2xl flex items-center gap-3">
+                <Target className="h-6 w-6 text-blue-600" />
+                {t.progress.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Progress value={dashboardData.user.progress} className="h-3 rounded-full" />
+                  <p className="text-sm text-gray-600">
+                    {dashboardData.user.progress}% {t.progress.completed}
+                  </p>
+                </div>
+                <Button
+                  className="w-full sm:w-auto rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300
+                           hover:shadow-lg transform hover:scale-[1.02] text-lg py-6 px-8"
+                  onClick={() => handleNavigation(`/module${dashboardData.user.currentModule}`)}
+                >
+                  {t.progress.button}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-        {/* Module Progress */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>{t.progress.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-base md:text-lg mb-4">
-              {t.progress.continue} {dashboardData.user.currentModule}
-            </p>
-            <Progress value={dashboardData.user.progress} className="w-full" />
-            <p className="mt-2 text-sm text-gray-600">
-              {dashboardData.user.progress}% {t.progress.completed}
-            </p>
-            <Button
-              className="mt-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all"
-              onClick={() => handleNavigation(`/module${dashboardData.user.currentModule}`)}
-            >
-              {t.progress.button}
-            </Button>
-          </CardContent>
-        </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <Bell className="mr-2 h-5 w-5" />
+                <Bell className="mr-2 h-5 w-5 text-blue-600" />
                 {t.quickActions.notifications.title}
               </CardTitle>
             </CardHeader>
@@ -274,7 +276,7 @@ export default function Dashboard() {
               <p className="text-sm mb-4">{t.quickActions.notifications.description}</p>
               <Button
                 variant="outline"
-                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                 onClick={() => handleNavigation("/mentor-ia")}
               >
                 {t.quickActions.notifications.button}
@@ -282,10 +284,10 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircle className="mr-2 h-5 w-5 text-blue-600" />
                 {t.quickActions.contact.title}
               </CardTitle>
             </CardHeader>
@@ -293,7 +295,7 @@ export default function Dashboard() {
               <p className="text-sm mb-4">{t.quickActions.contact.description}</p>
               <Button
                 variant="outline"
-                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                 onClick={() => handleNavigation("/contact")}
               >
                 {t.quickActions.contact.button}
@@ -301,10 +303,10 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <Users className="mr-2 h-5 w-5" />
+                <Users className="mr-2 h-5 w-5 text-blue-600" />
                 {t.quickActions.community.title}
               </CardTitle>
             </CardHeader>
@@ -312,7 +314,7 @@ export default function Dashboard() {
               <p className="text-sm mb-4">{t.quickActions.community.description}</p>
               <Button
                 variant="outline"
-                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                 onClick={() => handleNavigation("/community")}
               >
                 {t.quickActions.community.button}
@@ -320,35 +322,38 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Modules Overview */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-center mb-8">{t.modules.title}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+{/* Modules Overview - Improved design */}
+<div className="pb-12">
+          <h2 className="text-3xl font-bold text-center mb-12">{t.modules.title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {dashboardData.modules.map((module) => (
-              <Card
+              <div
                 key={module.id}
-                className={`transform transition-all duration-300 hover:scale-105 cursor-pointer ${
-                  module.completed ? "border-green-500" : ""
-                }`}
+                className="group relative bg-white rounded-2xl p-6 cursor-pointer transition-all duration-300
+                         hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100"
                 onClick={() => handleNavigation(`/module${module.id}`)}
               >
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    {language === "en" ? "Module" : "Módulo"} {module.id}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600 mb-4">{module.title}</p>
-                  <div className="flex items-center justify-between">
-                    <Button variant="ghost" className="text-blue-600 hover:text-blue-700 p-0 flex items-center gap-2">
-                      {t.modules.startModule}
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                    {module.completed && <span className="text-green-500 text-sm">✓ {t.modules.completed}</span>}
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-lg font-semibold text-gray-900">
+                      {language === "en" ? "Module" : "Módulo"} {module.id}
+                    </span>
+                    {module.completed && (
+                      <span className="text-green-500 bg-green-50 p-1 rounded-full">
+                        <CheckCircle2 className="h-5 w-5" />
+                      </span>
+                    )}
                   </div>
-                </CardContent>
-              </Card>
+                  <p className="text-gray-600">{module.title}</p>
+                </div>
+                
+                <div className="mt-auto pt-4 border-t border-gray-100">
+                  <span className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700">
+                    {t.modules.startModule}
+                    <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-2" />
+                  </span>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -356,4 +361,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
