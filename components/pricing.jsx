@@ -112,7 +112,7 @@ export function Pricing({ language }) {
           {t.plans.map((plan, index) => (
             <Card
               key={index}
-              className="group bg-white rounded-xl transition-all duration-300 hover:shadow-lg border border-gray-200"
+              className="group bg-white rounded-xl transition-all duration-300 hover:shadow-lg border border-gray-200 flex flex-col"
             >
               <CardHeader>
                 <CardTitle>
@@ -124,8 +124,8 @@ export function Pricing({ language }) {
                   <p className="text-sm text-gray-600">{plan.description}</p>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <ul className="space-y-4 mb-6">
+              <CardContent className="flex flex-col flex-grow">
+                <ul className="space-y-4 mb-6 flex-grow">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-center">
                       <Check className="h-5 w-5 text-secondary-500 mr-2" />
@@ -147,6 +147,7 @@ export function Pricing({ language }) {
             </Card>
           ))}
         </div>
+
 
         {/* Enterprise Section with new design */}
         <div className="mt-16 max-w-4xl mx-auto">
