@@ -233,4 +233,4 @@ export function Curriculum({ language }) {
       </div>
     </section>
   )
-}
+}   

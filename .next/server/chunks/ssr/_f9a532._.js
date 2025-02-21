@@ -66,14 +66,7 @@ function Contact() {
         className: "min-h-screen bg-gray-50 pt-20 relative overflow-hidden",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute inset-0 z-0",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]"
-                }, void 0, false, {
-                    fileName: "[project]/app/contact/page.jsx",
-                    lineNumber: 62,
-                    columnNumber: 9
-                }, this)
+                className: "absolute inset-0 z-0"
             }, void 0, false, {
                 fileName: "[project]/app/contact/page.jsx",
                 lineNumber: 61,
@@ -87,7 +80,7 @@ function Contact() {
                         children: t.title
                     }, void 0, false, {
                         fileName: "[project]/app/contact/page.jsx",
-                        lineNumber: 66,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -103,14 +96,14 @@ function Contact() {
                                                 className: "mr-2 text-secondary-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/contact/page.jsx",
-                                                lineNumber: 70,
+                                                lineNumber: 69,
                                                 columnNumber: 15
                                             }, this),
                                             t.email.title
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 69,
+                                        lineNumber: 68,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -118,7 +111,7 @@ function Contact() {
                                         children: t.email.description
                                     }, void 0, false, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 73,
+                                        lineNumber: 72,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -129,18 +122,18 @@ function Contact() {
                                             children: t.email.button
                                         }, void 0, false, {
                                             fileName: "[project]/app/contact/page.jsx",
-                                            lineNumber: 78,
+                                            lineNumber: 77,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 74,
+                                        lineNumber: 73,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/contact/page.jsx",
-                                lineNumber: 68,
+                                lineNumber: 67,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -153,14 +146,14 @@ function Contact() {
                                                 className: "mr-2 text-secondary-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/contact/page.jsx",
-                                                lineNumber: 84,
+                                                lineNumber: 83,
                                                 columnNumber: 15
                                             }, this),
                                             t.whatsapp.title
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 83,
+                                        lineNumber: 82,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -168,7 +161,7 @@ function Contact() {
                                         children: t.whatsapp.description
                                     }, void 0, false, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 87,
+                                        lineNumber: 86,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -179,18 +172,18 @@ function Contact() {
                                             children: t.whatsapp.button
                                         }, void 0, false, {
                                             fileName: "[project]/app/contact/page.jsx",
-                                            lineNumber: 92,
+                                            lineNumber: 91,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 88,
+                                        lineNumber: 87,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/contact/page.jsx",
-                                lineNumber: 82,
+                                lineNumber: 81,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -203,14 +196,14 @@ function Contact() {
                                                 className: "mr-2 text-secondary-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/contact/page.jsx",
-                                                lineNumber: 98,
+                                                lineNumber: 97,
                                                 columnNumber: 15
                                             }, this),
                                             t.meeting.title
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 97,
+                                        lineNumber: 96,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -218,7 +211,7 @@ function Contact() {
                                         children: t.meeting.description
                                     }, void 0, false, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 101,
+                                        lineNumber: 100,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -229,30 +222,30 @@ function Contact() {
                                             children: t.meeting.button
                                         }, void 0, false, {
                                             fileName: "[project]/app/contact/page.jsx",
-                                            lineNumber: 106,
+                                            lineNumber: 105,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/contact/page.jsx",
-                                        lineNumber: 102,
+                                        lineNumber: 101,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/contact/page.jsx",
-                                lineNumber: 96,
+                                lineNumber: 95,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/contact/page.jsx",
-                        lineNumber: 67,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/contact/page.jsx",
-                lineNumber: 65,
+                lineNumber: 64,
                 columnNumber: 7
             }, this)
         ]
