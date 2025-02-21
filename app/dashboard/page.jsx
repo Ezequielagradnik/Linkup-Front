@@ -2,35 +2,57 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import { motion } from "framer-motion"
 import { useAuth } from "@/contexts/AuthContext"
-import { useLanguage } from "@/contexts/LanguageContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Bell, Book, MessageCircle, Users, FileText, ArrowRight, Rocket, Target, Award } from 'lucide-react'
+import {
+  Bell,
+  MessageCircle,
+  Users,
+  FileText,
+  ArrowRight,
+  Target,
+  Sparkles,
+  CheckCircle2,
+  ClipboardCheck,
+} from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+}
 
 export default function Dashboard() {
-  const { user, loading, refreshToken, isTokenExpired } = useAuth()
-  const { language } = useLanguage()
   const router = useRouter()
+  const { user, loading, refreshToken, isTokenExpired } = useAuth()
+  const { toast } = useToast()
   const [dashboardData, setDashboardData] = useState(null)
-  const [dataLoading, setDataLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [showInitialForm, setShowInitialForm] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [language, setLanguage] = useState("es")
 
   const content = {
     en: {
       loading: "Loading...",
       error: "Error loading dashboard data.",
       noData: "No dashboard data found.",
-      welcome: "Welcome to LinkUp",
-      formDescription:
-        "To begin with the modules, we first need to get to know you better. Please complete our initial analysis form:",
+      welcome: "Welcome back",
+      formDescription: "To begin your journey, please complete our initial analysis form:",
       formButton: "Complete Analysis Form",
-      welcomeBack: "Welcome back",
       progress: {
         title: "Your Progress",
-        continue: "Continue with Module",
         completed: "completed",
         button: "Continue Learning",
       },
@@ -51,13 +73,6 @@ export default function Dashboard() {
           button: "Join Community",
         },
       },
-      mainActions: {
-        guide: {
-          title: "Start Guide",
-          description: "Begin your entrepreneurial journey with our step-by-step guide.",
-          button: "Start Guide",
-        },
-      },
       modules: {
         title: "Program Modules",
         startModule: "Start Module",
@@ -66,16 +81,13 @@ export default function Dashboard() {
     },
     es: {
       loading: "Cargando...",
-      error: "Error al cargar los datos del dashboard.",
-      noData: "No se encontraron datos del dashboard.",
-      welcome: "Bienvenido a LinkUp",
-      formDescription:
-        "Para comenzar con los módulos, primero necesitamos conocerte mejor. Por favor, completa nuestro formulario de análisis inicial:",
-      formButton: "Completar Formulario de Análisis",
-      welcomeBack: "Bienvenido de vuelta",
+      error: "Error al cargar los datos.",
+      noData: "No se encontraron datos.",
+      welcome: "Bienvenido de vuelta",
+      formDescription: "Para comenzar tu viaje, completa nuestro formulario de análisis inicial:",
+      formButton: "Completar Formulario",
       progress: {
         title: "Tu Progreso",
-        continue: "Continuar con Módulo",
         completed: "completado",
         button: "Continuar Aprendizaje",
       },
@@ -96,13 +108,6 @@ export default function Dashboard() {
           button: "Unirse a la Comunidad",
         },
       },
-      mainActions: {
-        guide: {
-          title: "Iniciar Guía",
-          description: "Comienza tu viaje emprendedor con nuestra guía paso a paso.",
-          button: "Iniciar Guía",
-        },
-      },
       modules: {
         title: "Módulos del Programa",
         startModule: "Comenzar Módulo",
@@ -114,224 +119,254 @@ export default function Dashboard() {
   const t = content[language]
 
   const fetchDashboardData = useCallback(async () => {
-    try {
-      // Mock data - replace with actual API call in production
-      const mockData = {
-        user: {
-          name: "Ezequiel",
-          currentModule: 1,
-          progress: 10,
-        },
-        modules: [
-          { id: 1, title: "INTRODUCCIÓN AL MUNDO DE LAS STARTUPS", completed: false },
-          { id: 2, title: "Ideation", completed: false },
-          { id: 3, title: "Validation", completed: false },
-        ],
-      }
-      setDashboardData(mockData)
-    } catch (err) {
-      setError(err)
-    } finally {
-      setDataLoading(false)
+    if (!user) {
+      router.push("/login")
+      return
     }
-  }, [])
 
-  useEffect(() => {
-    const checkAuthAndFetchData = async () => {
-      if (!loading) {
-        if (!user) {
+    try {
+      if (isTokenExpired()) {
+        const refreshed = await refreshToken()
+        if (!refreshed) {
           router.push("/login")
-        } else {
-          if (isTokenExpired()) {
-            const refreshed = await refreshToken()
-            if (!refreshed) {
-              router.push("/login")
-              return
-            }
-          }
-          fetchDashboardData()
+          return
         }
       }
+
+      const response = await fetch("/api/user/dashboard", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch dashboard data")
+      }
+
+      const data = await response.json()
+      setDashboardData(data)
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: t.error,
+        variant: "destructive",
+      })
+      if (err.message === "Unauthorized") {
+        router.push("/login")
+      }
+    } finally {
+      setIsLoading(false)
     }
+  }, [t?.error, toast, router, refreshToken, isTokenExpired, user])
 
-    checkAuthAndFetchData()
-  }, [user, loading, router, refreshToken, isTokenExpired, fetchDashboardData])
+  useEffect(() => {
+    if (!loading) {
+      fetchDashboardData()
+    }
+  }, [loading, fetchDashboardData])
 
-  const handleNavigation = (path) => {
-    router.push(path)
+  const handleNavigation = useCallback(
+    (path) => {
+      if (!user) {
+        router.push("/login")
+        return
+      }
+
+      if (isTokenExpired()) {
+        refreshToken().then((refreshed) => {
+          if (refreshed) {
+            router.push(path)
+          } else {
+            router.push("/login")
+          }
+        })
+      } else {
+        router.push(path)
+      }
+    },
+    [router, refreshToken, isTokenExpired, user],
+  )
+
+  if (loading || isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          <p className="text-gray-600 animate-pulse">{t?.loading}</p>
+        </div>
+      </div>
+    )
   }
 
-  if (loading || dataLoading) {
-    return <div className="flex justify-center items-center min-h-screen">{t.loading}</div>
+  if (!user) {
+    router.push("/login")
+    return null
   }
 
-  if (error) {
-    console.error("Error loading dashboard data:", error)
-    return <div className="text-center text-red-500">{t.error}</div>
+  // Mock data for development
+  const mockData = {
+    user: {
+      firstName: user?.firstName || "Usuario",
+      currentModule: 1,
+      progress: 10,
+      hasCompletedForm: false,
+    },
+    modules: [
+      { id: 1, title: "INTRODUCCIÓN AL MUNDO DE LAS STARTUPS", completed: false },
+      { id: 2, title: "Ideation", completed: false },
+      { id: 3, title: "Validation", completed: false },
+    ],
   }
 
-  if (!dashboardData) {
-    return <div className="text-center">{t.noData}</div>
-  } 
+  const dData = dashboardData || mockData
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] pt-16 pb-8">
+    <motion.div initial="hidden" animate="show" variants={container} className="min-h-screen bg-white pt-16 pb-8">
       <div className="container mx-auto max-w-7xl px-4">
-        {showInitialForm ? (
-          <div className="max-w-2xl mx-auto mb-12">
-            <Card className="overflow-hidden rounded-[2rem] border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-500">
-              <CardContent className="p-0">
-                <div className="relative overflow-hidden">
-                  {/* Subtle animated gradient background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-white animate-gradient" />
-                  
-                  <div className="relative p-8 md:p-10 flex flex-col items-center text-center">
-                    {/* Logo with subtle floating animation */}
-                    <div className="mb-8 relative group">
-                      <div className="absolute inset-0 bg-blue-100/50 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700" />
-                      <img
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LINKUP-removebg-preview-H4uudgwmEMqvfk5xeTIBJIgVNGQTC1.png"
-                        alt="LinkUp Logo"
-                        className="w-28 h-28 object-contain relative animate-float"
-                      />
-                    </div>
-                    
-                    <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-                      {t.welcome}
-                    </h1>
-                    <p className="text-lg text-gray-600 mb-8 max-w-xl">
-                      {t.formDescription}
-                    </p>
-                    <Button
-                      asChild
-                      size="lg"
-                      className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 
-                               hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transform hover:scale-105"
-                    >
-                      <a
-                        href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-8 py-3"
-                        onClick={() => setShowInitialForm(false)}
-                      >
-                        <FileText className="w-5 h-5" />
-                        <span className="text-lg">{t.formButton}</span>
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        ) : (
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-              {t.welcomeBack}, {dashboardData.user.name}
-            </h1>
-            <p className="text-xl text-gray-600">Continúa tu viaje emprendedor</p>
-          </div>
-        )}
+        {/* Welcome Section */}
+        <motion.div variants={item} className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            {t.welcome}{" "}
+            <motion.span initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-blue-600">
+              {dData.user.firstName}
+            </motion.span>
+            <Sparkles className="inline-block w-6 h-6 ml-2 text-yellow-400 animate-pulse" />
+          </h1>
+        </motion.div>
 
-     {/* Progress Overview - Now more prominent */}
-     <div className="max-w-3xl mx-auto mb-16">
-          <Card className="rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300">
+        {/* Progress Overview */}
+        <motion.div variants={item} className="max-w-3xl mx-auto mb-16">
+          <Card className="rounded-2xl border border-gray-100 shadow-lg">
             <CardHeader className="pb-2">
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Target className="h-6 w-6 text-blue-600" />
                 {t.progress.title}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <Progress value={dashboardData.user.progress} className="h-3 rounded-full" />
-                  <p className="text-sm text-gray-600">
-                    {dashboardData.user.progress}% {t.progress.completed}
-                  </p>
+            <CardContent className="flex flex-col items-center space-y-6 p-8">
+              <div className="w-full space-y-2">
+                <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-blue-600 rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${dData.user.progress}%` }}
+                  />
                 </div>
-                <Button
-                  className="w-full sm:w-auto rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300
-                           hover:shadow-lg transform hover:scale-[1.02] text-lg py-6 px-8"
-                  onClick={() => handleNavigation(`/module${dashboardData.user.currentModule}`)}
-                >
-                  {t.progress.button}
-                </Button>
+                <p className="text-sm text-gray-600">
+                  {dData.user.progress}% {t.progress.completed}
+                </p>
               </div>
+              <Button
+                className="rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300
+                         hover:shadow-lg transform hover:scale-[1.02] text-lg py-6 px-12 min-w-[200px]"
+                onClick={() => handleNavigation(`/modules/${dData.user.currentModule}`)}
+              >
+                {t.progress.button}
+              </Button>
             </CardContent>
           </Card>
-        </div>
+        </motion.div>
 
+        {/* Initial Form Card - Redesigned */}
+        {!dData.user.hasCompletedForm && (
+          <motion.div variants={item} className="max-w-3xl mx-auto mb-16">
+            <Card className="relative overflow-hidden rounded-2xl border-0 shadow-lg bg-gradient-to-br from-white-50 to-white">
+              <div className="absolute top-0 right-0 w-32 h-32 transform translate-x-16 -translate-y-16">
+                <div className="absolute inset-0 bg-blue-100 rounded-full opacity-50 blur-3xl" />
+              </div>
+              <CardContent className="relative p-8">
+                <div className="flex items-center gap-6">
+                  <div className="flex-shrink-0 w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                    <ClipboardCheck className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="text-xl font-semibold mb-2">¿Listo para comenzar tu viaje emprendedor?</h3>
+                    <p className="text-gray-600 mb-4">
+                      Completa nuestro formulario inicial para personalizar tu experiencia
+                    </p>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white
+                               transition-all duration-300 transform hover:scale-105"
+                    >
+                      <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLScWRQPDp4d46zpURjyL2TovoE81Ypw3eJ9n23c_wfgL50DRLw/viewform"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-6 py-2"
+                      >
+                        <FileText className="w-5 h-5" />
+                        <span>Completar Formulario</span>
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <Bell className="mr-2 h-5 w-5 text-blue-600" />
-                {t.quickActions.notifications.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm mb-4">{t.quickActions.notifications.description}</p>
-              <Button
-                variant="outline"
-                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                onClick={() => handleNavigation("/mentor-ia")}
-              >
-                {t.quickActions.notifications.button}
-              </Button>
-            </CardContent>
-          </Card>
+        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {[
+            {
+              icon: Bell,
+              title: t.quickActions.notifications.title,
+              description: t.quickActions.notifications.description,
+              button: t.quickActions.notifications.button,
+              path: "/mentor-ia",
+            },
+            {
+              icon: MessageCircle,
+              title: t.quickActions.contact.title,
+              description: t.quickActions.contact.description,
+              button: t.quickActions.contact.button,
+              path: "/contact",
+            },
+            {
+              icon: Users,
+              title: t.quickActions.community.title,
+              description: t.quickActions.community.description,
+              button: t.quickActions.community.button,
+              path: "/community",
+            },
+          ].map((action, index) => (
+            <motion.div key={action.title} variants={item} custom={index}>
+              <Card className="bg-white shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl border border-gray-100">
+                <CardHeader>
+                  <CardTitle className="flex items-center text-lg">
+                    <action.icon className="mr-2 h-5 w-5 text-blue-600" />
+                    {action.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm mb-4">{action.description}</p>
+                  <Button
+                    variant="outline"
+                    className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white
+                             transition-all duration-300 transform hover:scale-105"
+                    onClick={() => handleNavigation(action.path)}
+                  >
+                    {action.button}
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <MessageCircle className="mr-2 h-5 w-5 text-blue-600" />
-                {t.quickActions.contact.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm mb-4">{t.quickActions.contact.description}</p>
-              <Button
-                variant="outline"
-                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                onClick={() => handleNavigation("/contact")}
-              >
-                {t.quickActions.contact.button}
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center text-lg">
-                <Users className="mr-2 h-5 w-5 text-blue-600" />
-                {t.quickActions.community.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm mb-4">{t.quickActions.community.description}</p>
-              <Button
-                variant="outline"
-                className="w-full rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                onClick={() => handleNavigation("/community")}
-              >
-                {t.quickActions.community.button}
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-{/* Modules Overview - Improved design */}
-<div className="pb-12">
+        {/* Modules Overview */}
+        <motion.div variants={item} className="pb-12">
           <h2 className="text-3xl font-bold text-center mb-12">{t.modules.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {dashboardData.modules.map((module) => (
-              <div
+            {dData.modules.map((module, index) => (
+              <motion.div
                 key={module.id}
+                variants={item}
+                custom={index}
                 className="group relative bg-white rounded-2xl p-6 cursor-pointer transition-all duration-300
                          hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100"
-                onClick={() => handleNavigation(`/module${module.id}`)}
+                onClick={() => handleNavigation(`/modules/${module.id}`)}
               >
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
@@ -346,18 +381,19 @@ export default function Dashboard() {
                   </div>
                   <p className="text-gray-600">{module.title}</p>
                 </div>
-                
+
                 <div className="mt-auto pt-4 border-t border-gray-100">
                   <span className="inline-flex items-center text-blue-600 font-medium group-hover:text-blue-700">
                     {t.modules.startModule}
                     <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-2" />
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }
+
