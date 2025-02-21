@@ -102,7 +102,7 @@ export function Pricing({ language }) {
   }
 
   return (
-    <section id="pricing" className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section id="pricing" className="py-24 bg-white">
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-primary-900 mb-4">{t.title}</h2>

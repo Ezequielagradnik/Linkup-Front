@@ -35,8 +35,8 @@ export function Partnership() {
   const t = content[language]
 
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      <div className="container relative z-10">
+<section className="py-24 bg-white">
+<div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block px-4 py-2 bg-secondary-100 rounded-full mb-6">
             <span className="text-secondary-600 text-sm font-medium">{t.subtitle}</span>

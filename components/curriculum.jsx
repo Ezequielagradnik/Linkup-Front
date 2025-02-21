@@ -132,8 +132,8 @@ export function Curriculum({ language }) {
   }[language]
 
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container max-w-6xl mx-auto px-4">
+<section className="py-24 bg-white">
+<div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.title}</h2>
           <p className="text-xl text-gray-600">{t.subtitle}</p>

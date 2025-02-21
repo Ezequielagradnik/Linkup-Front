@@ -80,8 +80,8 @@ export function Features({ language }) {
   const t = content[language]
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="container">
+<section className="py-24 bg-white">
+        <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-primary mb-4">{t.title}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t.description}</p>
