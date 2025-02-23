@@ -1,13 +1,1 @@
-{
-  "/page": "app/page.js",
-  "/apply/page": "app/apply/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/login/page": "app/login/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/about/page": "app/about/page.js",
-  "/blog-podcast/page": "app/blog-podcast/page.js",
-  "/api/login/route": "app/api/login/route.js",
-  "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js",
-  "/community/page": "app/community/page.js",
-  "/module1/page": "app/module1/page.js"
-}
+{}
