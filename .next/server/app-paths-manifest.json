@@ -5,5 +5,6 @@
   "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/api/admin/applications/route": "app/api/admin/applications/route.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/guide/page": "app/guide/page.js"
 }
