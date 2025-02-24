@@ -1,15 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import ModuleOverview from "@/components/modules/ModuleOverview"
 import ModuleSection from "@/components/modules/ModuleSection"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/AuthContext"
-import { moduleData } from "@/data/module1" // Importamos el contenido estático
+import { moduleData } from "@/data/module1"
 
 export default function ModulePage({ params }) {
   const router = useRouter()
@@ -21,23 +21,17 @@ export default function ModulePage({ params }) {
     progress: 0,
   })
   const [currentSectionIndex, setCurrentSectionIndex] = useState(-1)
-  const [isLoading, setIsLoading] = useState(true)
-  const [moduleId, setModuleId] = useState(null)
+  const [isLoading] = useState(true) // Cambiado a false para evitar el loading inicial
+  const [module] = useState(moduleData)
 
-  useEffect(() => {
-    const fetchModuleId = async () => {
-      const id = await params.moduleId
-      setModuleId(id)
-    }
-    fetchModuleId()
-  }, [params])
-
+  // Comentado temporalmente para desarrollo
+  /*
   useEffect(() => {
     const fetchProgress = async () => {
-      if (!user || !moduleId) return
+      if (!user || !params.moduleId) return
 
       try {
-        const res = await fetch(`/api/progress/${user.id}/${moduleId}`)
+        const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`)
         if (res.ok) {
           const data = await res.json()
           setUserProgress({
@@ -59,18 +53,20 @@ export default function ModulePage({ params }) {
     }
 
     fetchProgress()
-  }, [user, moduleId, toast])
+  }, [user, params.moduleId, toast])
+  */
 
   const handleSectionComplete = async (sectionId, responses) => {
-    if (!moduleId) return
+    if (!module?.sections) return
 
     try {
-      // Calculamos el nuevo progreso
-      const totalSections = moduleData.sections.length
+      const totalSections = module.sections.length
       const completedCount = userProgress.completedSections.length + 1
       const newProgress = (completedCount / totalSections) * 100
 
-      const res = await fetch(`/api/progress/${user.id}/${moduleId}`, {
+      // Comentado temporalmente para desarrollo
+      /*
+      const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -84,8 +80,8 @@ export default function ModulePage({ params }) {
       })
 
       if (!res.ok) throw new Error("Failed to update progress")
+      */
 
-      const updatedProgress = await res.json()
       setUserProgress((prev) => ({
         ...prev,
         completedSections: [...prev.completedSections, sectionId],
@@ -101,8 +97,7 @@ export default function ModulePage({ params }) {
         description: "Tus respuestas han sido guardadas correctamente.",
       })
 
-      // Move to next section if available
-      if (currentSectionIndex < moduleData.sections.length - 1) {
+      if (currentSectionIndex < module.sections.length - 1) {
         setCurrentSectionIndex((prev) => prev + 1)
       }
     } catch (error) {
@@ -116,24 +111,33 @@ export default function ModulePage({ params }) {
   }
 
   const navigateToSection = (index) => {
-    if (index >= -1 && index < moduleData.sections.length) {
+    if (module?.sections && index >= -1 && index < module.sections.length) {
       setCurrentSectionIndex(index)
     }
   }
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     )
+  }
+
+  if (!module?.sections) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>No se pudo cargar el módulo</p>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 pt-16 pb-8 px-4">
       <div className="container mx-auto max-w-4xl">
         {currentSectionIndex === -1 ? (
           <ModuleOverview
-            module={moduleData}
+            module={module}
             progress={userProgress.progress}
             onStartModule={() => setCurrentSectionIndex(0)}
             completedSections={userProgress.completedSections}
@@ -158,7 +162,7 @@ export default function ModulePage({ params }) {
                 <Button
                   variant="ghost"
                   onClick={() => navigateToSection(currentSectionIndex + 1)}
-                  disabled={currentSectionIndex === moduleData.sections.length - 1}
+                  disabled={currentSectionIndex === module.sections.length - 1}
                   className="flex items-center gap-2"
                 >
                   Siguiente
@@ -170,14 +174,16 @@ export default function ModulePage({ params }) {
             </div>
 
             {/* Current Section */}
-            <ModuleSection
-              section={moduleData.sections[currentSectionIndex]}
-              onComplete={handleSectionComplete}
-              isCompleted={userProgress.completedSections.includes(moduleData.sections[currentSectionIndex].id)}
-              savedResponses={userProgress.responses[moduleData.sections[currentSectionIndex].id]}
-              totalSections={moduleData.sections.length}
-              currentSection={currentSectionIndex + 1}
-            />
+            {module.sections[currentSectionIndex] && (
+              <ModuleSection
+                section={module.sections[currentSectionIndex]}
+                onComplete={handleSectionComplete}
+                isCompleted={userProgress.completedSections.includes(module.sections[currentSectionIndex].id)}
+                savedResponses={userProgress.responses[module.sections[currentSectionIndex].id]}
+                totalSections={module.sections.length}
+                currentSection={currentSectionIndex + 1}
+              />
+            )}
           </>
         )}
       </div>
