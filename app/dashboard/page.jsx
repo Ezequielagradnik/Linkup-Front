@@ -118,6 +118,7 @@ export default function Dashboard() {
 
   const t = content[language]
 
+
   const fetchDashboardData = useCallback(async () => {
     if (!user) {
       router.push("/login")
@@ -133,19 +134,29 @@ export default function Dashboard() {
         }
       }
 
-      const response = await fetch("/api/user/dashboard", {
+      const token = localStorage.getItem("token")
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "https://linkup-back.vercel.app"
+
+      // Fetch del dashboard directamente al backend
+      const response = await fetch(`${backendUrl}/api/dashboard`, {
+        method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       })
 
       if (!response.ok) {
-        throw new Error("Failed to fetch dashboard data")
+        const errorData = await response.json()
+        console.error("Error response:", errorData)
+        throw new Error(errorData.message || "Failed to fetch dashboard data")
       }
 
       const data = await response.json()
+      console.log("Dashboard data received:", data)
       setDashboardData(data)
     } catch (err) {
+      console.error("Error fetching dashboard:", err)
       toast({
         title: "Error",
         description: t.error,
@@ -157,7 +168,68 @@ export default function Dashboard() {
     } finally {
       setIsLoading(false)
     }
-  }, [t?.error, toast, router, refreshToken, isTokenExpired, user])
+  }, [toast, router, refreshToken, isTokenExpired, user, t?.error])
+
+  // Fetch de progreso del módulo
+  const fetchModuleProgress = async (moduleId) => {
+    try {
+      const token = localStorage.getItem("token")
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "https://linkup-back.vercel.app"
+
+      const response = await fetch(`${backendUrl}/api/progress/${moduleId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch module progress")
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error("Error fetching module progress:", error)
+      toast({
+        title: "Error",
+        description: "Error al cargar el progreso del módulo",
+        variant: "destructive",
+      })
+    }
+  }
+
+  // Actualizar progreso del módulo
+  const updateModuleProgress = async (moduleId, progress) => {
+    try {
+      const token = localStorage.getItem("token")
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "https://linkup-back.vercel.app"
+
+      const response = await fetch(`${backendUrl}/api/progress/${moduleId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ progress }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to update module progress")
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error("Error updating module progress:", error)
+      toast({
+        title: "Error",
+        description: "Error al actualizar el progreso",
+        variant: "destructive",
+      })
+    }
+  }
 
   useEffect(() => {
     if (!loading) {
@@ -186,7 +258,6 @@ export default function Dashboard() {
     },
     [router, refreshToken, isTokenExpired, user],
   )
-
   if (loading || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
