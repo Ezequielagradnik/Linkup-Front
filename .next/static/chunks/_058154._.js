@@ -1417,9 +1417,9 @@ function ModulePage({ params }) {
         progress: 0
     });
     const [currentSectionIndex, setCurrentSectionIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(-1);
-    const [isLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true) // Cambiado a false para evitar el loading inicial
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false) // Cambiado a false para evitar el loading inicial
     ;
-    const [module] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(__TURBOPACK__imported__module__$5b$project$5d2f$data$2f$module1$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["moduleData"]);
+    const [module, setModule] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(__TURBOPACK__imported__module__$5b$project$5d2f$data$2f$module1$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["moduleData"]);
     // Comentado temporalmente para desarrollo
     /*
   useEffect(() => {
@@ -1663,7 +1663,7 @@ function ModulePage({ params }) {
         columnNumber: 5
     }, this);
 }
-_s(ModulePage, "yI3zhzJXzyusf6+6bwEKPwMVcec=", false, function() {
+_s(ModulePage, "v/FGx9ZVoA61Q/Sv3Q0hKdXZPiI=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$use$2d$toast$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useToast"],

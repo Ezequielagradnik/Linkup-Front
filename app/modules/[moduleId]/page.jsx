@@ -21,8 +21,8 @@ export default function ModulePage({ params }) {
     progress: 0,
   })
   const [currentSectionIndex, setCurrentSectionIndex] = useState(-1)
-  const [isLoading] = useState(true) // Cambiado a false para evitar el loading inicial
-  const [module] = useState(moduleData)
+  const [isLoading, setIsLoading] = useState(false) // Cambiado a false para evitar el loading inicial
+  const [module, setModule] = useState(moduleData)
 
   // Comentado temporalmente para desarrollo
   /*
