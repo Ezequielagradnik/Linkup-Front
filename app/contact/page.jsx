@@ -15,7 +15,8 @@ export default function Contact() {
         title: "Get in Touch",
         description:
           "Have questions or need more information about how LinkUp can accelerate your startup journey or connect you with the right investors? We're here to help!",
-        button: "Email Us",
+        emailText: "Email: ",
+        emailAddress: "linkup.startups@gmail.com",
       },
       whatsapp: {
         title: "WhatsApp Support",
@@ -36,7 +37,8 @@ export default function Contact() {
         title: "Ponte en Contacto",
         description:
           "¿Tienes preguntas o necesitas más información sobre cómo LinkUp puede acelerar el viaje de tu startup o conectarte con los inversores adecuados? ¡Estamos aquí para ayudarte!",
-        button: "Envíanos un Email",
+        emailText: "Email: ",
+        emailAddress: "linkup.startups@gmail.com",
       },
       whatsapp: {
         title: "Soporte por WhatsApp",
@@ -58,8 +60,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-gray-50 pt-20 relative overflow-hidden">
       {/* Background pattern */}
-      <div className="absolute inset-0 z-0">
-      </div>
+      <div className="absolute inset-0 z-0"></div>
 
       <div className="container mx-auto px-4 py-12 relative z-10">
         <h1 className="text-4xl font-bold text-primary-900 mb-8 text-center">{t.title}</h1>
@@ -70,12 +71,15 @@ export default function Contact() {
               {t.email.title}
             </h2>
             <p className="text-gray-600 mb-6">{t.email.description}</p>
-            <Button
-              asChild
-              className="bg-secondary-500 hover:bg-secondary-600 transition-all duration-300 transform hover:scale-105"
-            >
-              <Link href="mailto:linkup.startups@gmail.com">{t.email.button}</Link>
-            </Button>
+            <div className="flex items-center">
+              <span className="font-medium text-gray-700">{t.email.emailText}</span>
+              <Link
+                href="mailto:linkup.startups@gmail.com"
+                className="ml-2 text-secondary-500 hover:text-secondary-600 hover:underline font-medium"
+              >
+                {t.email.emailAddress}
+              </Link>
+            </div>
           </section>
 
           <section className="bg-white p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -88,7 +92,9 @@ export default function Contact() {
               asChild
               className="bg-secondary-500 hover:bg-secondary-600 transition-all duration-300 transform hover:scale-105"
             >
-              <Link href="https://wa.me/5491131954757">{t.whatsapp.button}</Link>
+              <Link href="https://wa.me/5491131954757" target="_blank" rel="noopener noreferrer">
+                {t.whatsapp.button}
+              </Link>
             </Button>
           </section>
 
@@ -102,7 +108,9 @@ export default function Contact() {
               asChild
               className="bg-secondary-500 hover:bg-secondary-600 transition-all duration-300 transform hover:scale-105"
             >
-              <Link href="https://calendly.com/benjokapu/30min?month=2025-02">{t.meeting.button}</Link>
+              <Link href="https://calendly.com/benjokapu/30min?month=2025-02" target="_blank" rel="noopener noreferrer">
+                {t.meeting.button}
+              </Link>
             </Button>
           </section>
         </div>
