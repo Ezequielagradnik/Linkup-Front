@@ -1,4 +1,10 @@
 {
   "/page": "app/page.js",
-  "/contact/page": "app/contact/page.js"
+  "/contact/page": "app/contact/page.js",
+  "/blog-podcast/page": "app/blog-podcast/page.js",
+  "/apply/page": "app/apply/page.js",
+  "/login/page": "app/login/page.js",
+  "/api/login/route": "app/api/login/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js"
 }

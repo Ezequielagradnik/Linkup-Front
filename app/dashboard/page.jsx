@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
 import {
   Bell,
   MessageCircle,
@@ -118,7 +117,7 @@ export default function Dashboard() {
 
   const t = content[language]
 
-
+  
   const fetchDashboardData = useCallback(async () => {
     if (!user) {
       router.push("/login")
@@ -296,12 +295,16 @@ export default function Dashboard() {
       <div className="container mx-auto max-w-7xl px-4">
         {/* Welcome Section */}
         <motion.div variants={item} className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            {t.welcome}{" "}
-            <motion.span initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-blue-600">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 flex flex-col sm:flex-row items-center justify-center gap-2">
+            <span>{t.welcome}</span>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-blue-600 break-words max-w-full"
+            >
               {dData.user.firstName}
-            </motion.span>
-            <Sparkles className="inline-block w-6 h-6 ml-2 text-yellow-400 animate-pulse" />
+              <Sparkles className="inline-block w-6 h-6 ml-2 text-yellow-400 animate-pulse align-middle" />
+            </motion.div>
           </h1>
         </motion.div>
 
