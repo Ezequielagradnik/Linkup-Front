@@ -9,7 +9,6 @@ import ModuleOverview from "@/components/modules/ModuleOverview"
 import ModuleSection from "@/components/modules/ModuleSection"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/AuthContext"
-import { moduleData } from "@/data/module1"
 
 export default function ModulePage({ params }) {
   const router = useRouter()

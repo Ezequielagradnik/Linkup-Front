@@ -6,17 +6,7 @@ import { motion } from "framer-motion"
 import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  Bell,
-  MessageCircle,
-  Users,
-  FileText,
-  ArrowRight,
-  Target,
-  Sparkles,
-  CheckCircle2,
-  ClipboardCheck,
-} from "lucide-react"
+import { Bell, MessageCircle, Users, FileText, ArrowRight, Target, CheckCircle2, ClipboardCheck } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 
 const container = {
@@ -117,7 +107,6 @@ export default function Dashboard() {
 
   const t = content[language]
 
-  
   const fetchDashboardData = useCallback(async () => {
     if (!user) {
       router.push("/login")
@@ -153,6 +142,8 @@ export default function Dashboard() {
 
       const data = await response.json()
       console.log("Dashboard data received:", data)
+      console.log("User name from data:", data?.user?.name || "No name found")
+      console.log("User firstName from data:", data?.user?.firstName || "No firstName found")
       setDashboardData(data)
     } catch (err) {
       console.error("Error fetching dashboard:", err)
@@ -276,7 +267,7 @@ export default function Dashboard() {
   // Mock data for development
   const mockData = {
     user: {
-      firstName: user?.firstName || "Usuario",
+      name: user?.name || user?.firstName || "Usuario",
       currentModule: 1,
       progress: 10,
       hasCompletedForm: false,
@@ -300,10 +291,10 @@ export default function Dashboard() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-blue-600 break-words max-w-full"
+              className="text-blue-600 break-words max-w-full flex items-center"
             >
-              {dData.user.firstName}
-              <Sparkles className="inline-block w-6 h-6 ml-2 text-yellow-400 animate-pulse align-middle" />
+              {dData.user.name || dData.user.firstName || ""}
+              <span className="ml-2">🚀</span>
             </motion.div>
           </h1>
         </motion.div>

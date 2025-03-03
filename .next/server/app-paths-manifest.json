@@ -6,5 +6,6 @@
   "/login/page": "app/login/page.js",
   "/api/login/route": "app/api/login/route.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js"
+  "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js",
+  "/guide/page": "app/guide/page.js"
 }
