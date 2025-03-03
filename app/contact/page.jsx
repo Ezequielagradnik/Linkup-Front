@@ -71,8 +71,8 @@ export default function Contact() {
               {t.email.title}
             </h2>
             <p className="text-gray-600 mb-6">{t.email.description}</p>
-            <div className="flex items-center">
-              <span className="font-medium text-gray-700">{t.email.emailText}</span>
+            <div className="flex justify-center items-center">
+              <span className="font-medium text-gray-700 ">{t.email.emailText}</span>
               <Link
                 href="mailto:linkup.startups@gmail.com"
                 className="ml-2 text-secondary-500 hover:text-secondary-600 hover:underline font-medium"
