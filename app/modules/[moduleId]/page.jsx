@@ -1,49 +1,76 @@
 "use client"
 
-import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useToast } from "@/components/ui/use-toast"
+import { useAuth } from "@/contexts/AuthContext"
+import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import ModuleOverview from "@/components/modules/ModuleOverview"
-import ModuleSection from "@/components/modules/ModuleSection"
-import { useToast } from "@/components/ui/use-toast"
-import { useAuth } from "@/contexts/AuthContext"
+import ModuleOverview from "@/components/ModuleOverview"
+import ModuleSection from "@/components/ModuleSection"
 
+// Componente principal que maneja los params como promesa
 export default function ModulePage({ params }) {
   const router = useRouter()
   const { toast } = useToast()
   const { user } = useAuth()
+  const [moduleId, setModuleId] = useState(null)
   const [userProgress, setUserProgress] = useState({
     completedSections: [],
     responses: {},
     progress: 0,
   })
   const [currentSectionIndex, setCurrentSectionIndex] = useState(-1)
-  const [isLoading, setIsLoading] = useState(false) // Cambiado a false para evitar el loading inicial
-  const [module, setModule] = useState(moduleData)
+  const [isLoading, setIsLoading] = useState(true)
+  const [module, setModule] = useState(null)
+  const [error, setError] = useState(null)
 
-  // Comentado temporalmente para desarrollo
-  /*
+  // Extraer moduleId de params al inicio
   useEffect(() => {
-    const fetchProgress = async () => {
-      if (!user || !params.moduleId) return
-
+    async function extractParams() {
       try {
-        const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`)
-        if (res.ok) {
-          const data = await res.json()
-          setUserProgress({
-            completedSections: data.completedSections || [],
-            responses: data.responses || {},
-            progress: data.progress || 0,
-          })
+        const resolvedParams = await params
+        setModuleId(resolvedParams.moduleId)
+      } catch (err) {
+        console.error("Error resolving params:", err)
+        setError("Error loading module parameters")
+      }
+    }
+
+    extractParams()
+  }, [params])
+
+  // Obtener el módulo desde el backend
+  useEffect(() => {
+    if (!moduleId) return
+
+    const fetchModule = async () => {
+      try {
+        setIsLoading(true)
+        const token = localStorage.getItem("token")
+
+        // Usar la ruta relativa para evitar problemas de CORS
+        const response = await fetch(`/api/modules/${moduleId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el módulo")
         }
+
+        const moduleData = await response.json()
+        console.log("Módulo cargado:", moduleData)
+        setModule(moduleData)
       } catch (error) {
-        console.error("Error fetching progress:", error)
+        console.error("Error al cargar el módulo:", error)
+        setError(error.message)
         toast({
           title: "Error",
-          description: "No se pudo cargar tu progreso. Por favor intenta nuevamente.",
+          description: "No se pudo cargar el módulo. Por favor intenta nuevamente.",
           variant: "destructive",
         })
       } finally {
@@ -51,23 +78,67 @@ export default function ModulePage({ params }) {
       }
     }
 
+    fetchModule()
+  }, [moduleId, toast])
+
+  // Obtener el progreso del usuario
+  useEffect(() => {
+    if (!user || !moduleId || isLoading || !module) return
+
+    const fetchProgress = async () => {
+      try {
+        const token = localStorage.getItem("token")
+        // Usar la nueva ruta específica
+        const res = await fetch(`/api/progress/module/${moduleId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+
+        if (res.ok) {
+          const data = await res.json()
+          setUserProgress({
+            completedSections: data.completedSections || [],
+            responses: data.responses || {},
+            progress: data.progress || 0,
+          })
+        } else {
+          console.log("No se encontró progreso, usando valores predeterminados")
+          setUserProgress({
+            completedSections: [],
+            responses: {},
+            progress: 0,
+          })
+        }
+      } catch (error) {
+        console.error("Error fetching progress:", error)
+        // Usar valores predeterminados en caso de error
+        setUserProgress({
+          completedSections: [],
+          responses: {},
+          progress: 0,
+        })
+      }
+    }
+
     fetchProgress()
-  }, [user, params.moduleId, toast])
-  */
+  }, [user, moduleId, isLoading, module])
 
   const handleSectionComplete = async (sectionId, responses) => {
-    if (!module?.sections) return
+    if (!module?.content?.sections || !moduleId) return
 
     try {
-      const totalSections = module.sections.length
+      const totalSections = module.content.sections.length
       const completedCount = userProgress.completedSections.length + 1
       const newProgress = (completedCount / totalSections) * 100
 
-      // Comentado temporalmente para desarrollo
-      /*
-      const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`, {
+      const token = localStorage.getItem("token")
+      // Usar la nueva ruta específica
+      const res = await fetch(`/api/progress/module/${moduleId}`, {
         method: "PUT",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -79,7 +150,6 @@ export default function ModulePage({ params }) {
       })
 
       if (!res.ok) throw new Error("Failed to update progress")
-      */
 
       setUserProgress((prev) => ({
         ...prev,
@@ -96,7 +166,7 @@ export default function ModulePage({ params }) {
         description: "Tus respuestas han sido guardadas correctamente.",
       })
 
-      if (currentSectionIndex < module.sections.length - 1) {
+      if (currentSectionIndex < module.content.sections.length - 1) {
         setCurrentSectionIndex((prev) => prev + 1)
       }
     } catch (error) {
@@ -110,12 +180,12 @@ export default function ModulePage({ params }) {
   }
 
   const navigateToSection = (index) => {
-    if (module?.sections && index >= -1 && index < module.sections.length) {
+    if (module?.content?.sections && index >= -1 && index < module.content.sections.length) {
       setCurrentSectionIndex(index)
     }
   }
 
-  if (isLoading) {
+  if (!moduleId || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -123,13 +193,17 @@ export default function ModulePage({ params }) {
     )
   }
 
-  if (!module?.sections) {
+  if (error || !module) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>No se pudo cargar el módulo</p>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <p className="text-red-500">No se pudo cargar el módulo</p>
+        <Button onClick={() => router.push("/dashboard")}>Volver al Dashboard</Button>
       </div>
     )
   }
+
+  // Asegurarse de que las secciones estén disponibles
+  const sections = module.content?.sections || []
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 pt-16 pb-8 px-4">
@@ -161,7 +235,7 @@ export default function ModulePage({ params }) {
                 <Button
                   variant="ghost"
                   onClick={() => navigateToSection(currentSectionIndex + 1)}
-                  disabled={currentSectionIndex === module.sections.length - 1}
+                  disabled={currentSectionIndex === sections.length - 1}
                   className="flex items-center gap-2"
                 >
                   Siguiente
@@ -173,13 +247,13 @@ export default function ModulePage({ params }) {
             </div>
 
             {/* Current Section */}
-            {module.sections[currentSectionIndex] && (
+            {sections[currentSectionIndex] && (
               <ModuleSection
-                section={module.sections[currentSectionIndex]}
+                section={sections[currentSectionIndex]}
                 onComplete={handleSectionComplete}
-                isCompleted={userProgress.completedSections.includes(module.sections[currentSectionIndex].id)}
-                savedResponses={userProgress.responses[module.sections[currentSectionIndex].id]}
-                totalSections={module.sections.length}
+                isCompleted={userProgress.completedSections.includes(sections[currentSectionIndex].id)}
+                savedResponses={userProgress.responses[sections[currentSectionIndex].id]}
+                totalSections={sections.length}
                 currentSection={currentSectionIndex + 1}
               />
             )}

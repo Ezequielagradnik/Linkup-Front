@@ -1135,62 +1135,113 @@ function ModulePage({ params }) {
         progress: 0
     });
     const [currentSectionIndex, setCurrentSectionIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(-1);
-    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false) // Cambiado a false para evitar el loading inicial
-    ;
-    const [module, setModule] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(moduleData);
-    // Comentado temporalmente para desarrollo
-    /*
-  useEffect(() => {
-    const fetchProgress = async () => {
-      if (!user || !params.moduleId) return
-
-      try {
-        const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`)
-        if (res.ok) {
-          const data = await res.json()
-          setUserProgress({
-            completedSections: data.completedSections || [],
-            responses: data.responses || {},
-            progress: data.progress || 0,
-          })
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [module, setModule] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    // Obtener el módulo desde el backend
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ModulePage.useEffect": ()=>{
+            const fetchModule = {
+                "ModulePage.useEffect.fetchModule": async ()=>{
+                    if (!params.moduleId) return;
+                    try {
+                        setIsLoading(true);
+                        const token = localStorage.getItem("token");
+                        // Usar la ruta relativa para evitar problemas de CORS
+                        const response = await fetch(`/api/modules/${params.moduleId}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "application/json"
+                            }
+                        });
+                        if (!response.ok) {
+                            throw new Error("No se pudo cargar el módulo");
+                        }
+                        const moduleData = await response.json();
+                        console.log("Módulo cargado:", moduleData);
+                        setModule(moduleData);
+                    } catch (error) {
+                        console.error("Error al cargar el módulo:", error);
+                        setError(error.message);
+                        toast({
+                            title: "Error",
+                            description: "No se pudo cargar el módulo. Por favor intenta nuevamente.",
+                            variant: "destructive"
+                        });
+                    } finally{
+                        setIsLoading(false);
+                    }
+                }
+            }["ModulePage.useEffect.fetchModule"];
+            fetchModule();
         }
-      } catch (error) {
-        console.error("Error fetching progress:", error)
-        toast({
-          title: "Error",
-          description: "No se pudo cargar tu progreso. Por favor intenta nuevamente.",
-          variant: "destructive",
-        })
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchProgress()
-  }, [user, params.moduleId, toast])
-  */ const handleSectionComplete = async (sectionId, responses)=>{
-        if (!module?.sections) return;
+    }["ModulePage.useEffect"], [
+        params.moduleId,
+        toast
+    ]);
+    // Obtener el progreso del usuario
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ModulePage.useEffect": ()=>{
+            const fetchProgress = {
+                "ModulePage.useEffect.fetchProgress": async ()=>{
+                    if (!user || !params.moduleId) return;
+                    try {
+                        const token = localStorage.getItem("token");
+                        const res = await fetch(`/api/progress/${params.moduleId}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "application/json"
+                            }
+                        });
+                        if (res.ok) {
+                            const data = await res.json();
+                            setUserProgress({
+                                completedSections: data.completedSections || [],
+                                responses: data.responses || {},
+                                progress: data.progress || 0
+                            });
+                        }
+                    } catch (error) {
+                        console.error("Error fetching progress:", error);
+                    // No mostramos toast aquí para evitar múltiples errores si el usuario no tiene progreso
+                    }
+                }
+            }["ModulePage.useEffect.fetchProgress"];
+            if (!isLoading && module) {
+                fetchProgress();
+            }
+        }
+    }["ModulePage.useEffect"], [
+        user,
+        params.moduleId,
+        isLoading,
+        module
+    ]);
+    const handleSectionComplete = async (sectionId, responses)=>{
+        if (!module?.content?.sections) return;
         try {
-            const totalSections = module.sections.length;
+            const totalSections = module.content.sections.length;
             const completedCount = userProgress.completedSections.length + 1;
             const newProgress = completedCount / totalSections * 100;
-            // Comentado temporalmente para desarrollo
-            /*
-      const res = await fetch(`/api/progress/${user.id}/${params.moduleId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sectionId,
-          responses,
-          progress: newProgress,
-          completedSections: [...userProgress.completedSections, sectionId],
-        }),
-      })
-
-      if (!res.ok) throw new Error("Failed to update progress")
-      */ setUserProgress((prev)=>({
+            const token = localStorage.getItem("token");
+            const res = await fetch(`/api/progress/${params.moduleId}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    sectionId,
+                    responses,
+                    progress: newProgress,
+                    completedSections: [
+                        ...userProgress.completedSections,
+                        sectionId
+                    ]
+                })
+            });
+            if (!res.ok) throw new Error("Failed to update progress");
+            setUserProgress((prev)=>({
                     ...prev,
                     completedSections: [
                         ...prev.completedSections,
@@ -1206,7 +1257,7 @@ function ModulePage({ params }) {
                 title: "Sección completada",
                 description: "Tus respuestas han sido guardadas correctamente."
             });
-            if (currentSectionIndex < module.sections.length - 1) {
+            if (currentSectionIndex < module.content.sections.length - 1) {
                 setCurrentSectionIndex((prev)=>prev + 1);
             }
         } catch (error) {
@@ -1219,7 +1270,7 @@ function ModulePage({ params }) {
         }
     };
     const navigateToSection = (index)=>{
-        if (module?.sections && index >= -1 && index < module.sections.length) {
+        if (module?.content?.sections && index >= -1 && index < module.content.sections.length) {
             setCurrentSectionIndex(index);
         }
     };
@@ -1230,31 +1281,44 @@ function ModulePage({ params }) {
                 className: "animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"
             }, void 0, false, {
                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                lineNumber: 121,
+                lineNumber: 162,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/modules/[moduleId]/page.jsx",
-            lineNumber: 120,
+            lineNumber: 161,
             columnNumber: 7
         }, this);
     }
-    if (!module?.sections) {
+    if (error || !module) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "min-h-screen flex items-center justify-center",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                children: "No se pudo cargar el módulo"
-            }, void 0, false, {
-                fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                lineNumber: 129,
-                columnNumber: 9
-            }, this)
-        }, void 0, false, {
+            className: "min-h-screen flex flex-col items-center justify-center gap-4",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                    className: "text-red-500",
+                    children: "No se pudo cargar el módulo"
+                }, void 0, false, {
+                    fileName: "[project]/app/modules/[moduleId]/page.jsx",
+                    lineNumber: 170,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                    onClick: ()=>router.push('/dashboard'),
+                    children: "Volver al Dashboard"
+                }, void 0, false, {
+                    fileName: "[project]/app/modules/[moduleId]/page.jsx",
+                    lineNumber: 171,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
             fileName: "[project]/app/modules/[moduleId]/page.jsx",
-            lineNumber: 128,
+            lineNumber: 169,
             columnNumber: 7
         }, this);
     }
+    // Asegurarse de que las secciones estén disponibles
+    const sections = module.content?.sections || [];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-gradient-to-b from-white to-blue-50 pt-16 pb-8 px-4",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1266,7 +1330,7 @@ function ModulePage({ params }) {
                 completedSections: userProgress.completedSections
             }, void 0, false, {
                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                lineNumber: 138,
+                lineNumber: 183,
                 columnNumber: 11
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                 children: [
@@ -1286,14 +1350,14 @@ function ModulePage({ params }) {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                                lineNumber: 155,
+                                                lineNumber: 200,
                                                 columnNumber: 19
                                             }, this),
                                             "Anterior"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                        lineNumber: 149,
+                                        lineNumber: 194,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1302,13 +1366,13 @@ function ModulePage({ params }) {
                                         children: "Volver al índice"
                                     }, void 0, false, {
                                         fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                        lineNumber: 158,
+                                        lineNumber: 203,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                         variant: "ghost",
                                         onClick: ()=>navigateToSection(currentSectionIndex + 1),
-                                        disabled: currentSectionIndex === module.sections.length - 1,
+                                        disabled: currentSectionIndex === sections.length - 1,
                                         className: "flex items-center gap-2",
                                         children: [
                                             "Siguiente",
@@ -1316,19 +1380,19 @@ function ModulePage({ params }) {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                                lineNumber: 168,
+                                                lineNumber: 213,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                        lineNumber: 161,
+                                        lineNumber: 206,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                lineNumber: 148,
+                                lineNumber: 193,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$progress$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Progress"], {
@@ -1336,7 +1400,7 @@ function ModulePage({ params }) {
                                 className: "w-full"
                             }, void 0, false, {
                                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                lineNumber: 171,
+                                lineNumber: 216,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1347,41 +1411,41 @@ function ModulePage({ params }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                                lineNumber: 172,
+                                lineNumber: 217,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                        lineNumber: 147,
+                        lineNumber: 192,
                         columnNumber: 13
                     }, this),
-                    module.sections[currentSectionIndex] && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$modules$2f$ModuleSection$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                        section: module.sections[currentSectionIndex],
+                    sections[currentSectionIndex] && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$modules$2f$ModuleSection$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                        section: sections[currentSectionIndex],
                         onComplete: handleSectionComplete,
-                        isCompleted: userProgress.completedSections.includes(module.sections[currentSectionIndex].id),
-                        savedResponses: userProgress.responses[module.sections[currentSectionIndex].id],
-                        totalSections: module.sections.length,
+                        isCompleted: userProgress.completedSections.includes(sections[currentSectionIndex].id),
+                        savedResponses: userProgress.responses[sections[currentSectionIndex].id],
+                        totalSections: sections.length,
                         currentSection: currentSectionIndex + 1
                     }, void 0, false, {
                         fileName: "[project]/app/modules/[moduleId]/page.jsx",
-                        lineNumber: 177,
+                        lineNumber: 222,
                         columnNumber: 15
                     }, this)
                 ]
             }, void 0, true)
         }, void 0, false, {
             fileName: "[project]/app/modules/[moduleId]/page.jsx",
-            lineNumber: 136,
+            lineNumber: 181,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/modules/[moduleId]/page.jsx",
-        lineNumber: 135,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
-_s(ModulePage, "v/FGx9ZVoA61Q/Sv3Q0hKdXZPiI=", false, function() {
+_s(ModulePage, "e/Zz6mOBsAA6oKx2lDUjbVtToq0=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$use$2d$toast$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useToast"],
