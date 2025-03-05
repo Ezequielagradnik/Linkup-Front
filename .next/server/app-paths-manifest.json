@@ -1,3 +1,7 @@
 {
-  "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js"
+  "/modules/[moduleId]/page": "app/modules/[moduleId]/page.js",
+  "/page": "app/page.js",
+  "/login/page": "app/login/page.js",
+  "/api/login/route": "app/api/login/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
 }
