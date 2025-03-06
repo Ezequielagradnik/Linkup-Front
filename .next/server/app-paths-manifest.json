@@ -3,5 +3,10 @@
   "/page": "app/page.js",
   "/login/page": "app/login/page.js",
   "/api/login/route": "app/api/login/route.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/dashboard/page": "app/dashboard/page.js",
+  "/about/page": "app/about/page.js",
+  "/blog-podcast/page": "app/blog-podcast/page.js",
+  "/pricing/page": "app/pricing/page.js",
+  "/apply/page": "app/apply/page.js",
+  "/contact/page": "app/contact/page.js"
 }

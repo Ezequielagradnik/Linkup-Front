@@ -3,7 +3,7 @@
 
 import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { TrendingUp, Clock, ChevronDown, ChevronUp, BookOpen, Target, Rocket, Users, PieChart, Presentation, Phone } from 'lucide-react'
+import { TrendingUp, Clock, ChevronDown, ChevronUp, BookOpen, Target, Rocket, Users, PieChart, Presentation, Phone, BarChart, LineChart } from 'lucide-react'
 import { motion, AnimatePresence } from "framer-motion"
 const modules = [
   {
@@ -105,7 +105,38 @@ const modules = [
       "Cómo presentar un pitch deck y levantar inversión",
     ],
   },
+  {
+    number: 8,
+    title: "Planificación Financiera y Estrategias de Escalamiento",
+    icon: BarChart,
+    duration: "30-32 horas",
+    weeklyHours: "5-7 horas por semana",
+    recommendedWeeks: "4-6 semanas",
+    topics: [
+      "¿Cuánto dinero necesita tu startup?",
+      "Cálculo de CAC, LTV y métricas clave",
+      "Proyecciones financieras realistas",
+      "Cómo escalar tu startup y hacerla crecer",
+    ],
+  },
+  {
+    number: 9,
+    title: "Estrategias de Crecimiento y Mejora Continua",
+    icon: LineChart,
+    duration: "32-40 horas",
+    weeklyHours: "5-8 horas por semana",
+    recommendedWeeks: "4-6 semanas",
+    topics: [
+      "Estrategias para crecimiento acelerado sin perder el control",
+      "Optimización y automatización de procesos a gran escala",
+      "Métricas clave de escalabilidad y sostenibilidad",
+      "Transformando feedback en mejoras estratégicas",
+      "Interpretación y priorización del feedback según su fuente",
+      "Implementando un sistema de mejor continua en la startup",
+    ],
+  },
 ]
+
 
 export function Curriculum({ language }) {
   const [expandedModule, setExpandedModule] = useState(null)

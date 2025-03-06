@@ -16,7 +16,6 @@ export default function Home() {
     <div className="bg-gradient-to-b from-primary to-white">
       <Hero language={language} />
       <Features language={language} />
-      <Partnership />
       <Curriculum language={language} /> {/* Add this component */}
       <WeeklyPosts language={language} />
       <Pricing language={language} />

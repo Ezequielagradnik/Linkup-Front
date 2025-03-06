@@ -1318,6 +1318,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-ssr] (ecmascript) <export default as Users>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$presentation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Presentation$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/presentation.js [app-ssr] (ecmascript) <export default as Presentation>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/phone.js [app-ssr] (ecmascript) <export default as Phone>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$no$2d$axes$2d$column$2d$increasing$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/chart-no-axes-column-increasing.js [app-ssr] (ecmascript) <export default as BarChart>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LineChart$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/chart-line.js [app-ssr] (ecmascript) <export default as LineChart>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/clock.js [app-ssr] (ecmascript) <export default as Clock>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/chevron-down.js [app-ssr] (ecmascript) <export default as ChevronDown>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUp$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/chevron-up.js [app-ssr] (ecmascript) <export default as ChevronUp>");
@@ -1429,6 +1431,36 @@ const modules = [
             "Pitch en llamadas: captar la atención en segundos",
             "Cómo presentar un pitch deck y levantar inversión"
         ]
+    },
+    {
+        number: 8,
+        title: "Planificación Financiera y Estrategias de Escalamiento",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$no$2d$axes$2d$column$2d$increasing$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart$3e$__["BarChart"],
+        duration: "30-32 horas",
+        weeklyHours: "5-7 horas por semana",
+        recommendedWeeks: "4-6 semanas",
+        topics: [
+            "¿Cuánto dinero necesita tu startup?",
+            "Cálculo de CAC, LTV y métricas clave",
+            "Proyecciones financieras realistas",
+            "Cómo escalar tu startup y hacerla crecer"
+        ]
+    },
+    {
+        number: 9,
+        title: "Estrategias de Crecimiento y Mejora Continua",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LineChart$3e$__["LineChart"],
+        duration: "32-40 horas",
+        weeklyHours: "5-8 horas por semana",
+        recommendedWeeks: "4-6 semanas",
+        topics: [
+            "Estrategias para crecimiento acelerado sin perder el control",
+            "Optimización y automatización de procesos a gran escala",
+            "Métricas clave de escalabilidad y sostenibilidad",
+            "Transformando feedback en mejoras estratégicas",
+            "Interpretación y priorización del feedback según su fuente",
+            "Implementando un sistema de mejor continua en la startup"
+        ]
     }
 ];
 function Curriculum({ language }) {
@@ -1466,7 +1498,7 @@ function Curriculum({ language }) {
                             children: t.title
                         }, void 0, false, {
                             fileName: "[project]/components/curriculum.jsx",
-                            lineNumber: 138,
+                            lineNumber: 169,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1474,13 +1506,13 @@ function Curriculum({ language }) {
                             children: t.subtitle
                         }, void 0, false, {
                             fileName: "[project]/components/curriculum.jsx",
-                            lineNumber: 139,
+                            lineNumber: 170,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/curriculum.jsx",
-                    lineNumber: 137,
+                    lineNumber: 168,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1505,12 +1537,12 @@ function Curriculum({ language }) {
                                                                 className: "w-6 h-6 text-blue-600"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                lineNumber: 156,
+                                                                lineNumber: 187,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/curriculum.jsx",
-                                                            lineNumber: 155,
+                                                            lineNumber: 186,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1523,7 +1555,7 @@ function Curriculum({ language }) {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/curriculum.jsx",
-                                                                    lineNumber: 159,
+                                                                    lineNumber: 190,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1531,19 +1563,19 @@ function Curriculum({ language }) {
                                                                     children: module.title
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/curriculum.jsx",
-                                                                    lineNumber: 160,
+                                                                    lineNumber: 191,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/curriculum.jsx",
-                                                            lineNumber: 158,
+                                                            lineNumber: 189,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/curriculum.jsx",
-                                                    lineNumber: 154,
+                                                    lineNumber: 185,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1556,7 +1588,7 @@ function Curriculum({ language }) {
                                                                     className: "w-4 h-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/curriculum.jsx",
-                                                                    lineNumber: 165,
+                                                                    lineNumber: 196,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1564,43 +1596,43 @@ function Curriculum({ language }) {
                                                                     children: module.duration
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/curriculum.jsx",
-                                                                    lineNumber: 166,
+                                                                    lineNumber: 197,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/curriculum.jsx",
-                                                            lineNumber: 164,
+                                                            lineNumber: 195,
                                                             columnNumber: 23
                                                         }, this),
                                                         expandedModule === module.number ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUp$3e$__["ChevronUp"], {
                                                             className: "w-5 h-5 text-gray-400"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/curriculum.jsx",
-                                                            lineNumber: 169,
+                                                            lineNumber: 200,
                                                             columnNumber: 25
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                                                             className: "w-5 h-5 text-gray-400"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/curriculum.jsx",
-                                                            lineNumber: 171,
+                                                            lineNumber: 202,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/curriculum.jsx",
-                                                    lineNumber: 163,
+                                                    lineNumber: 194,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/curriculum.jsx",
-                                            lineNumber: 153,
+                                            lineNumber: 184,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/curriculum.jsx",
-                                        lineNumber: 149,
+                                        lineNumber: 180,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -1634,7 +1666,7 @@ function Curriculum({ language }) {
                                                                         className: "w-4 h-4 text-gray-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 189,
+                                                                        lineNumber: 220,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1644,7 +1676,7 @@ function Curriculum({ language }) {
                                                                                 children: t.duration
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                                lineNumber: 191,
+                                                                                lineNumber: 222,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1652,19 +1684,19 @@ function Curriculum({ language }) {
                                                                                 children: module.duration
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                                lineNumber: 192,
+                                                                                lineNumber: 223,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 190,
+                                                                        lineNumber: 221,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                lineNumber: 188,
+                                                                lineNumber: 219,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1674,7 +1706,7 @@ function Curriculum({ language }) {
                                                                         className: "w-4 h-4 text-gray-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 196,
+                                                                        lineNumber: 227,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1684,7 +1716,7 @@ function Curriculum({ language }) {
                                                                                 children: t.weekly
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                                lineNumber: 198,
+                                                                                lineNumber: 229,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1692,19 +1724,19 @@ function Curriculum({ language }) {
                                                                                 children: module.weeklyHours
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                                lineNumber: 199,
+                                                                                lineNumber: 230,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 197,
+                                                                        lineNumber: 228,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                lineNumber: 195,
+                                                                lineNumber: 226,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1714,7 +1746,7 @@ function Curriculum({ language }) {
                                                                         className: "w-4 h-4 text-gray-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 203,
+                                                                        lineNumber: 234,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1724,7 +1756,7 @@ function Curriculum({ language }) {
                                                                                 children: t.recommended
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                                lineNumber: 205,
+                                                                                lineNumber: 236,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1732,25 +1764,25 @@ function Curriculum({ language }) {
                                                                                 children: module.recommendedWeeks
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                                lineNumber: 206,
+                                                                                lineNumber: 237,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 204,
+                                                                        lineNumber: 235,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                lineNumber: 202,
+                                                                lineNumber: 233,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/curriculum.jsx",
-                                                        lineNumber: 187,
+                                                        lineNumber: 218,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -1773,7 +1805,7 @@ function Curriculum({ language }) {
                                                                         className: "w-1.5 h-1.5 rounded-full bg-blue-600 mt-2"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 220,
+                                                                        lineNumber: 251,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1781,61 +1813,61 @@ function Curriculum({ language }) {
                                                                         children: topic
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/curriculum.jsx",
-                                                                        lineNumber: 221,
+                                                                        lineNumber: 252,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, index, true, {
                                                                 fileName: "[project]/components/curriculum.jsx",
-                                                                lineNumber: 213,
+                                                                lineNumber: 244,
                                                                 columnNumber: 29
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/curriculum.jsx",
-                                                        lineNumber: 211,
+                                                        lineNumber: 242,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/curriculum.jsx",
-                                                lineNumber: 186,
+                                                lineNumber: 217,
                                                 columnNumber: 23
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/curriculum.jsx",
-                                            lineNumber: 179,
+                                            lineNumber: 210,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/curriculum.jsx",
-                                        lineNumber: 177,
+                                        lineNumber: 208,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/curriculum.jsx",
-                                lineNumber: 148,
+                                lineNumber: 179,
                                 columnNumber: 15
                             }, this)
                         }, module.number, false, {
                             fileName: "[project]/components/curriculum.jsx",
-                            lineNumber: 144,
+                            lineNumber: 175,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/curriculum.jsx",
-                    lineNumber: 142,
+                    lineNumber: 173,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/curriculum.jsx",
-            lineNumber: 136,
+            lineNumber: 167,
             columnNumber: 1
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/curriculum.jsx",
-        lineNumber: 135,
+        lineNumber: 166,
         columnNumber: 1
     }, this);
 }
@@ -1885,16 +1917,11 @@ function Home() {
                 lineNumber: 18,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$partnership$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Partnership"], {}, void 0, false, {
-                fileName: "[project]/app/page.jsx",
-                lineNumber: 19,
-                columnNumber: 7
-            }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$curriculum$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Curriculum"], {
                 language: language
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 20,
+                lineNumber: 19,
                 columnNumber: 7
             }, this),
             " ",
@@ -1902,14 +1929,14 @@ function Home() {
                 language: language
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 21,
+                lineNumber: 20,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$pricing$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Pricing"], {
                 language: language
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 22,
+                lineNumber: 21,
                 columnNumber: 7
             }, this)
         ]
